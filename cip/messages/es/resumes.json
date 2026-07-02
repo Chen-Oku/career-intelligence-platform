@@ -1,0 +1,85 @@
+{
+  "list": {
+    "pageTitle": "Hojas de vida",
+    "pageDescription": "Hojas de vida generadas con IA, adaptadas a partir de tu base de conocimiento profesional.",
+    "generateResume": "Generar hoja de vida",
+    "clearLabel": "hojas de vida",
+    "emptyState": {
+      "title": "Aún no tienes hojas de vida",
+      "description": "Genera tu primera hoja de vida con IA. Gemini leerá tu perfil profesional completo y producirá un documento profesional y personalizado.",
+      "action": "Generar tu primera hoja de vida"
+    },
+    "view": "Ver"
+  },
+  "new": {
+    "pageTitle": "Generar hoja de vida",
+    "pageDescription": "Gemini leerá tu perfil profesional completo — experiencia, proyectos, habilidades e historias — y producirá una hoja de vida profesional y personalizada."
+  },
+  "detail": {
+    "defaultUserName": "Profesional"
+  },
+  "generatorForm": {
+    "generationSteps": {
+      "step1": "Leyendo tu experiencia, proyectos e historias…",
+      "step2": "Analizando tus logros más destacados…",
+      "step3": "Redactando tu resumen profesional…",
+      "step4": "Escribiendo viñetas personalizadas para tu hoja de vida…",
+      "step5": "Finalizando tu hoja de vida…"
+    },
+    "resumeType": {
+      "heading": "Tipo de hoja de vida",
+      "description": "Cada tipo le indica a Gemini qué habilidades y experiencias priorizar.",
+      "typeLabel": "Tipo *",
+      "labelField": "Etiqueta (para tu referencia) *",
+      "labelPlaceholder": "Hoja de vida ArchViz 2026",
+      "targetRoleLabel": "Rol objetivo *",
+      "targetRoleDescription": "Entre más específico, mejor la personalización.",
+      "targetRolePlaceholder": "Artista 3D Senior — Visualización Arquitectónica en Gensler",
+      "languageLabel": "Idioma"
+    },
+    "education": {
+      "heading": "Educación",
+      "description": "Tus títulos y certificaciones.",
+      "institutionLabel": "Institución",
+      "institutionPlaceholder": "Universidad Icesi",
+      "degreeLabel": "Título",
+      "degreePlaceholder": "Pregrado en Diseño Industrial",
+      "yearLabel": "Año",
+      "yearPlaceholder": "2014",
+      "addDegree": "Agregar título"
+    },
+    "contact": {
+      "heading": "Datos de contacto",
+      "description": "Aparece en el encabezado de la hoja de vida. El correo se toma de tu cuenta.",
+      "phone": "Teléfono",
+      "location": "Ubicación",
+      "linkedin": "LinkedIn",
+      "portfolio": "Portafolio"
+    },
+    "submit": {
+      "generating": "Generando…",
+      "generate": "Generar hoja de vida con IA",
+      "helperText": "Toma entre 15 y 30 segundos. Gemini lee tu perfil profesional completo."
+    },
+    "targetJob": {
+      "heading": "Dirigido a: {role} en {company}",
+      "description": "Las palabras clave y skills requeridas de la oferta guiarán el CV (match actual: {matchScore}%). Solo se usa tu información real.",
+      "remove": "Quitar oferta objetivo"
+    }
+  },
+  "preview": {
+    "generated": "Generado el {date}",
+    "copyText": "Copiar texto",
+    "copied": "¡Copiado!",
+    "download": "Descargar",
+    "downloadPdf": "Descargar como PDF",
+    "downloadDocx": "Descargar como Word (.docx)",
+    "sections": {
+      "summary": "Resumen Profesional",
+      "experience": "Experiencia",
+      "projects": "Proyectos Destacados",
+      "skills": "Habilidades Técnicas",
+      "education": "Educación"
+    }
+  }
+}

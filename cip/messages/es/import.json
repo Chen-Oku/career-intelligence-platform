@@ -1,0 +1,43 @@
+{
+  "pageTitle": "Importar desde CV",
+  "pageDescription": "Sube tu hoja de vida (PDF o Word) y Gemini prellenará tu Experiencia, Proyectos y Habilidades. Revisa y edita todo antes de guardarlo — nada se agrega automáticamente.",
+  "upload": {
+    "prompt": "Selecciona una hoja de vida en PDF o Word (.docx) (máx. 10MB)",
+    "extracting": "Extrayendo…",
+    "extractButton": "Extraer datos",
+    "extractingHint": "Esto puede tardar de 15 a 30 segundos — Gemini está leyendo el documento completo.",
+    "importAnother": "Importar otro archivo",
+    "errorTitle": "No se pudieron extraer los datos",
+    "errorDefault": "Inténtalo de nuevo."
+  },
+  "tabs": {
+    "experience": "Experiencia ({count})",
+    "projects": "Proyectos ({count})",
+    "skills": "Habilidades ({count})"
+  },
+  "experienceReview": {
+    "discard": "Descartar",
+    "submitLabel": "Agregar experiencia",
+    "addedToast": "\"{position}\" agregada",
+    "allReviewed": "Se revisaron todas las experiencias extraídas.",
+    "saveErrorTitle": "Error al guardar la experiencia"
+  },
+  "projectReview": {
+    "discard": "Descartar",
+    "submitLabel": "Agregar proyecto",
+    "addedToast": "\"{name}\" agregado",
+    "allReviewed": "Se revisaron todos los proyectos extraídos.",
+    "saveErrorTitle": "Error al guardar el proyecto"
+  },
+  "skillsReview": {
+    "noneExtracted": "No se extrajo ninguna habilidad.",
+    "technicalSkills": "Habilidades técnicas",
+    "softSkills": "Habilidades blandas y fortalezas",
+    "levelPlaceholder": "Nivel",
+    "adding": "Agregando…",
+    "addSelected": "{count, plural, one {Agregar # habilidad seleccionada} other {Agregar # habilidades seleccionadas}}",
+    "addedToast": "{count, plural, one {# habilidad agregada} other {# habilidades agregadas}}",
+    "skippedToast": "{count, plural, one {# habilidad omitida} other {# habilidades omitidas}}",
+    "skippedDescription": "Ya está en tu perfil o no se pudo guardar."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Asistente de Carrera",
+  "subtitle": "Detecta y enriquece habilidades, experiencias, proyectos e historias desde tu texto",
+  "open": "Abrir asistente de carrera",
+  "close": "Cerrar",
+  "clear": "Limpiar conversación",
+  "send": "Enviar",
+  "placeholder": "Pregunta algo o pega un texto sobre tu carrera...",
+  "thinking": "Analizando...",
+  "emptyState": "Pega cualquier texto sobre tu trabajo — una evaluación, una bio antigua, el resumen de un proyecto — y te sugeriré entradas nuevas o enriqueceré las existentes (p. ej. agregar un logro a un trabajo ya registrado), en la sección correcta.",
+  "error": "Algo salió mal. Por favor, intenta de nuevo.",
+  "apply": "Agregar",
+  "applied": "Agregado",
+  "appliedToast": "\"{title}\" agregado a tu perfil",
+  "applyError": "No se pudo agregar la sugerencia",
+  "incomplete": "Faltan datos obligatorios — dale más información al asistente (p. ej. fechas) o agrégalo manualmente en su sección.",
+  "sections": {
+    "SKILL": "Habilidad",
+    "EXPERIENCE": "Experiencia",
+    "PROJECT": "Proyecto",
+    "STORY": "Historia"
+  },
+  "updateBadge": "Actualización",
+  "applyUpdate": "Actualizar",
+  "appliedUpdateToast": "\"{title}\" actualizado"
+}

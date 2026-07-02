@@ -1,0 +1,71 @@
+{
+  "pageTitle": "Habilidades",
+  "pageDescription": "Tu inventario profesional de habilidades. El Generador de Hojas de Vida usa esta información para compararte con las descripciones de empleo.",
+  "clearLabel": "habilidades",
+  "addSkill": "Agregar habilidad",
+  "loadError": "No se pudieron cargar las habilidades. Por favor, actualiza la página.",
+  "levelLegend": "Nivel:",
+  "softSkillsSection": "Habilidades Blandas y Fortalezas",
+  "addSkillToCategory": "Agregar habilidad a {label}",
+  "footerStats": "{count, plural, one {# habilidad} other {# habilidades}} · {categoryCount, plural, one {# categoría} other {# categorías}}",
+  "emptyState": {
+    "title": "Aún no hay habilidades",
+    "description": "Agrega tus habilidades técnicas y blandas. Cuanto más completo esté tu perfil, más precisas serán las hojas de vida generadas.",
+    "action": "Agrega tu primera habilidad"
+  },
+  "category": {
+    "TECHNICAL": "Técnicas",
+    "SOFT": "Habilidades Blandas",
+    "LANGUAGE": "Idiomas",
+    "FRAMEWORK": "Frameworks",
+    "METHODOLOGY": "Metodologías",
+    "LEADERSHIP": "Liderazgo",
+    "AI": "IA y Herramientas",
+    "DESIGN": "Diseño",
+    "PROGRAMMING": "Programación",
+    "OTHER": "Otras"
+  },
+  "level": {
+    "BEGINNER": "Principiante",
+    "INTERMEDIATE": "Intermedio",
+    "ADVANCED": "Avanzado",
+    "EXPERT": "Experto"
+  },
+  "chip": {
+    "editAction": "Editar {name}",
+    "removeAction": "Eliminar {name}",
+    "years": "{years}a"
+  },
+  "dialog": {
+    "addTitle": "Agregar habilidad",
+    "editTitle": "Editar — {name}",
+    "nameLabel": "Nombre de la habilidad *",
+    "namePlaceholder": "3ds Max",
+    "similarNameWarning": "Similar a la habilidad existente “{name}”. Agrégala de todos modos si es diferente.",
+    "categoryLabel": "Categoría *",
+    "categoryPlaceholder": "Selecciona",
+    "levelLabel": "Nivel *",
+    "levelPlaceholder": "Selecciona",
+    "softSkillHint": "Las habilidades blandas no se califican por nivel de competencia.",
+    "yearsOfExpLabel": "Años de experiencia",
+    "yearsOfExpOptional": "(opcional)",
+    "yearsOfExpPlaceholder": "3",
+    "cancel": "Cancelar",
+    "saving": "Guardando…",
+    "adding": "Agregando…",
+    "saveChanges": "Guardar cambios",
+    "addSkill": "Agregar habilidad"
+  },
+  "detect": {
+    "button": "Detectar habilidades",
+    "title": "Habilidades detectadas",
+    "description": "Habilidades mencionadas en tus experiencias, proyectos e historias que aún no están en tu base de datos. Revisa, ajusta categoría y nivel, y agrega las que correspondan.",
+    "scanning": "Escaneando tus datos de carrera...",
+    "empty": "No hay nada nuevo — todas las habilidades mencionadas en tus datos ya están en tu base.",
+    "similarTo": "Similar a \"{name}\" ya existente — podría ser un duplicado",
+    "selectedCount": "{count} de {total} seleccionadas",
+    "addSelected": "Agregar {count}",
+    "resultToast": "{added, plural, one {# habilidad agregada} other {# habilidades agregadas}}",
+    "resultFailed": "{failed, plural, one {# falló} other {# fallaron}} (posibles duplicados)"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "pageTitle": "Entrevista simulada",
+  "questionTypes": {
+    "behavioral": "Conductual",
+    "technical": "Técnica",
+    "situational": "Situacional"
+  },
+  "start": {
+    "description": "Practica {count} preguntas de entrevista para {role}, una a la vez.",
+    "intro": "Pasarás por {count} preguntas en secuencia. Para cada una, puedes usar la respuesta sugerida por la IA, escribir la tuya y recibir retroalimentación, o generar una sugerencia distinta.",
+    "begin": "Comenzar entrevista simulada",
+    "pastSessions": "Sesiones anteriores",
+    "questionsCount": "{count} preguntas"
+  },
+  "question": {
+    "progress": "{current} / {total}",
+    "suggestedAnswer": "Respuesta sugerida",
+    "noMatchingStory": "Aún no hay una historia que coincida",
+    "noMatchingStoryDetail": "Todavía no hay nada en tu Banco de historias o Experiencia que cubra esto.",
+    "generateAnotherAnswer": "Generar otra respuesta",
+    "useAsMyAnswer": "Usar esto como mi respuesta",
+    "orWriteYourOwn": "O escribe tu propia respuesta",
+    "answerPlaceholder": "Escribe cómo responderías esto realmente en una entrevista…",
+    "getFeedback": "Obtener retroalimentación",
+    "evaluating": "Evaluando…",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "finish": "Finalizar"
+  },
+  "end": {
+    "description": "Así te fue.",
+    "backToAnalysis": "Volver al análisis",
+    "practiceAgain": "Practicar de nuevo"
+  },
+  "recap": {
+    "pageTitle": "Resumen de la sesión de entrevista",
+    "sessionRecapTitle": "Resumen de la sesión",
+    "interviewCompleteTitle": "Entrevista completada",
+    "summary": "{role} · {answered}/{total} preguntas respondidas",
+    "averageScoreSuffix": " · puntaje promedio {score}/100",
+    "backToMockInterview": "Volver a la entrevista simulada",
+    "answeredVia": {
+      "aiSuggested": "Usó sugerencia de la IA",
+      "ownDraft": "Escribió su propia respuesta",
+      "skipped": "Omitida"
+    },
+    "noAnswerRecorded": "No se registró ninguna respuesta."
+  }
+}

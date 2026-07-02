@@ -1,0 +1,75 @@
+{
+  "questionTypes": {
+    "behavioral": "Behavioral",
+    "technical": "Technical",
+    "situational": "Situational"
+  },
+  "list": {
+    "pageTitle": "Job Analyzer",
+    "pageDescription": "Paste any job description — Gemini extracts requirements, scores your match, and generates interview questions.",
+    "newAnalysis": "New analysis",
+    "clearItemLabel": "analyses",
+    "emptyTitle": "No analyses yet",
+    "emptyDescription": "Paste a job description and Gemini will tell you your match score, missing skills, and the interview questions you'll face.",
+    "analyzeFirstJob": "Analyze your first job",
+    "gaps": "{count} gaps",
+    "view": "View"
+  },
+  "new": {
+    "pageTitle": "Analyze job",
+    "pageDescription": "Paste a job description. Gemini will extract the requirements, score your match, and generate interview questions."
+  },
+  "detail": {
+    "pageTitle": "Analysis",
+    "pageDescription": "Match score, skill gaps, interview questions, and resume tips for this role."
+  },
+  "form": {
+    "jobDescriptionLabel": "Job description *",
+    "jobDescriptionHint": "Paste the full job posting. The more complete, the more accurate the analysis.",
+    "jobDescriptionPlaceholder": "Paste the entire job description here — title, requirements, responsibilities, company info…",
+    "companyLabel": "Company",
+    "companyOptional": "(optional)",
+    "companyPlaceholder": "Extracted automatically",
+    "titleLabel": "Job title",
+    "titleOptional": "(optional)",
+    "titlePlaceholder": "Extracted automatically",
+    "languageLabel": "Analysis language",
+    "submit": "Analyze Job Description",
+    "analyzing": "Analyzing…",
+    "helperText": "Claude reads the job description and your full profile. Takes ~15 seconds.",
+    "steps": {
+      "reading": "Reading job requirements…",
+      "extracting": "Extracting required skills and keywords…",
+      "matching": "Matching against your profile…",
+      "generatingQuestions": "Generating interview questions…",
+      "writingTips": "Writing resume tips…"
+    }
+  },
+  "matchScore": {
+    "match": "match",
+    "strongMatch": "Strong match",
+    "moderateMatch": "Moderate match",
+    "weakMatch": "Weak match",
+    "ariaLabel": "{score}% match"
+  },
+  "result": {
+    "yearsRequired": "· {years}+ years required",
+    "generateTailoredResume": "Generate tailored resume",
+    "generateCoverLetter": "Generate cover letter",
+    "youHave": "You have ({count})",
+    "gapsToClose": "Gaps to close ({count})",
+    "interviewQuestions": "Interview Questions",
+    "startMockInterview": "Start mock interview",
+    "resumeTips": "Resume Tips",
+    "hiringInsights": "Hiring Insights",
+    "whatYoullDo": "What You'll Do",
+    "suggestedAnswer": "Suggested answer — based on your profile",
+    "noMatchingStory": "No matching story yet",
+    "noMatchingStoryDetail": "Nothing in your Story Bank or Experience covers this yet — add a STAR story or fill in more detail on a role to get a grounded draft here.",
+    "generateAnotherAnswer": "Generate another answer",
+    "practiceOwnAnswer": "Practice your own answer",
+    "answerPlaceholder": "Write how you'd actually answer this in an interview…",
+    "getFeedback": "Get feedback",
+    "evaluating": "Evaluating…"
+  }
+}

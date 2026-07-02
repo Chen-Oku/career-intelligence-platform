@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Environment files — NEVER commit these (cip/.gitignore also covers its own)
+.env
+.env.*
+!.env.example
+
+# Build output
+.next/
+out/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# Logs
+*.log

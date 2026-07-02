@@ -1,0 +1,58 @@
+{
+  "pageTitle": "Perfil",
+  "pageDescription": "Tu biografía \"Sobre mí\", tu discurso de presentación y tu resumen de fortalezas — generados a partir de tu historial profesional, listos para copiar en LinkedIn, el encabezado de tu hoja de vida, o usar en persona.",
+  "voiceGuide": {
+    "title": "Guía de voz",
+    "description": "Preferencias de estilo opcionales — tono y elección de palabras — aplicadas a cada generación de Sobre mí, Discurso de presentación y Fortalezas más abajo, para que el resultado suene a ti y no a un asistente de IA genérico.",
+    "placeholder": "Tono: calmado, profesional, seguro, humilde\nEvitar: apasionado, emocionado, increíble, de vanguardia, orientado a resultados\nPreferir: \"disfruto...\" en lugar de \"me apasiona...\"; \"mi experiencia me ha permitido...\" en lugar de \"soy excelente en...\"",
+    "save": "Guardar"
+  },
+  "aboutMe": {
+    "title": "Sobre mí",
+    "description": "Una breve biografía profesional — algunas frases que resumen quién eres y en qué destacas."
+  },
+  "elevatorPitch": {
+    "title": "Discurso de presentación",
+    "description": "Una introducción hablada de 30 a 60 segundos — quién eres, tu fortaleza más destacada, y qué buscas a continuación."
+  },
+  "strengths": {
+    "title": "Fortalezas",
+    "description": "Un resumen de lo que te distingue — patrones en tus habilidades, experiencia e historias que un solo cargo no mostraría."
+  },
+  "placeholder": "Genera con IA, o escribe tu propio texto de {title}…",
+  "generateWithAi": "Generar con IA",
+  "evaluateWithAi": "Evaluar con IA",
+  "save": "Guardar",
+  "guidedQuestions": {
+    "toggle": "Refinar con preguntas guía (opcional)",
+    "hint": "Responde algunas de estas antes de generar para obtener un borrador más rico y personal. Si las dejas en blanco, la generación usará solo tu historial profesional.",
+    "shared": {
+      "origin": "¿Qué te atrajo primero a este campo, o cómo comenzó tu camino?",
+      "teamRole": "¿Cuál es una fortaleza o rol que sueles asumir dentro de un equipo?",
+      "curiosity": "¿Qué te da curiosidad o qué estás aprendiendo ahora mismo, incluso fuera de tu trabajo principal?",
+      "lookingFor": "¿Qué tipo de rol u oportunidad buscas a continuación?"
+    },
+    "strengths": {
+      "teammateFeedback": "¿Qué habilidad o forma de trabajar suelen destacar tus compañeros o colegas sobre ti?",
+      "crossDomain": "¿En qué momento conectaste conocimientos de dos áreas muy distintas para resolver un problema?",
+      "teamStuck": "Cuando un compañero de equipo está atascado, ¿qué haces de forma natural?",
+      "hiddenSkill": "¿Qué se te da bien que no es evidente por tu cargo o tu hoja de vida?"
+    }
+  },
+  "resumeDefaults": {
+    "title": "Datos para tus CVs",
+    "description": "La educación y datos de contacto que guardes aquí se precargan en cada CV que generes, para que no los vuelvas a escribir.",
+    "educationHeading": "Educación",
+    "institution": "Institución",
+    "degree": "Título",
+    "year": "Año",
+    "addEducation": "Agregar educación",
+    "contactHeading": "Contacto",
+    "phone": "Teléfono",
+    "location": "Ubicación",
+    "linkedin": "LinkedIn",
+    "portfolio": "Portafolio",
+    "save": "Guardar datos",
+    "saving": "Guardando..."
+  }
+}

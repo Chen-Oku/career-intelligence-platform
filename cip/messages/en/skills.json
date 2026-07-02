@@ -1,0 +1,71 @@
+{
+  "pageTitle": "Skills",
+  "pageDescription": "Your professional skill inventory. The Resume Generator uses this to match you against job descriptions.",
+  "clearLabel": "skills",
+  "addSkill": "Add skill",
+  "loadError": "Failed to load skills. Please refresh the page.",
+  "levelLegend": "Level:",
+  "softSkillsSection": "Soft Skills & Strengths",
+  "addSkillToCategory": "Add skill to {label}",
+  "footerStats": "{count, plural, one {# skill} other {# skills}} · {categoryCount, plural, one {# category} other {# categories}}",
+  "emptyState": {
+    "title": "No skills yet",
+    "description": "Add your technical and soft skills. The more complete your profile, the more accurate the generated resumes.",
+    "action": "Add your first skill"
+  },
+  "category": {
+    "TECHNICAL": "Technical",
+    "SOFT": "Soft Skills",
+    "LANGUAGE": "Languages",
+    "FRAMEWORK": "Frameworks",
+    "METHODOLOGY": "Methodologies",
+    "LEADERSHIP": "Leadership",
+    "AI": "AI & Tools",
+    "DESIGN": "Design",
+    "PROGRAMMING": "Programming",
+    "OTHER": "Other"
+  },
+  "level": {
+    "BEGINNER": "Beginner",
+    "INTERMEDIATE": "Intermediate",
+    "ADVANCED": "Advanced",
+    "EXPERT": "Expert"
+  },
+  "chip": {
+    "editAction": "Edit {name}",
+    "removeAction": "Remove {name}",
+    "years": "{years}y"
+  },
+  "dialog": {
+    "addTitle": "Add skill",
+    "editTitle": "Edit — {name}",
+    "nameLabel": "Skill name *",
+    "namePlaceholder": "3ds Max",
+    "similarNameWarning": "Similar to existing skill “{name}”. Add anyway if this is different.",
+    "categoryLabel": "Category *",
+    "categoryPlaceholder": "Select",
+    "levelLabel": "Level *",
+    "levelPlaceholder": "Select",
+    "softSkillHint": "Soft skills aren't rated by proficiency level.",
+    "yearsOfExpLabel": "Years of experience",
+    "yearsOfExpOptional": "(optional)",
+    "yearsOfExpPlaceholder": "3",
+    "cancel": "Cancel",
+    "saving": "Saving…",
+    "adding": "Adding…",
+    "saveChanges": "Save changes",
+    "addSkill": "Add skill"
+  },
+  "detect": {
+    "button": "Detect skills",
+    "title": "Detected skills",
+    "description": "Skills mentioned in your experiences, projects and stories that are not in your Skills Database yet. Review, adjust category and level, and add the ones that belong.",
+    "scanning": "Scanning your career data...",
+    "empty": "Nothing new found — every skill mentioned in your career data is already in your database.",
+    "similarTo": "Similar to existing \"{name}\" — might be a duplicate",
+    "selectedCount": "{count} of {total} selected",
+    "addSelected": "Add {count}",
+    "resultToast": "{added, plural, one {# skill added} other {# skills added}}",
+    "resultFailed": "{failed, plural, one {# failed} other {# failed}} (possible duplicates)"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "pageTitle": "Profile",
+  "pageDescription": "Your About Me bio, elevator pitch, and strengths summary — generated from your career data, ready to copy into LinkedIn, your resume header, or use in person.",
+  "voiceGuide": {
+    "title": "Voice Guide",
+    "description": "Optional style preferences — tone and word choice — applied to every About Me, Elevator Pitch, and Strengths generation below, so the output sounds like you instead of a generic AI assistant.",
+    "placeholder": "Tone: calm, professional, confident, humble\nAvoid: passionate, thrilled, amazing, cutting-edge, results-driven\nPrefer: \"I enjoy...\" instead of \"I'm passionate about...\"; \"my experience has allowed me to...\" instead of \"I excel at...\"",
+    "save": "Save"
+  },
+  "aboutMe": {
+    "title": "About Me",
+    "description": "A short professional bio — a few sentences summarizing who you are and what you do best."
+  },
+  "elevatorPitch": {
+    "title": "Elevator Pitch",
+    "description": "A 30-60 second spoken introduction — who you are, your standout strength, and what you're looking for next."
+  },
+  "strengths": {
+    "title": "Strengths",
+    "description": "A summary of what sets you apart — patterns across your skills, experience, and stories that a single job title wouldn't show."
+  },
+  "placeholder": "Generate with AI, or write your own {title}…",
+  "generateWithAi": "Generate with AI",
+  "evaluateWithAi": "Evaluate with AI",
+  "save": "Save",
+  "guidedQuestions": {
+    "toggle": "Refine with guided questions (optional)",
+    "hint": "Answer any of these before generating to get a richer, more personal draft. Left blank, generation uses only your career data.",
+    "shared": {
+      "origin": "What first drew you to this field, or how did your path start?",
+      "teamRole": "What's a strength or role you naturally take on within a team?",
+      "curiosity": "What are you curious about or learning right now, even outside your main job?",
+      "lookingFor": "What kind of role or opportunity are you looking for next?"
+    },
+    "strengths": {
+      "teammateFeedback": "What's a skill or way of working that colleagues or teammates specifically point out about you?",
+      "crossDomain": "Where have you connected knowledge from two very different fields to solve a problem?",
+      "teamStuck": "When a teammate is stuck, what do you naturally do?",
+      "hiddenSkill": "What's something you're good at that isn't obvious from your job title or resume?"
+    }
+  },
+  "resumeDefaults": {
+    "title": "Resume defaults",
+    "description": "Education and contact info saved here are prefilled into every resume you generate, so you never retype them.",
+    "educationHeading": "Education",
+    "institution": "Institution",
+    "degree": "Degree",
+    "year": "Year",
+    "addEducation": "Add education",
+    "contactHeading": "Contact",
+    "phone": "Phone",
+    "location": "Location",
+    "linkedin": "LinkedIn",
+    "portfolio": "Portfolio",
+    "save": "Save defaults",
+    "saving": "Saving..."
+  }
+}

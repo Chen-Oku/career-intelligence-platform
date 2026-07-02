@@ -1,0 +1,49 @@
+{
+  "pageTitle": "Mock Interview",
+  "questionTypes": {
+    "behavioral": "Behavioral",
+    "technical": "Technical",
+    "situational": "Situational"
+  },
+  "start": {
+    "description": "Practice {count} interview questions for {role}, one at a time.",
+    "intro": "You'll go through {count} questions in sequence. For each one, use the AI's suggested answer, write your own and get feedback, or generate a different suggestion.",
+    "begin": "Begin mock interview",
+    "pastSessions": "Past sessions",
+    "questionsCount": "{count} questions"
+  },
+  "question": {
+    "progress": "{current} / {total}",
+    "suggestedAnswer": "Suggested answer",
+    "noMatchingStory": "No matching story yet",
+    "noMatchingStoryDetail": "Nothing in your Story Bank or Experience covers this yet.",
+    "generateAnotherAnswer": "Generate another answer",
+    "useAsMyAnswer": "Use this as my answer",
+    "orWriteYourOwn": "Or write your own answer",
+    "answerPlaceholder": "Write how you'd actually answer this in an interview…",
+    "getFeedback": "Get feedback",
+    "evaluating": "Evaluating…",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish"
+  },
+  "end": {
+    "description": "Here's how it went.",
+    "backToAnalysis": "Back to analysis",
+    "practiceAgain": "Practice again"
+  },
+  "recap": {
+    "pageTitle": "Interview Session Recap",
+    "sessionRecapTitle": "Session recap",
+    "interviewCompleteTitle": "Interview complete",
+    "summary": "{role} · {answered}/{total} questions answered",
+    "averageScoreSuffix": " · {score}/100 average score",
+    "backToMockInterview": "Back to mock interview",
+    "answeredVia": {
+      "aiSuggested": "Used AI suggestion",
+      "ownDraft": "Wrote own answer",
+      "skipped": "Skipped"
+    },
+    "noAnswerRecorded": "No answer recorded."
+  }
+}

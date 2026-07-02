@@ -1,0 +1,24 @@
+{
+  "tagInput": {
+    "typeAndPressEnter": "Escribe y presiona Enter",
+    "cannotBeEmpty": "No puede estar vacío.",
+    "mustBeValidUrl": "Debe ser una URL válida (incluye https://)",
+    "alreadyAdded": "Ya fue agregado.",
+    "maximumReached": "Se alcanzó el máximo de {max} elementos",
+    "removeTag": "Eliminar {tag}",
+    "addItem": "Agregar elemento"
+  },
+  "feedbackPanel": {
+    "strengths": "Fortalezas",
+    "improve": "Mejorar",
+    "rewrittenSuggestion": "Sugerencia reescrita"
+  },
+  "clearSection": {
+    "clearSection": "Vaciar sección",
+    "clearAllTitle": "¿Eliminar todos los {itemLabel}?",
+    "clearAllDescription": "Esto eliminará permanentemente los {count} {itemLabel}. Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "clearing": "Eliminando…",
+    "clearAll": "Eliminar todo"
+  }
+}

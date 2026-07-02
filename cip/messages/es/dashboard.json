@@ -1,0 +1,72 @@
+{
+  "defaultName": "de nuevo",
+  "welcome": "Bienvenido de nuevo, {name}",
+  "intro": "Empieza construyendo tu base de conocimiento profesional. Cada hoja de vida y carta de presentación se generará a partir de estos datos.",
+  "modules": {
+    "experience": {
+      "title": "Experiencia",
+      "description": "Agrega y gestiona tu historial laboral. Esta es la fuente de verdad."
+    },
+    "projects": {
+      "title": "Proyectos",
+      "description": "Proyectos de portafolio vinculados a tu experiencia."
+    },
+    "skills": {
+      "title": "Habilidades",
+      "description": "Tu base de datos de habilidades técnicas y blandas."
+    },
+    "stories": {
+      "title": "Banco de Historias",
+      "description": "Historias STAR para la preparación de entrevistas."
+    },
+    "import": {
+      "title": "Importar CV",
+      "description": "Sube una hoja de vida y prellena tu perfil con IA."
+    },
+    "profile": {
+      "title": "Perfil",
+      "description": "Tu biografía \"Sobre mí\" y discurso de presentación, generados a partir de tus datos."
+    },
+    "resumes": {
+      "title": "Hojas de Vida",
+      "description": "Genera hojas de vida a la medida a partir de tu historial profesional."
+    },
+    "coverLetters": {
+      "title": "Cartas de Presentación",
+      "description": "Genera una carta de presentación ajustada a una vacante específica que ya analizaste."
+    },
+    "jobAnalyzer": {
+      "title": "Analizador de Empleo",
+      "description": "Porcentaje de compatibilidad, brechas de habilidades y preparación de entrevista para una oferta."
+    },
+    "interviewPrep": {
+      "title": "Preparación de Entrevista",
+      "description": "Un set reutilizable de respuestas de entrevista — háblame de ti, debilidades, salario, e historias de comportamiento — sin depender de una vacante específica."
+    },
+    "certifications": {
+      "title": "Certificaciones",
+      "description": "Cursos, credenciales y licencias que respaldan tus habilidades."
+    }
+  },
+  "completeness": {
+    "title": "Completitud del perfil",
+    "allDone": "Tu base de conocimiento está completa — cada generador tiene datos reales con qué trabajar.",
+    "checks": {
+      "experience": "Agrega experiencia laboral",
+      "skills": "Agrega al menos 3 habilidades",
+      "projects": "Agrega un proyecto",
+      "stories": "Escribe una historia STAR",
+      "aboutMe": "Genera tu About Me",
+      "education": "Guarda tu educación en Perfil"
+    }
+  },
+  "latestAnalysis": {
+    "label": "Último análisis de oferta",
+    "match": "{score}% match"
+  },
+  "steps": {
+    "build": "Paso 1 · Construye tu base",
+    "generate": "Paso 2 · Genera documentos",
+    "apply": "Paso 3 · Postula y prepárate"
+  }
+}

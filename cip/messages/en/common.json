@@ -1,0 +1,24 @@
+{
+  "tagInput": {
+    "typeAndPressEnter": "Type and press Enter",
+    "cannotBeEmpty": "Cannot be empty.",
+    "mustBeValidUrl": "Must be a valid URL (include https://)",
+    "alreadyAdded": "Already added.",
+    "maximumReached": "Maximum {max} items reached",
+    "removeTag": "Remove {tag}",
+    "addItem": "Add item"
+  },
+  "feedbackPanel": {
+    "strengths": "Strengths",
+    "improve": "Improve",
+    "rewrittenSuggestion": "Rewritten suggestion"
+  },
+  "clearSection": {
+    "clearSection": "Clear section",
+    "clearAllTitle": "Clear all {itemLabel}?",
+    "clearAllDescription": "This will permanently delete all {count} {itemLabel}. This cannot be undone.",
+    "cancel": "Cancel",
+    "clearing": "Clearing…",
+    "clearAll": "Clear all"
+  }
+}

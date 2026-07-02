@@ -1,0 +1,79 @@
+{
+  "listPage": {
+    "title": "Story Bank",
+    "description": "STAR stories for interview preparation and cover letter generation. The AI picks the right story for each question.",
+    "addStory": "Add story",
+    "clearLabel": "stories",
+    "loadError": "Failed to load stories.",
+    "emptyState": {
+      "title": "No stories yet",
+      "description": "Add your first STAR story. Think of a time you solved a hard problem, led a team, or learned something important.",
+      "action": "Add your first story"
+    },
+    "summary": "{count, plural, one {# story} other {# stories}}"
+  },
+  "newPage": {
+    "title": "Add story",
+    "description": "Write a STAR story from your career. Be specific — the AI uses every word."
+  },
+  "editPage": {
+    "title": "Edit story",
+    "submitLabel": "Save changes"
+  },
+  "card": {
+    "situation": "Situation",
+    "task": "Task",
+    "action": "Action",
+    "result": "Result",
+    "impact": "Impact",
+    "editAction": "Edit",
+    "deleteAction": "Delete",
+    "deleteDialog": {
+      "title": "Delete this story?",
+      "description": "This will permanently delete <strong>{title}</strong>.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    }
+  },
+  "form": {
+    "detailsSection": {
+      "title": "Story Details",
+      "description": "Give this story a memorable title and pick the interview category where it fits best."
+    },
+    "titleLabel": "Title *",
+    "titlePlaceholder": "Delivering 12 renders in 48h under last-minute design changes",
+    "categoryLabel": "Interview category *",
+    "starSection": {
+      "title": "STAR Story",
+      "description": "Write each part separately. The AI uses this structure to generate interview answers and cover letter paragraphs."
+    },
+    "situationLabel": "S — Situation *",
+    "situationPrompt": "Set the scene. What was the context, the challenge, or the trigger? Don't solve anything yet.",
+    "situationPlaceholder": "The client needed to present the university auditorium to investors in 48 hours. The design had just changed for the third time...",
+    "taskLabel": "T — Task *",
+    "taskPrompt": "What was specifically your responsibility in this situation?",
+    "taskPlaceholder": "I was responsible for producing all 12 architectural renders from the updated CAD drawings...",
+    "actionLabel": "A — Action *",
+    "actionPrompt": "What did YOU do? Use 'I', not 'we'. Be specific about your decisions and process.",
+    "actionPlaceholder": "I reorganized the render queue to prioritize hero angles, optimized material assets to reduce render time by 30%, and coordinated with the design team overnight to validate each iteration...",
+    "resultLabel": "R — Result *",
+    "resultPrompt": "What happened? What changed? Quantify if possible.",
+    "resultPlaceholder": "Delivered all 12 renders 2 hours before the deadline. The client presented successfully and closed the deal the following week...",
+    "contextSection": {
+      "title": "Context",
+      "description": "Help the AI understand what skills this story demonstrates and which keywords to match against job descriptions."
+    },
+    "impactLabel": "Quantified impact",
+    "impactOptional": "(optional)",
+    "impactDescription": "A single sentence. Numbers are powerful: \"Reduced render time 30%\", \"Closed €50K deal\".",
+    "impactPlaceholder": "Delivered 12 renders on time. Client closed the deal.",
+    "skillsLabel": "Skills demonstrated",
+    "skillsPlaceholder": "Project Management...",
+    "keywordsLabel": "Keywords for AI matching",
+    "keywordsDescription": "Terms from job descriptions this story addresses.",
+    "keywordsPlaceholder": "deadline, cross-functional...",
+    "cancel": "Cancel",
+    "saving": "Saving…",
+    "defaultSubmitLabel": "Save story"
+  }
+}

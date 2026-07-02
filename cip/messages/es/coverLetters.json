@@ -1,0 +1,36 @@
+{
+  "list": {
+    "pageTitle": "Cartas de Presentación",
+    "pageDescription": "Cartas de presentación generadas a partir de tu historial profesional y una vacante específica que analizaste.",
+    "clearLabel": "cartas de presentación",
+    "generateCoverLetter": "Generar carta de presentación",
+    "view": "Ver",
+    "emptyState": {
+      "title": "Aún no tienes cartas de presentación",
+      "description": "Genera una a partir de una vacante que ya hayas analizado en el Analizador de Empleo.",
+      "action": "Genera tu primera carta de presentación"
+    }
+  },
+  "new": {
+    "pageTitle": "Generar una Carta de Presentación",
+    "pageDescription": "Elige una vacante que ya hayas analizado — la carta se basa en los requisitos de esa vacante y tu historial profesional.",
+    "noAnalyses": "Aún no has analizado ninguna vacante. Analiza una en el Analizador de Empleo primero, y luego vuelve aquí para generar una carta de presentación para ella.",
+    "jobLabel": "Vacante",
+    "jobPlaceholder": "Selecciona una vacante analizada…",
+    "extraNotesLabel": "¿Algo más que quieras mencionar? (opcional)",
+    "extraNotesPlaceholder": "ej. una razón específica por la que te entusiasma esta empresa, un contacto en común, algo que no esté en tu perfil…",
+    "generate": "Generar carta de presentación",
+    "generating": "Generando…"
+  },
+  "detail": {
+    "defaultUserName": "Profesional"
+  },
+  "preview": {
+    "generated": "Generada el {date}",
+    "copyText": "Copiar texto",
+    "copied": "Copiado",
+    "download": "Descargar",
+    "downloadPdf": "Descargar como PDF",
+    "downloadDocx": "Descargar como Word"
+  }
+}

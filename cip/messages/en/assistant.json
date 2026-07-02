@@ -1,0 +1,26 @@
+{
+  "title": "Career Assistant",
+  "subtitle": "Detects and enriches skills, experiences, projects and stories from your text",
+  "open": "Open career assistant",
+  "close": "Close",
+  "clear": "Clear conversation",
+  "send": "Send",
+  "placeholder": "Ask something or paste text about your career...",
+  "thinking": "Analyzing...",
+  "emptyState": "Paste any text about your work — a review, an old bio, a project recap — and I'll suggest new entries or enrich existing ones (e.g. add an achievement to a job already on file), in the right section.",
+  "error": "Something went wrong. Please try again.",
+  "apply": "Add",
+  "applied": "Added",
+  "appliedToast": "\"{title}\" added to your profile",
+  "applyError": "Could not add the suggestion",
+  "incomplete": "Some required details are missing — give the assistant more info (e.g. dates) or add it manually in its section.",
+  "sections": {
+    "SKILL": "Skill",
+    "EXPERIENCE": "Experience",
+    "PROJECT": "Project",
+    "STORY": "Story"
+  },
+  "updateBadge": "Update",
+  "applyUpdate": "Update",
+  "appliedUpdateToast": "\"{title}\" updated"
+}

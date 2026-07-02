@@ -1,0 +1,43 @@
+{
+  "pageTitle": "Import from CV",
+  "pageDescription": "Upload your resume (PDF or Word) and Gemini will pre-fill your Experience, Projects, and Skills. Review and edit everything before it's saved — nothing is added automatically.",
+  "upload": {
+    "prompt": "Select a PDF or Word (.docx) resume (max 10MB)",
+    "extracting": "Extracting…",
+    "extractButton": "Extract data",
+    "extractingHint": "This can take 15–30 seconds — Gemini is reading the full document.",
+    "importAnother": "Import another file",
+    "errorTitle": "Could not extract data",
+    "errorDefault": "Please try again."
+  },
+  "tabs": {
+    "experience": "Experience ({count})",
+    "projects": "Projects ({count})",
+    "skills": "Skills ({count})"
+  },
+  "experienceReview": {
+    "discard": "Discard",
+    "submitLabel": "Add experience",
+    "addedToast": "\"{position}\" added",
+    "allReviewed": "All extracted experiences have been reviewed.",
+    "saveErrorTitle": "Failed to save experience"
+  },
+  "projectReview": {
+    "discard": "Discard",
+    "submitLabel": "Add project",
+    "addedToast": "\"{name}\" added",
+    "allReviewed": "All extracted projects have been reviewed.",
+    "saveErrorTitle": "Failed to save project"
+  },
+  "skillsReview": {
+    "noneExtracted": "No skills were extracted.",
+    "technicalSkills": "Technical Skills",
+    "softSkills": "Soft Skills & Strengths",
+    "levelPlaceholder": "Level",
+    "adding": "Adding…",
+    "addSelected": "{count, plural, one {Add # selected skill} other {Add # selected skills}}",
+    "addedToast": "{count, plural, one {# skill added} other {# skills added}}",
+    "skippedToast": "{count, plural, one {# skill skipped} other {# skills skipped}}",
+    "skippedDescription": "Already in your profile or failed to save."
+  }
+}

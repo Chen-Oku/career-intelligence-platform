@@ -1,0 +1,103 @@
+{
+  "clearLabel": "proyectos",
+  "list": {
+    "pageTitle": "Proyectos",
+    "pageDescription": "Tus proyectos de portafolio. Los destacados alimentan directamente al Generador de Hojas de Vida.",
+    "addProject": "Agregar proyecto",
+    "loadError": "No se pudieron cargar los proyectos. Por favor, actualiza la página.",
+    "emptyState": {
+      "title": "Aún no hay proyectos",
+      "description": "Agrega proyectos para construir tu portafolio. Vincúlalos con tu experiencia para una generación de hojas de vida más completa.",
+      "action": "Agrega tu primer proyecto"
+    },
+    "featured": "Destacados",
+    "allProjects": "Todos los proyectos",
+    "count": "{count, plural, one {# proyecto} other {# proyectos}}",
+    "featuredCount": "{count, plural, one {# destacado} other {# destacados}}"
+  },
+  "new": {
+    "pageTitle": "Agregar proyecto",
+    "pageDescription": "Documenta un proyecto para tu base de conocimiento de portafolio."
+  },
+  "edit": {
+    "pageTitle": "Editar — {name}",
+    "submitLabel": "Guardar cambios"
+  },
+  "card": {
+    "viewProject": "Ver proyecto",
+    "github": "GitHub",
+    "goal": "Objetivo: ",
+    "results": "Resultados: ",
+    "deleteTitle": "¿Eliminar este proyecto?",
+    "deleteDescription": "Esto eliminará permanentemente <strong>{name}</strong>. Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  },
+  "toasts": {
+    "saved": "Proyecto guardado",
+    "saveFailed": "Error al guardar",
+    "updated": "Cambios guardados",
+    "updateFailed": "Error al actualizar",
+    "deleted": "Proyecto eliminado",
+    "deleteFailed": "Error al eliminar",
+    "cleared": "Todos los proyectos eliminados",
+    "clearFailed": "Error al eliminar"
+  },
+  "form": {
+    "overview": {
+      "title": "Resumen",
+      "description": "¿Qué es este proyecto?"
+    },
+    "nameLabel": "Nombre del proyecto *",
+    "namePlaceholder": "Visualización de auditorio — Grupo AE",
+    "descriptionLabel": "Descripción *",
+    "descriptionHint": "¿Qué es este proyecto? ¿Para quién fue? ¿Cómo se ve?",
+    "descriptionPlaceholder": "Visualización arquitectónica fotorrealista de un auditorio de 200 asientos para una universidad privada en Bogotá...",
+    "goalLabel": "Objetivo",
+    "goalHint": "¿Cuál era el objetivo de este proyecto?",
+    "goalPlaceholder": "Ayudar al cliente a presentar el proyecto a inversionistas antes de iniciar la construcción.",
+    "period": {
+      "title": "Período",
+      "description": "¿Cuándo trabajaste en esto? (opcional)"
+    },
+    "startDateLabel": "Fecha de inicio",
+    "endDateLabel": "Fecha de fin",
+    "techTeam": {
+      "title": "Tecnología y equipo",
+      "description": "Herramientas usadas y tu rol dentro del equipo."
+    },
+    "myRoleLabel": "Tu rol",
+    "myRolePlaceholder": "Artista 3D principal",
+    "teamSizeLabel": "Tamaño del equipo",
+    "teamSizePlaceholder": "3",
+    "technologiesLabel": "Tecnologías",
+    "technologiesPlaceholder": "3ds Max, Corona Renderer, Photoshop...",
+    "story": {
+      "title": "Historia",
+      "description": "Usado por la IA para preparación de entrevistas y cartas de presentación."
+    },
+    "challengesLabel": "Desafíos",
+    "challengesPlaceholder": "El cliente cambió el diseño 3 veces en la última semana...",
+    "resultsLabel": "Resultados",
+    "resultsHint": "¿Cuál fue el resultado? Cuantifica cuando sea posible.",
+    "resultsPlaceholder": "Entregué 12 renders finales en 48 horas. El cliente cerró el trato.",
+    "lessonsLearnedLabel": "Lecciones aprendidas",
+    "lessonsLearnedPlaceholder": "Agrupar los pases de render antes ahorra tiempo cuando llegan revisiones de último momento...",
+    "publishing": {
+      "title": "Publicación",
+      "description": "Etiquetas, enlaces y visibilidad en el portafolio."
+    },
+    "tagsLabel": "Etiquetas",
+    "tagsHint": "Categorías como: ArchViz, Interiores, Tiempo real, Comercial.",
+    "tagsPlaceholder": "ArchViz...",
+    "externalUrlLabel": "URL del portafolio",
+    "externalUrlPlaceholder": "https://behance.net/...",
+    "githubUrlLabel": "URL de GitHub",
+    "githubUrlPlaceholder": "https://github.com/...",
+    "featureLabel": "Destacar en el portafolio",
+    "featureHint": "Los proyectos destacados aparecen primero y son seleccionados por el Generador de Hojas de Vida.",
+    "cancel": "Cancelar",
+    "saving": "Guardando…",
+    "saveProject": "Guardar proyecto"
+  }
+}

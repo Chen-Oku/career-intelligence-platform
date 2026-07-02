@@ -1,0 +1,54 @@
+// src/app/api/job-analyzer/[id]/regenerate-answer/route.ts — POST: regenerate one question's suggested answer
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { z } from "zod";
+import { authOptions } from "@/lib/auth";
+import { PrismaExperienceRepository } from "@/infrastructure/database/repositories/PrismaExperienceRepository";
+import { PrismaSkillRepository } from "@/infrastructure/database/repositories/PrismaSkillRepository";
+import { PrismaStoryRepository } from "@/infrastructure/database/repositories/PrismaStoryRepository";
+import { PrismaProjectRepository } from "@/infrastructure/database/repositories/PrismaProjectRepository";
+import { JobAnalyzerService } from "@/infrastructure/ai/gemini/JobAnalyzerService";
+import { RegenerateInterviewAnswerUseCase } from "@/application/intelligence/commands/RegenerateInterviewAnswer";
+
+export const maxDuration = 60;
+
+type P = { params: Promise<{ id: string }> };
+
+const regenerateAnswerSchema = z.object({
+  questionIndex: z.number().int().min(0),
+});
+
+export async function POST(req: NextRequest, { params }: P) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON." }, { status: 400 });
+  }
+
+  const parsed = regenerateAnswerSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Validation failed.", details: parsed.error.flatten() }, { status: 400 });
+  }
+
+  const { id } = await params;
+  const useCase = new RegenerateInterviewAnswerUseCase(
+    new PrismaExperienceRepository(),
+    new PrismaSkillRepository(),
+    new PrismaStoryRepository(),
+    new PrismaProjectRepository(),
+    new JobAnalyzerService(),
+  );
+
+  const result = await useCase.execute({
+    userId: session.user.id,
+    jobDescriptionId: id,
+    questionIndex: parsed.data.questionIndex,
+  });
+
+  if (!result.ok) return NextResponse.json({ error: result.error.message }, { status: 422 });
+  return NextResponse.json({ data: result.value });
+}

@@ -1,0 +1,19 @@
+{
+  "dashboard": "Panel",
+  "importCv": "Importar CV",
+  "experience": "Experiencia",
+  "projects": "Proyectos",
+  "skills": "Habilidades",
+  "storyBank": "Banco de Historias",
+  "profile": "Perfil",
+  "resumes": "Hojas de Vida",
+  "coverLetters": "Cartas de Presentación",
+  "jobAnalyzer": "Analizador de Empleo",
+  "interviewPrep": "Preparación de Entrevista",
+  "comingSoon": "pronto",
+  "signOut": "Cerrar sesión",
+  "certifications": "Certificaciones",
+  "groupBuild": "1 · Construye tu base",
+  "groupGenerate": "2 · Genera",
+  "groupApply": "3 · Postula y prepárate"
+}

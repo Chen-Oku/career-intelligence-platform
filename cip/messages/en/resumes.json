@@ -1,0 +1,85 @@
+{
+  "list": {
+    "pageTitle": "Resumes",
+    "pageDescription": "AI-generated resumes tailored from your career knowledge base.",
+    "generateResume": "Generate resume",
+    "clearLabel": "resumes",
+    "emptyState": {
+      "title": "No resumes yet",
+      "description": "Generate your first AI resume. Gemini will read your complete career profile and produce a tailored, professional document.",
+      "action": "Generate your first resume"
+    },
+    "view": "View"
+  },
+  "new": {
+    "pageTitle": "Generate Resume",
+    "pageDescription": "Gemini will read your complete career profile — experiences, projects, skills, and stories — and produce a tailored, professional resume."
+  },
+  "detail": {
+    "defaultUserName": "Professional"
+  },
+  "generatorForm": {
+    "generationSteps": {
+      "step1": "Reading your experience, projects, and stories…",
+      "step2": "Analyzing your strongest achievements…",
+      "step3": "Crafting your professional summary…",
+      "step4": "Writing tailored resume bullets…",
+      "step5": "Finalizing your resume…"
+    },
+    "resumeType": {
+      "heading": "Resume Type",
+      "description": "Each type tells Gemini which skills and experiences to prioritize.",
+      "typeLabel": "Type *",
+      "labelField": "Label (for your reference) *",
+      "labelPlaceholder": "ArchViz Resume 2026",
+      "targetRoleLabel": "Target role *",
+      "targetRoleDescription": "The more specific, the better the tailoring.",
+      "targetRolePlaceholder": "Senior 3D Artist — Architectural Visualization at Gensler",
+      "languageLabel": "Language"
+    },
+    "education": {
+      "heading": "Education",
+      "description": "Your degrees and certifications.",
+      "institutionLabel": "Institution",
+      "institutionPlaceholder": "Universidad Icesi",
+      "degreeLabel": "Degree",
+      "degreePlaceholder": "Bachelor's in Industrial Design",
+      "yearLabel": "Year",
+      "yearPlaceholder": "2014",
+      "addDegree": "Add degree"
+    },
+    "contact": {
+      "heading": "Contact Details",
+      "description": "Appears in the resume header. Email is pulled from your account.",
+      "phone": "Phone",
+      "location": "Location",
+      "linkedin": "LinkedIn",
+      "portfolio": "Portfolio"
+    },
+    "submit": {
+      "generating": "Generating…",
+      "generate": "Generate Resume with AI",
+      "helperText": "Takes 15–30 seconds. Gemini reads your complete career profile."
+    },
+    "targetJob": {
+      "heading": "Targeting: {role} at {company}",
+      "description": "The posting's keywords and required skills will guide the resume (current match: {matchScore}%). Only your real data is used.",
+      "remove": "Remove job targeting"
+    }
+  },
+  "preview": {
+    "generated": "Generated {date}",
+    "copyText": "Copy text",
+    "copied": "Copied!",
+    "download": "Download",
+    "downloadPdf": "Download as PDF",
+    "downloadDocx": "Download as Word (.docx)",
+    "sections": {
+      "summary": "Professional Summary",
+      "experience": "Experience",
+      "projects": "Notable Projects",
+      "skills": "Technical Skills",
+      "education": "Education"
+    }
+  }
+}

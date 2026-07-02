@@ -1,0 +1,103 @@
+{
+  "clearLabel": "projects",
+  "list": {
+    "pageTitle": "Projects",
+    "pageDescription": "Your portfolio projects. Highlighted ones feed directly into the Resume Generator.",
+    "addProject": "Add project",
+    "loadError": "Failed to load projects. Please refresh the page.",
+    "emptyState": {
+      "title": "No projects yet",
+      "description": "Add projects to build your portfolio. Link them to your experience for richer resume generation.",
+      "action": "Add your first project"
+    },
+    "featured": "Featured",
+    "allProjects": "All projects",
+    "count": "{count, plural, one {# project} other {# projects}}",
+    "featuredCount": "{count, plural, one {# featured} other {# featured}}"
+  },
+  "new": {
+    "pageTitle": "Add project",
+    "pageDescription": "Document a project for your portfolio knowledge base."
+  },
+  "edit": {
+    "pageTitle": "Edit — {name}",
+    "submitLabel": "Save changes"
+  },
+  "card": {
+    "viewProject": "View project",
+    "github": "GitHub",
+    "goal": "Goal: ",
+    "results": "Results: ",
+    "deleteTitle": "Delete this project?",
+    "deleteDescription": "This will permanently delete <strong>{name}</strong>. This cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "toasts": {
+    "saved": "Project saved",
+    "saveFailed": "Failed to save",
+    "updated": "Changes saved",
+    "updateFailed": "Failed to update",
+    "deleted": "Project deleted",
+    "deleteFailed": "Failed to delete",
+    "cleared": "All projects cleared",
+    "clearFailed": "Failed to clear"
+  },
+  "form": {
+    "overview": {
+      "title": "Overview",
+      "description": "What is this project?"
+    },
+    "nameLabel": "Project name *",
+    "namePlaceholder": "Auditorium Visualization — Grupo AE",
+    "descriptionLabel": "Description *",
+    "descriptionHint": "What is this project? Who was it for? What does it look like?",
+    "descriptionPlaceholder": "Photorealistic architectural visualization of a 200-seat auditorium for a private university in Bogotá...",
+    "goalLabel": "Goal",
+    "goalHint": "What was the objective of this project?",
+    "goalPlaceholder": "Help the client present the project to investors before construction began.",
+    "period": {
+      "title": "Period",
+      "description": "When did you work on this? (optional)"
+    },
+    "startDateLabel": "Start date",
+    "endDateLabel": "End date",
+    "techTeam": {
+      "title": "Tech & Team",
+      "description": "Tools used and your role on the team."
+    },
+    "myRoleLabel": "Your role",
+    "myRolePlaceholder": "Lead 3D Artist",
+    "teamSizeLabel": "Team size",
+    "teamSizePlaceholder": "3",
+    "technologiesLabel": "Technologies",
+    "technologiesPlaceholder": "3ds Max, Corona Renderer, Photoshop...",
+    "story": {
+      "title": "Story",
+      "description": "Used by the AI for interview prep and cover letters."
+    },
+    "challengesLabel": "Challenges",
+    "challengesPlaceholder": "The client changed the design 3 times in the final week...",
+    "resultsLabel": "Results",
+    "resultsHint": "What was the outcome? Quantify where possible.",
+    "resultsPlaceholder": "Delivered 12 final renders in 48 hours. Client closed the deal.",
+    "lessonsLearnedLabel": "Lessons learned",
+    "lessonsLearnedPlaceholder": "Batching render passes earlier saves time when revisions come late...",
+    "publishing": {
+      "title": "Publishing",
+      "description": "Tags, links, and portfolio visibility."
+    },
+    "tagsLabel": "Tags",
+    "tagsHint": "Categories like: ArchViz, Interior, Real-time, Commercial.",
+    "tagsPlaceholder": "ArchViz...",
+    "externalUrlLabel": "Portfolio URL",
+    "externalUrlPlaceholder": "https://behance.net/...",
+    "githubUrlLabel": "GitHub URL",
+    "githubUrlPlaceholder": "https://github.com/...",
+    "featureLabel": "Feature in portfolio",
+    "featureHint": "Highlighted projects appear first and are selected by the Resume Generator.",
+    "cancel": "Cancel",
+    "saving": "Saving…",
+    "saveProject": "Save project"
+  }
+}

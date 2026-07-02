@@ -1,0 +1,41 @@
+{
+  "pageTitle": "Interview Prep",
+  "pageDescription": "A reusable toolkit of interview answers, generated from your career data — not tied to any specific job posting.",
+  "placeholder": "Generate with AI, or write your own answer…",
+  "generateWithAi": "Generate with AI",
+  "evaluateWithAi": "Evaluate with AI",
+  "save": "Save",
+  "guidanceRequiredHint": "Answer this before generating — this can't be written without your input.",
+  "types": {
+    "tellMeAboutYourself": {
+      "title": "Tell Me About Yourself",
+      "description": "A 2-3 minute spoken narrative connecting your background, experience, and what you're looking for next.",
+      "guidance": "Anything specific you want to emphasize (a turning point, what excites you right now)?"
+    },
+    "weakness": {
+      "title": "Biggest Weakness",
+      "description": "A credible weakness with real evidence you're actively improving it.",
+      "guidance": "What's a real weakness you want to address? Be honest — this needs to be authentic, not a disguised strength."
+    },
+    "salaryExpectations": {
+      "title": "Salary Expectations",
+      "description": "Talking points for discussing compensation confidently.",
+      "guidance": "What's your target range or market research so far?"
+    },
+    "leadershipStory": {
+      "title": "Leadership Story",
+      "description": "A time you led a team or took ownership of a situation, drawn from your Story Bank.",
+      "guidance": "Anything specific about this story you want emphasized?"
+    },
+    "conflictStory": {
+      "title": "Conflict Story",
+      "description": "A conflict with a coworker and how you resolved it, drawn from your Story Bank.",
+      "guidance": "Anything specific about this story you want emphasized?"
+    },
+    "teamworkStory": {
+      "title": "Teamwork Story",
+      "description": "A time you worked effectively as part of a team, drawn from your Story Bank.",
+      "guidance": "Anything specific about this story you want emphasized?"
+    }
+  }
+}

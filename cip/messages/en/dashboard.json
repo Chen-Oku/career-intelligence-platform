@@ -1,0 +1,72 @@
+{
+  "defaultName": "there",
+  "welcome": "Welcome back, {name}",
+  "intro": "Start by building your career knowledge base. Every resume and cover letter will be generated from this data.",
+  "modules": {
+    "experience": {
+      "title": "Experience",
+      "description": "Add and manage your work history. This is the source of truth."
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "Portfolio projects linked to your experience."
+    },
+    "skills": {
+      "title": "Skills",
+      "description": "Your technical and soft skill database."
+    },
+    "stories": {
+      "title": "Story Bank",
+      "description": "STAR stories for interview preparation."
+    },
+    "import": {
+      "title": "Import CV",
+      "description": "Upload a resume and pre-fill your profile with AI."
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "Your About Me bio and elevator pitch, generated from your data."
+    },
+    "resumes": {
+      "title": "Resumes",
+      "description": "Generate tailored resumes from your career data."
+    },
+    "coverLetters": {
+      "title": "Cover Letters",
+      "description": "Generate a cover letter tailored to a specific job posting you've analyzed."
+    },
+    "jobAnalyzer": {
+      "title": "Job Analyzer",
+      "description": "Match score, skill gaps, and interview prep for a posting."
+    },
+    "interviewPrep": {
+      "title": "Interview Prep",
+      "description": "A reusable toolkit of interview answers — tell me about yourself, weaknesses, salary, and behavioral stories — not tied to any one posting."
+    },
+    "certifications": {
+      "title": "Certifications",
+      "description": "Courses, credentials and licenses that back up your skills."
+    }
+  },
+  "completeness": {
+    "title": "Profile completeness",
+    "allDone": "Your knowledge base is complete — every generator has real data to work with.",
+    "checks": {
+      "experience": "Add work experience",
+      "skills": "Add at least 3 skills",
+      "projects": "Add a project",
+      "stories": "Write a STAR story",
+      "aboutMe": "Generate your About Me",
+      "education": "Save your education in Profile"
+    }
+  },
+  "latestAnalysis": {
+    "label": "Latest job analysis",
+    "match": "{score}% match"
+  },
+  "steps": {
+    "build": "Step 1 · Build your base",
+    "generate": "Step 2 · Generate documents",
+    "apply": "Step 3 · Target & prepare"
+  }
+}

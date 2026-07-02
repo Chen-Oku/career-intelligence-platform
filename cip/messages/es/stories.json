@@ -1,0 +1,79 @@
+{
+  "listPage": {
+    "title": "Banco de historias",
+    "description": "Historias STAR para preparación de entrevistas y generación de cartas de presentación. La IA elige la historia correcta para cada pregunta.",
+    "addStory": "Agregar historia",
+    "clearLabel": "historias",
+    "loadError": "No se pudieron cargar las historias.",
+    "emptyState": {
+      "title": "Aún no tienes historias",
+      "description": "Agrega tu primera historia STAR. Piensa en un momento en que resolviste un problema difícil, lideraste un equipo o aprendiste algo importante.",
+      "action": "Agrega tu primera historia"
+    },
+    "summary": "{count, plural, one {# historia} other {# historias}}"
+  },
+  "newPage": {
+    "title": "Agregar historia",
+    "description": "Escribe una historia STAR de tu carrera. Sé específico — la IA usa cada palabra."
+  },
+  "editPage": {
+    "title": "Editar historia",
+    "submitLabel": "Guardar cambios"
+  },
+  "card": {
+    "situation": "Situación",
+    "task": "Tarea",
+    "action": "Acción",
+    "result": "Resultado",
+    "impact": "Impacto",
+    "editAction": "Editar",
+    "deleteAction": "Eliminar",
+    "deleteDialog": {
+      "title": "¿Eliminar esta historia?",
+      "description": "Esto eliminará permanentemente <strong>{title}</strong>.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar"
+    }
+  },
+  "form": {
+    "detailsSection": {
+      "title": "Detalles de la historia",
+      "description": "Dale a esta historia un título memorable y elige la categoría de entrevista donde mejor encaja."
+    },
+    "titleLabel": "Título *",
+    "titlePlaceholder": "Entregar 12 renders en 48h bajo cambios de diseño de último momento",
+    "categoryLabel": "Categoría de entrevista *",
+    "starSection": {
+      "title": "Historia STAR",
+      "description": "Escribe cada parte por separado. La IA usa esta estructura para generar respuestas de entrevista y párrafos de carta de presentación."
+    },
+    "situationLabel": "S — Situación *",
+    "situationPrompt": "Plantea el escenario. ¿Cuál era el contexto, el desafío o el detonante? No resuelvas nada todavía.",
+    "situationPlaceholder": "El cliente necesitaba presentar el auditorio universitario a inversionistas en 48 horas. El diseño había cambiado por tercera vez...",
+    "taskLabel": "T — Tarea *",
+    "taskPrompt": "¿Cuál era específicamente tu responsabilidad en esta situación?",
+    "taskPlaceholder": "Yo era responsable de producir los 12 renders arquitectónicos a partir de los planos CAD actualizados...",
+    "actionLabel": "A — Acción *",
+    "actionPrompt": "¿Qué hiciste TÚ? Usa 'yo', no 'nosotros'. Sé específico sobre tus decisiones y tu proceso.",
+    "actionPlaceholder": "Reorganicé la cola de renderizado para priorizar los ángulos principales, optimicé los materiales para reducir el tiempo de render en un 30%, y coordiné con el equipo de diseño durante la noche para validar cada iteración...",
+    "resultLabel": "R — Resultado *",
+    "resultPrompt": "¿Qué pasó? ¿Qué cambió? Cuantifica si es posible.",
+    "resultPlaceholder": "Entregué los 12 renders 2 horas antes de la fecha límite. El cliente presentó con éxito y cerró el trato la semana siguiente...",
+    "contextSection": {
+      "title": "Contexto",
+      "description": "Ayuda a la IA a entender qué habilidades demuestra esta historia y qué palabras clave debe usar para compararla con descripciones de empleo."
+    },
+    "impactLabel": "Impacto cuantificado",
+    "impactOptional": "(opcional)",
+    "impactDescription": "Una sola frase. Los números tienen poder: \"Redujo el tiempo de render en 30%\", \"Cerró un trato de 50.000 €\".",
+    "impactPlaceholder": "Entregué 12 renders a tiempo. El cliente cerró el trato.",
+    "skillsLabel": "Habilidades demostradas",
+    "skillsPlaceholder": "Gestión de proyectos...",
+    "keywordsLabel": "Palabras clave para coincidencia con IA",
+    "keywordsDescription": "Términos de descripciones de empleo que esta historia aborda.",
+    "keywordsPlaceholder": "fecha límite, multifuncional...",
+    "cancel": "Cancelar",
+    "saving": "Guardando…",
+    "defaultSubmitLabel": "Guardar historia"
+  }
+}

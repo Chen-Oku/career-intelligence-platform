@@ -1,0 +1,443 @@
+// Career Intelligence Platform — Database Schema
+// Architecture: Clean Architecture + DDD
+// Each comment block marks a Bounded Context boundary.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// IDENTITY CONTEXT — Generic Domain
+// Foundation for all other contexts.
+// ============================================================
+
+model User {
+  id               String           @id @default(cuid())
+  email            String           @unique
+  name             String?
+  avatar           String?
+  subscriptionTier SubscriptionTier @default(FREE)
+  // Profile — single editable AI-generated text per field, no version history.
+  aboutMe          String?
+  elevatorPitch    String?
+  strengths        String?
+  // Voice guide — user-authored style preferences (tone, words to avoid/prefer),
+  // injected into aboutMe/elevatorPitch/strengths generation and feedback so
+  // output matches the user's own voice instead of a generic professional tone.
+  voiceGuide       String?
+  // Resume defaults — education entries + contact info entered once here and
+  // prefilled into every resume generation instead of retyped per resume.
+  // Json (not normalized) for the same reason Resume.content is: small,
+  // user-owned blobs read/written as a whole.
+  education        Json?
+  contactInfo      Json?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  // Career Context relations
+  experiences       Experience[]
+  projects          Project[]
+  skills            Skill[]
+  stories           Story[]
+  certifications    Certification[]
+
+  // Document Context relations
+  resumes           Resume[]
+  coverLetters      CoverLetter[]
+
+  // Intelligence Context relations
+  jobDescriptions      JobDescription[]
+  interviewSessions    InterviewSession[]
+  interviewPrepAnswers InterviewPrepAnswer[]
+
+  // Portfolio Context relations
+  portfolioAssets   PortfolioAsset[]
+
+  @@map("users")
+}
+
+enum SubscriptionTier {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+// ============================================================
+// CAREER CONTEXT — Core Domain
+// This is the "Source of Truth" described in the vision doc.
+// All generated outputs (resumes, cover letters, etc.) derive
+// from data that lives here.
+// ============================================================
+
+model Experience {
+  id               String    @id @default(cuid())
+  userId           String
+  company          String
+  position         String
+  industry         String?
+  location         String?
+  startDate        DateTime
+  endDate          DateTime?
+  isCurrent        Boolean   @default(false)
+  responsibilities String[]
+  achievements     String[]
+  // Technologies and skills are stored as String[] (denormalized).
+  // Reason: Resume generation reads this in one query without joins.
+  // The canonical Skill records live in the Skill table.
+  technologies     String[]
+  skills           String[]
+  hasLeadership    Boolean   @default(false)
+  teamSize         Int?
+  challenges       String?
+  starStory        String?
+  portfolioLinks   String[]
+  order            Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectLinks     ExperienceProject[]
+  storyLinks       ExperienceStory[]
+
+  @@index([userId])
+  @@map("experiences")
+}
+
+model Project {
+  id             String    @id @default(cuid())
+  userId         String
+  name           String
+  description    String
+  goal           String?
+  technologies   String[]
+  teamSize       Int?
+  myRole         String?
+  challenges     String?
+  results        String?
+  lessonsLearned String?
+  startDate      DateTime?
+  endDate        DateTime?
+  isHighlighted  Boolean   @default(false)
+  isPublic       Boolean   @default(false)
+  tags           String[]
+  externalUrl    String?
+  githubUrl      String?
+  order          Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  experienceLinks ExperienceProject[]
+  assets          PortfolioAsset[]
+
+  @@index([userId])
+  @@map("projects")
+}
+
+// Explicit junction table — allows adding relationship metadata later
+// (e.g. how central was this project to this role?)
+model ExperienceProject {
+  experienceId String
+  projectId    String
+
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([experienceId, projectId])
+  @@map("experience_projects")
+}
+
+model Skill {
+  id         String        @id @default(cuid())
+  userId     String
+  name       String
+  category   SkillCategory
+  level      SkillLevel?
+  yearsOfExp Float?
+  lastUsed   DateTime?
+  isPublic   Boolean       @default(true)
+  tags       String[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Enforce one skill name per user — prevents duplicates in the Skill Database
+  @@unique([userId, name])
+  @@index([userId, category])
+  @@map("skills")
+}
+
+enum SkillCategory {
+  TECHNICAL
+  SOFT
+  LANGUAGE
+  FRAMEWORK
+  METHODOLOGY
+  LEADERSHIP
+  AI
+  DESIGN
+  PROGRAMMING
+  OTHER
+}
+
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+// STAR Stories — the Story Bank module.
+// These power behavioral interview preparation and resume bullets.
+model Story {
+  id          String        @id @default(cuid())
+  userId      String
+  title       String
+  category    StoryCategory
+  // STAR format fields stored separately for structured AI retrieval
+  situation   String
+  task        String
+  action      String
+  result      String
+  impact      String?       // Quantified impact ("Reduced render time by 40%")
+  skills      String[]
+  keywords    String[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  experienceLinks ExperienceStory[]
+
+  @@index([userId, category])
+  @@map("stories")
+}
+
+model ExperienceStory {
+  experienceId String
+  storyId      String
+
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  story        Story      @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@id([experienceId, storyId])
+  @@map("experience_stories")
+}
+
+enum StoryCategory {
+  LEADERSHIP
+  CONFLICT
+  INNOVATION
+  FAILURE
+  PROBLEM_SOLVING
+  COMMUNICATION
+  ADAPTABILITY
+  LEARNING
+  MENTORING
+  CUSTOMER_SUCCESS
+  PROJECT_MANAGEMENT
+}
+
+model Certification {
+  id            String    @id @default(cuid())
+  userId        String
+  name          String
+  issuer        String
+  issueDate     DateTime?
+  expiryDate    DateTime?
+  credentialId  String?
+  credentialUrl String?
+  skills        String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("certifications")
+}
+
+// ============================================================
+// DOCUMENT CONTEXT — Supporting Domain
+// Consumes Career Context data to produce outputs.
+// Content stored as Json so we can re-render in any format
+// (PDF, HTML, plain text) without regenerating from AI.
+// ============================================================
+
+model Resume {
+  id            String     @id @default(cuid())
+  userId        String
+  type          ResumeType
+  title         String
+  // Structured content — not a raw string. AI returns JSON matching
+  // a defined ResumeContent interface so we can render it as needed.
+  content       Json
+  targetRole    String?
+  targetCompany String?
+  language      String     @default("en")
+  atsScore      Float?
+  isActive      Boolean    @default(true)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+  @@map("resumes")
+}
+
+enum ResumeType {
+  MASTER
+  ARCHVIZ
+  GAMEPLAY
+  TECHNICAL_ARTIST
+  GRAPHIC_DESIGNER
+  BTL
+  ENVIRONMENT_ARTIST
+  VFX
+  CUSTOM
+}
+
+model CoverLetter {
+  id               String          @id @default(cuid())
+  userId           String
+  company          String
+  jobTitle         String
+  content          String
+  language         String          @default("en")
+  jobDescriptionId String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobDescription   JobDescription? @relation(fields: [jobDescriptionId], references: [id])
+
+  @@index([userId])
+  @@map("cover_letters")
+}
+
+// ============================================================
+// INTELLIGENCE CONTEXT — Supporting Domain
+// AI-powered analysis. Consumes Career Context as input.
+// ============================================================
+
+model JobDescription {
+  id            String   @id @default(cuid())
+  userId        String
+  company       String
+  title         String
+  rawText       String
+  // analyzedData stores the structured extraction:
+  // required skills, nice-to-have, years of experience, keywords, etc.
+  analyzedData  Json?
+  matchScore    Float?   // 0–100 match against this user's profile
+  missingSkills String[]
+  language      String   @default("en")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coverLetters      CoverLetter[]
+  interviewSessions InterviewSession[]
+
+  @@index([userId])
+  @@map("job_descriptions")
+}
+
+model InterviewSession {
+  id               String        @id @default(cuid())
+  userId           String
+  jobDescriptionId String?
+  role             String
+  // questions is an array of { question, suggestedAnswer, category, difficulty }
+  questions        Json
+  language         String        @default("en")
+  sessionType      InterviewType
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobDescription JobDescription?  @relation(fields: [jobDescriptionId], references: [id])
+
+  @@index([userId])
+  @@map("interview_sessions")
+}
+
+enum InterviewType {
+  BEHAVIORAL
+  TECHNICAL
+  MIXED
+  SALARY
+}
+
+// Generic interview-prep answers — not tied to a specific job posting or
+// InterviewSession, unlike the rest of Intelligence. One editable answer per
+// type, same "single value, no version history" precedent as the Identity
+// profile text fields (aboutMe/elevatorPitch/strengths).
+model InterviewPrepAnswer {
+  id        String                  @id @default(cuid())
+  userId    String
+  type      InterviewPrepAnswerType
+  content   String
+  language  String                  @default("en")
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type])
+  @@map("interview_prep_answers")
+}
+
+enum InterviewPrepAnswerType {
+  TELL_ME_ABOUT_YOURSELF
+  WEAKNESS
+  SALARY_EXPECTATIONS
+  LEADERSHIP_STORY
+  CONFLICT_STORY
+  TEAMWORK_STORY
+}
+
+// ============================================================
+// PORTFOLIO CONTEXT — Supporting Domain
+// Assets linked to projects or standalone.
+// ============================================================
+
+model PortfolioAsset {
+  id          String    @id @default(cuid())
+  userId      String
+  projectId   String?
+  type        AssetType
+  url         String
+  thumbnail   String?
+  title       String
+  description String?
+  order       Int       @default(0)
+  tags        String[]
+  isPublic    Boolean   @default(false)
+  // Flexible metadata: { width, height } for images; { duration } for video
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project     Project?  @relation(fields: [projectId], references: [id])
+
+  @@index([userId])
+  @@map("portfolio_assets")
+}
+
+enum AssetType {
+  IMAGE
+  VIDEO
+  PDF
+  LINK
+  BEHANCE_PROJECT
+  GITHUB_REPO
+  ARTSTATION
+}

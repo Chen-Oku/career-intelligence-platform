@@ -1,0 +1,41 @@
+{
+  "pageTitle": "Preparación de Entrevista",
+  "pageDescription": "Un set reutilizable de respuestas de entrevista, generadas a partir de tu historial profesional — sin depender de una vacante específica.",
+  "placeholder": "Genera con IA, o escribe tu propia respuesta…",
+  "generateWithAi": "Generar con IA",
+  "evaluateWithAi": "Evaluar con IA",
+  "save": "Guardar",
+  "guidanceRequiredHint": "Responde esto antes de generar — no se puede escribir sin tu información.",
+  "types": {
+    "tellMeAboutYourself": {
+      "title": "Háblame de Ti",
+      "description": "Un relato hablado de 2 a 3 minutos que conecta tu trayectoria, tu experiencia, y lo que buscas a continuación.",
+      "guidance": "¿Algo específico que quieras destacar (un punto de inflexión, qué te emociona ahora mismo)?"
+    },
+    "weakness": {
+      "title": "Mayor Debilidad",
+      "description": "Una debilidad creíble con evidencia real de que estás trabajando en mejorarla.",
+      "guidance": "¿Cuál es una debilidad real que quieres abordar? Sé honesto — debe ser auténtica, no una fortaleza disfrazada."
+    },
+    "salaryExpectations": {
+      "title": "Expectativa Salarial",
+      "description": "Puntos clave para hablar de compensación con confianza.",
+      "guidance": "¿Cuál es tu rango objetivo o la investigación de mercado que ya tienes?"
+    },
+    "leadershipStory": {
+      "title": "Historia de Liderazgo",
+      "description": "Un momento en que lideraste un equipo o asumiste una situación, tomado de tu Banco de Historias.",
+      "guidance": "¿Algo específico de esta historia que quieras destacar?"
+    },
+    "conflictStory": {
+      "title": "Historia de Conflicto",
+      "description": "Un conflicto con un compañero y cómo lo resolviste, tomado de tu Banco de Historias.",
+      "guidance": "¿Algo específico de esta historia que quieras destacar?"
+    },
+    "teamworkStory": {
+      "title": "Historia de Trabajo en Equipo",
+      "description": "Un momento en que trabajaste efectivamente en equipo, tomado de tu Banco de Historias.",
+      "guidance": "¿Algo específico de esta historia que quieras destacar?"
+    }
+  }
+}

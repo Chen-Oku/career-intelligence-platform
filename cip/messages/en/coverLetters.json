@@ -1,0 +1,36 @@
+{
+  "list": {
+    "pageTitle": "Cover Letters",
+    "pageDescription": "Cover letters generated from your career data and a specific job posting you analyzed.",
+    "clearLabel": "cover letters",
+    "generateCoverLetter": "Generate cover letter",
+    "view": "View",
+    "emptyState": {
+      "title": "No cover letters yet",
+      "description": "Generate one from a job posting you've already analyzed in Job Analyzer.",
+      "action": "Generate your first cover letter"
+    }
+  },
+  "new": {
+    "pageTitle": "Generate a Cover Letter",
+    "pageDescription": "Pick a job posting you've already analyzed — the letter is grounded in that posting's requirements and your career data.",
+    "noAnalyses": "You haven't analyzed any job postings yet. Analyze one in Job Analyzer first, then come back here to generate a cover letter for it.",
+    "jobLabel": "Job posting",
+    "jobPlaceholder": "Select an analyzed job posting…",
+    "extraNotesLabel": "Anything else to mention? (optional)",
+    "extraNotesPlaceholder": "e.g. a specific reason you're excited about this company, a mutual connection, something not in your profile…",
+    "generate": "Generate cover letter",
+    "generating": "Generating…"
+  },
+  "detail": {
+    "defaultUserName": "Professional"
+  },
+  "preview": {
+    "generated": "Generated {date}",
+    "copyText": "Copy text",
+    "copied": "Copied",
+    "download": "Download",
+    "downloadPdf": "Download as PDF",
+    "downloadDocx": "Download as Word"
+  }
+}

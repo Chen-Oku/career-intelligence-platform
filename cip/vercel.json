@@ -1,0 +1,37 @@
+{
+  "functions": {
+    "src/app/api/resumes/generate/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/job-analyzer/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/import/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/job-analyzer/evaluate-answer/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/job-analyzer/[id]/regenerate-answer/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/cover-letters/generate/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/interview-prep/generate/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/interview-prep/evaluate/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/profile/generate/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/profile/evaluate/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/assistant/chat/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}

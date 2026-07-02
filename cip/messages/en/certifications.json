@@ -1,0 +1,32 @@
+{
+  "pageTitle": "Certifications",
+  "pageDescription": "Courses, credentials and licenses that back up your skills. Resume generation includes them as supporting evidence.",
+  "addCertification": "Add certification",
+  "loadError": "Could not load certifications. Please refresh the page.",
+  "expired": "Expired",
+  "issued": "Issued",
+  "expires": "Expires",
+  "viewCredential": "View credential",
+  "emptyState": {
+    "title": "No certifications yet",
+    "description": "Add courses, credentials and licenses. They strengthen generated resumes and back up the skills in your database.",
+    "action": "Add your first certification"
+  },
+  "form": {
+    "createTitle": "Add certification",
+    "editTitle": "Edit certification",
+    "name": "Name",
+    "namePlaceholder": "Unreal Engine 5 Certified Developer",
+    "issuer": "Issuer",
+    "issuerPlaceholder": "Epic Games",
+    "issueDate": "Issue date",
+    "expiryDate": "Expiry date",
+    "credentialId": "Credential ID",
+    "credentialUrl": "Credential URL",
+    "skills": "Related skills",
+    "skillsPlaceholder": "Comma-separated, e.g. Unreal Engine, Blueprints",
+    "cancel": "Cancel",
+    "create": "Add",
+    "saveChanges": "Save changes"
+  }
+}

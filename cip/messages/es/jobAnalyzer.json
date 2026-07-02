@@ -1,0 +1,75 @@
+{
+  "questionTypes": {
+    "behavioral": "Conductual",
+    "technical": "Técnica",
+    "situational": "Situacional"
+  },
+  "list": {
+    "pageTitle": "Analizador de empleos",
+    "pageDescription": "Pega cualquier oferta de empleo — Gemini extrae los requisitos, calcula tu porcentaje de compatibilidad y genera preguntas de entrevista.",
+    "newAnalysis": "Nuevo análisis",
+    "clearItemLabel": "análisis",
+    "emptyTitle": "Aún no hay análisis",
+    "emptyDescription": "Pega una oferta de empleo y Gemini te dirá tu porcentaje de compatibilidad, las habilidades que te faltan y las preguntas de entrevista que enfrentarás.",
+    "analyzeFirstJob": "Analiza tu primer empleo",
+    "gaps": "{count} brechas",
+    "view": "Ver"
+  },
+  "new": {
+    "pageTitle": "Analizar empleo",
+    "pageDescription": "Pega una oferta de empleo. Gemini extraerá los requisitos, calculará tu compatibilidad y generará preguntas de entrevista."
+  },
+  "detail": {
+    "pageTitle": "Análisis",
+    "pageDescription": "Porcentaje de compatibilidad, brechas de habilidades, preguntas de entrevista y consejos de hoja de vida para este puesto."
+  },
+  "form": {
+    "jobDescriptionLabel": "Descripción del empleo *",
+    "jobDescriptionHint": "Pega la oferta de empleo completa. Cuanto más completa, más precisa será el análisis.",
+    "jobDescriptionPlaceholder": "Pega aquí la descripción completa del empleo — título, requisitos, responsabilidades, información de la empresa…",
+    "companyLabel": "Empresa",
+    "companyOptional": "(opcional)",
+    "companyPlaceholder": "Se extrae automáticamente",
+    "titleLabel": "Puesto",
+    "titleOptional": "(opcional)",
+    "titlePlaceholder": "Se extrae automáticamente",
+    "languageLabel": "Idioma del análisis",
+    "submit": "Analizar descripción del empleo",
+    "analyzing": "Analizando…",
+    "helperText": "Claude lee la descripción del empleo y todo tu perfil. Tarda unos 15 segundos.",
+    "steps": {
+      "reading": "Leyendo los requisitos del empleo…",
+      "extracting": "Extrayendo habilidades y palabras clave requeridas…",
+      "matching": "Comparando con tu perfil…",
+      "generatingQuestions": "Generando preguntas de entrevista…",
+      "writingTips": "Redactando consejos para tu hoja de vida…"
+    }
+  },
+  "matchScore": {
+    "match": "compatibilidad",
+    "strongMatch": "Compatibilidad alta",
+    "moderateMatch": "Compatibilidad moderada",
+    "weakMatch": "Compatibilidad baja",
+    "ariaLabel": "{score}% de compatibilidad"
+  },
+  "result": {
+    "yearsRequired": "· {years}+ años de experiencia requeridos",
+    "generateTailoredResume": "Generar hoja de vida a medida",
+    "generateCoverLetter": "Generar carta de presentación",
+    "youHave": "Ya tienes ({count})",
+    "gapsToClose": "Brechas por cerrar ({count})",
+    "interviewQuestions": "Preguntas de entrevista",
+    "startMockInterview": "Iniciar entrevista simulada",
+    "resumeTips": "Consejos para tu hoja de vida",
+    "hiringInsights": "Perspectivas de contratación",
+    "whatYoullDo": "Qué harás",
+    "suggestedAnswer": "Respuesta sugerida — basada en tu perfil",
+    "noMatchingStory": "Aún no hay una historia que coincida",
+    "noMatchingStoryDetail": "Todavía no hay nada en tu Banco de historias o Experiencia que cubra esto — agrega una historia STAR o completa más detalles en un puesto para obtener un borrador fundamentado aquí.",
+    "generateAnotherAnswer": "Generar otra respuesta",
+    "practiceOwnAnswer": "Practica tu propia respuesta",
+    "answerPlaceholder": "Escribe cómo responderías esto realmente en una entrevista…",
+    "getFeedback": "Obtener retroalimentación",
+    "evaluating": "Evaluando…"
+  }
+}

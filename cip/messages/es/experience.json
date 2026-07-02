@@ -1,0 +1,101 @@
+{
+  "listPage": {
+    "title": "Mi experiencia",
+    "description": "Tu historial profesional — la fuente de verdad para todos los resultados generados.",
+    "addExperience": "Agregar experiencia",
+    "clearLabel": "experiencias",
+    "loadError": "No se pudo cargar tu experiencia. Actualiza la página.",
+    "emptyState": {
+      "title": "Aún no tienes experiencia",
+      "description": "Agrega tu primera experiencia laboral. Todo lo demás — hojas de vida, cartas de presentación, preparación de entrevistas — empieza aquí.",
+      "action": "Agrega tu primera experiencia"
+    },
+    "summary": "{count, plural, one {# puesto} other {# puestos}} · {months} meses en total"
+  },
+  "newPage": {
+    "title": "Agregar experiencia",
+    "description": "Agrega un puesto a tu base de conocimiento profesional. Sé específico — la IA usa cada campo.",
+    "submitLabel": "Guardar experiencia"
+  },
+  "editPage": {
+    "title": "Editar — {company}",
+    "submitLabel": "Guardar cambios"
+  },
+  "card": {
+    "current": "Actual",
+    "present": "Presente",
+    "teamSize": "{count} personas",
+    "showDetails": "Mostrar detalles",
+    "hideDetails": "Ocultar detalles",
+    "responsibilities": "Responsabilidades",
+    "achievements": "Logros",
+    "editAction": "Editar",
+    "deleteAction": "Eliminar",
+    "deleteDialog": {
+      "title": "¿Eliminar esta experiencia?",
+      "description": "Esto eliminará permanentemente tu experiencia en <strong>{company}</strong>. Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar"
+    }
+  },
+  "form": {
+    "roleSection": {
+      "title": "Puesto",
+      "description": "La posición y la empresa donde trabajaste."
+    },
+    "positionLabel": "Posición *",
+    "positionPlaceholder": "Artista 3D",
+    "companyLabel": "Empresa *",
+    "companyPlaceholder": "Grupo AE",
+    "industryLabel": "Industria",
+    "industryPlaceholder": "Arquitectura y Diseño",
+    "locationLabel": "Ubicación",
+    "locationPlaceholder": "Bogotá, Colombia",
+    "periodSection": {
+      "title": "Periodo",
+      "description": "Cuándo ocupaste este puesto."
+    },
+    "currentCheckbox": "Actualmente trabajo aquí",
+    "startDateLabel": "Fecha de inicio *",
+    "endDateLabel": "Fecha de fin",
+    "whatYouDidSection": {
+      "title": "Qué hiciste",
+      "description": "La IA usa las responsabilidades y logros para redactar puntos de la hoja de vida y respuestas STAR."
+    },
+    "responsibilitiesLabel": "Responsabilidades *",
+    "responsibilitiesDescription": "¿Cuáles eran tus tareas diarias? Agrega una por línea.",
+    "responsibilitiesPlaceholder": "Creé renders fotorrealistas para clientes...",
+    "achievementsLabel": "Logros",
+    "achievementsDescription": "Cuantifica cuando sea posible. \"Reduje el tiempo de render en un 40%.\"",
+    "achievementsPlaceholder": "Entregué más de 20 proyectos a tiempo...",
+    "skillsTeamSection": {
+      "title": "Habilidades y equipo",
+      "description": "Tecnologías usadas y contexto del equipo."
+    },
+    "technologiesLabel": "Tecnologías",
+    "technologiesDescription": "Software, herramientas, plataformas.",
+    "technologiesPlaceholder": "3ds Max, Corona Renderer...",
+    "skillsLabel": "Habilidades",
+    "skillsDescription": "Competencias demostradas.",
+    "skillsPlaceholder": "Visualización Arquitectónica...",
+    "teamSizeLabel": "Tamaño del equipo",
+    "teamSizePlaceholder": "5",
+    "leadershipCheckbox": "Tuve un rol de liderazgo",
+    "storySection": {
+      "title": "Historia",
+      "description": "Usado por la IA para preparación de entrevistas, cartas de presentación y respuestas STAR."
+    },
+    "challengesLabel": "Desafíos",
+    "challengesDescription": "¿Qué obstáculos enfrentaste? ¿Cómo los superaste?",
+    "challengesPlaceholder": "Tuvimos que entregar renders fotorrealistas para un auditorio de 200 asientos en 3 días...",
+    "starStoryLabel": "Historia STAR",
+    "starStoryDescription": "Situación → Tarea → Acción → Resultado. La IA convierte esto en respuestas de entrevista y párrafos de carta de presentación.",
+    "starStoryPlaceholder": "Situación: El cliente necesitaba presentar el proyecto a inversionistas en 48 horas.\nTarea: Yo era responsable de la visualización completa del interior.\nAcción: Optimicé el pipeline de render y trabajé con el equipo de diseño para priorizar los ángulos clave.\nResultado: Entregué 12 renders a tiempo. El cliente cerró el trato.",
+    "portfolioLinksLabel": "Enlaces de portafolio",
+    "portfolioLinksDescription": "Behance, Artstation, o cualquier URL que muestre trabajo de este puesto.",
+    "portfolioLinksPlaceholder": "https://behance.net/tu-proyecto",
+    "cancel": "Cancelar",
+    "saving": "Guardando…",
+    "defaultSubmitLabel": "Guardar experiencia"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "dashboard": "Dashboard",
+  "importCv": "Import CV",
+  "experience": "Experience",
+  "projects": "Projects",
+  "skills": "Skills",
+  "storyBank": "Story Bank",
+  "profile": "Profile",
+  "resumes": "Resumes",
+  "coverLetters": "Cover Letters",
+  "jobAnalyzer": "Job Analyzer",
+  "interviewPrep": "Interview Prep",
+  "comingSoon": "soon",
+  "signOut": "Sign out",
+  "certifications": "Certifications",
+  "groupBuild": "1 · Build your base",
+  "groupGenerate": "2 · Generate",
+  "groupApply": "3 · Apply & prepare"
+}

@@ -1,0 +1,32 @@
+{
+  "pageTitle": "Certificaciones",
+  "pageDescription": "Cursos, credenciales y licencias que respaldan tus habilidades. La generación de CVs las incluye como evidencia.",
+  "addCertification": "Agregar certificación",
+  "loadError": "No se pudieron cargar las certificaciones. Por favor, actualiza la página.",
+  "expired": "Vencida",
+  "issued": "Emitida",
+  "expires": "Vence",
+  "viewCredential": "Ver credencial",
+  "emptyState": {
+    "title": "Aún no hay certificaciones",
+    "description": "Agrega cursos, credenciales y licencias. Fortalecen los CVs generados y respaldan las habilidades de tu base de datos.",
+    "action": "Agrega tu primera certificación"
+  },
+  "form": {
+    "createTitle": "Agregar certificación",
+    "editTitle": "Editar certificación",
+    "name": "Nombre",
+    "namePlaceholder": "Unreal Engine 5 Certified Developer",
+    "issuer": "Emisor",
+    "issuerPlaceholder": "Epic Games",
+    "issueDate": "Fecha de emisión",
+    "expiryDate": "Fecha de vencimiento",
+    "credentialId": "ID de credencial",
+    "credentialUrl": "URL de credencial",
+    "skills": "Habilidades relacionadas",
+    "skillsPlaceholder": "Separadas por coma, ej. Unreal Engine, Blueprints",
+    "cancel": "Cancelar",
+    "create": "Agregar",
+    "saveChanges": "Guardar cambios"
+  }
+}

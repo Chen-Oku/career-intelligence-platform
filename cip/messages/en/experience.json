@@ -1,0 +1,101 @@
+{
+  "listPage": {
+    "title": "My Experience",
+    "description": "Your professional history — the source of truth for all generated outputs.",
+    "addExperience": "Add experience",
+    "clearLabel": "experience entries",
+    "loadError": "Failed to load your experience. Please refresh the page.",
+    "emptyState": {
+      "title": "No experience yet",
+      "description": "Add your first work experience. Everything else — resumes, cover letters, interview prep — starts here.",
+      "action": "Add your first experience"
+    },
+    "summary": "{count, plural, one {# position} other {# positions}} · {months} months total"
+  },
+  "newPage": {
+    "title": "Add experience",
+    "description": "Add a position to your career knowledge base. Be specific — the AI uses every field.",
+    "submitLabel": "Save experience"
+  },
+  "editPage": {
+    "title": "Edit — {company}",
+    "submitLabel": "Save changes"
+  },
+  "card": {
+    "current": "Current",
+    "present": "Present",
+    "teamSize": "{count} people",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "responsibilities": "Responsibilities",
+    "achievements": "Achievements",
+    "editAction": "Edit",
+    "deleteAction": "Delete",
+    "deleteDialog": {
+      "title": "Delete this experience?",
+      "description": "This will permanently remove your experience at <strong>{company}</strong>. This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    }
+  },
+  "form": {
+    "roleSection": {
+      "title": "Role",
+      "description": "The position and company where you worked."
+    },
+    "positionLabel": "Position *",
+    "positionPlaceholder": "3D Artist",
+    "companyLabel": "Company *",
+    "companyPlaceholder": "Grupo AE",
+    "industryLabel": "Industry",
+    "industryPlaceholder": "Architecture & Design",
+    "locationLabel": "Location",
+    "locationPlaceholder": "Bogotá, Colombia",
+    "periodSection": {
+      "title": "Period",
+      "description": "When you held this position."
+    },
+    "currentCheckbox": "I currently work here",
+    "startDateLabel": "Start date *",
+    "endDateLabel": "End date",
+    "whatYouDidSection": {
+      "title": "What you did",
+      "description": "The AI uses responsibilities and achievements to craft resume bullets and STAR answers."
+    },
+    "responsibilitiesLabel": "Responsibilities *",
+    "responsibilitiesDescription": "What were your daily duties? Add one per line.",
+    "responsibilitiesPlaceholder": "Created photorealistic renders for clients...",
+    "achievementsLabel": "Achievements",
+    "achievementsDescription": "Quantify where possible. \"Reduced render time by 40%.\"",
+    "achievementsPlaceholder": "Delivered 20+ projects on time...",
+    "skillsTeamSection": {
+      "title": "Skills & Team",
+      "description": "Technologies used and team context."
+    },
+    "technologiesLabel": "Technologies",
+    "technologiesDescription": "Software, tools, platforms.",
+    "technologiesPlaceholder": "3ds Max, Corona Renderer...",
+    "skillsLabel": "Skills",
+    "skillsDescription": "Competencies demonstrated.",
+    "skillsPlaceholder": "Architectural Visualization...",
+    "teamSizeLabel": "Team size",
+    "teamSizePlaceholder": "5",
+    "leadershipCheckbox": "I had a leadership role",
+    "storySection": {
+      "title": "Story",
+      "description": "Used by the AI for interview prep, cover letters, and STAR answers."
+    },
+    "challengesLabel": "Challenges",
+    "challengesDescription": "What obstacles did you face? How did you overcome them?",
+    "challengesPlaceholder": "We had to deliver photorealistic renders for a 200-seat auditorium within 3 days...",
+    "starStoryLabel": "STAR Story",
+    "starStoryDescription": "Situation → Task → Action → Result. The AI turns this into interview answers and cover letter paragraphs.",
+    "starStoryPlaceholder": "Situation: The client needed to present the project to investors in 48 hours.\nTask: I was responsible for the complete interior visualization.\nAction: I optimized the render pipeline and worked with the design team to prioritize key angles.\nResult: Delivered 12 renders on time. The client closed the deal.",
+    "portfolioLinksLabel": "Portfolio links",
+    "portfolioLinksDescription": "Behance, Artstation, or any URL showcasing work from this role.",
+    "portfolioLinksPlaceholder": "https://behance.net/your-project",
+    "cancel": "Cancel",
+    "saving": "Saving…",
+    "defaultSubmitLabel": "Save experience"
+  }
+}
