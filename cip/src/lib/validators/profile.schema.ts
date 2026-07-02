@@ -5,13 +5,16 @@ import { z } from "zod";
 export const generatableProfileFieldSchema = z.enum(["aboutMe", "elevatorPitch", "strengths"]);
 
 // All fields fetchable/savable via GET /api/profile and POST /api/profile/save.
-export const profileFieldSchema = z.enum(["aboutMe", "elevatorPitch", "strengths", "voiceGuide"]);
+// geminiApiKey is the user's own Gemini key (BYOK) — config the user authors,
+// like voiceGuide, not AI-generated content.
+export const profileFieldSchema = z.enum(["aboutMe", "elevatorPitch", "strengths", "voiceGuide", "geminiApiKey"]);
 
 const MAX_LENGTH: Record<z.infer<typeof profileFieldSchema>, number> = {
   aboutMe: 2000,
   elevatorPitch: 1500,
   strengths: 2000,
   voiceGuide: 1000,
+  geminiApiKey: 200,
 };
 
 export const guidedAnswerSchema = z.object({

@@ -54,5 +54,14 @@
     "portfolio": "Portafolio",
     "save": "Guardar datos",
     "saving": "Guardando..."
+  },
+  "aiSettings": {
+    "title": "Ajustes de IA",
+    "description": "Opcional: usa tu propia API key de Google Gemini. Si la guardas, tus funciones de IA corren con tu key — y siguen funcionando aunque el motor de IA de la plataforma esté apagado.",
+    "placeholder": "AIza... (tu API key de Gemini)",
+    "save": "Guardar key",
+    "show": "Mostrar key",
+    "hide": "Ocultar key",
+    "hint": "Consigue una API key gratuita en"
   }
 }

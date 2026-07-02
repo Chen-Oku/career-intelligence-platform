@@ -54,5 +54,14 @@
     "portfolio": "Portfolio",
     "save": "Save defaults",
     "saving": "Saving..."
+  },
+  "aiSettings": {
+    "title": "AI settings",
+    "description": "Optional: use your own Google Gemini API key. When set, your AI features run on your key — and keep working even if the platform's AI engine is offline.",
+    "placeholder": "AIza... (your Gemini API key)",
+    "save": "Save key",
+    "show": "Show key",
+    "hide": "Hide key",
+    "hint": "Get a free API key at"
   }
 }

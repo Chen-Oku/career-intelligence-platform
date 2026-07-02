@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { withUserAiContext } from "@/infrastructure/ai/requestAiContext";
 import { PrismaExperienceRepository } from "@/infrastructure/database/repositories/PrismaExperienceRepository";
 import { PrismaSkillRepository } from "@/infrastructure/database/repositories/PrismaSkillRepository";
 import { PrismaStoryRepository } from "@/infrastructure/database/repositories/PrismaStoryRepository";
@@ -36,7 +37,9 @@ export async function POST(req: NextRequest) {
     new InterviewCoachService(),
   );
 
-  const result = await useCase.execute({ userId: session.user.id, type: parsed.data.type, draftText: parsed.data.draftText });
+  const result = await withUserAiContext(session.user.id, () =>
+    useCase.execute({ userId: session.user.id, type: parsed.data.type, draftText: parsed.data.draftText }),
+  );
   if (!result.ok) return NextResponse.json({ error: result.error.message }, { status: 422 });
   return NextResponse.json({ data: result.value });
 }

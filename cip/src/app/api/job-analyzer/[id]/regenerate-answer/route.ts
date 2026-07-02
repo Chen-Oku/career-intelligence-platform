@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
 import { authOptions } from "@/lib/auth";
+import { withUserAiContext } from "@/infrastructure/ai/requestAiContext";
 import { PrismaExperienceRepository } from "@/infrastructure/database/repositories/PrismaExperienceRepository";
 import { PrismaSkillRepository } from "@/infrastructure/database/repositories/PrismaSkillRepository";
 import { PrismaStoryRepository } from "@/infrastructure/database/repositories/PrismaStoryRepository";
@@ -43,11 +44,13 @@ export async function POST(req: NextRequest, { params }: P) {
     new JobAnalyzerService(),
   );
 
-  const result = await useCase.execute({
-    userId: session.user.id,
-    jobDescriptionId: id,
-    questionIndex: parsed.data.questionIndex,
-  });
+  const result = await withUserAiContext(session.user.id, () =>
+    useCase.execute({
+      userId: session.user.id,
+      jobDescriptionId: id,
+      questionIndex: parsed.data.questionIndex,
+    }),
+  );
 
   if (!result.ok) return NextResponse.json({ error: result.error.message }, { status: 422 });
   return NextResponse.json({ data: result.value });

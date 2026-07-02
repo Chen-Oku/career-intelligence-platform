@@ -10,7 +10,7 @@ export async function GET() {
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { aboutMe: true, elevatorPitch: true, strengths: true, voiceGuide: true },
+    select: { aboutMe: true, elevatorPitch: true, strengths: true, voiceGuide: true, geminiApiKey: true },
   });
 
   return NextResponse.json({
@@ -19,6 +19,7 @@ export async function GET() {
       elevatorPitch: user?.elevatorPitch ?? null,
       strengths: user?.strengths ?? null,
       voiceGuide: user?.voiceGuide ?? null,
+      geminiApiKey: user?.geminiApiKey ?? null,
     },
   });
 }

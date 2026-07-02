@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { withUserAiContext } from "@/infrastructure/ai/requestAiContext";
 import { PrismaExperienceRepository } from "@/infrastructure/database/repositories/PrismaExperienceRepository";
 import { PrismaProjectRepository } from "@/infrastructure/database/repositories/PrismaProjectRepository";
 import { PrismaSkillRepository } from "@/infrastructure/database/repositories/PrismaSkillRepository";
@@ -51,23 +52,25 @@ export async function POST(req: NextRequest) {
     new ResumeGeneratorService(),
   );
 
-  const result = await useCase.execute({
-    userId: session.user.id,
-    userName: session.user.name ?? "Professional",
-    type: parsed.data.type as ResumeType,
-    title: parsed.data.title,
-    targetRole: parsed.data.targetRole,
-    language: parsed.data.language,
-    education: parsed.data.education,
-    jobDescriptionId: parsed.data.jobDescriptionId,
-    contact: {
-      email: session.user.email ?? parsed.data.contact.email,
-      phone: parsed.data.contact.phone,
-      linkedin: parsed.data.contact.linkedin,
-      portfolio: parsed.data.contact.portfolio,
-      location: parsed.data.contact.location,
-    },
-  });
+  const result = await withUserAiContext(session.user.id, () =>
+    useCase.execute({
+      userId: session.user.id,
+      userName: session.user.name ?? "Professional",
+      type: parsed.data.type as ResumeType,
+      title: parsed.data.title,
+      targetRole: parsed.data.targetRole,
+      language: parsed.data.language,
+      education: parsed.data.education,
+      jobDescriptionId: parsed.data.jobDescriptionId,
+      contact: {
+        email: session.user.email ?? parsed.data.contact.email,
+        phone: parsed.data.contact.phone,
+        linkedin: parsed.data.contact.linkedin,
+        portfolio: parsed.data.contact.portfolio,
+        location: parsed.data.contact.location,
+      },
+    }),
+  );
 
   if (!result.ok) {
     return NextResponse.json({ error: result.error.message }, { status: 422 });

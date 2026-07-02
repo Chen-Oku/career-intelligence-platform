@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { withUserAiContext } from "@/infrastructure/ai/requestAiContext";
 import { extractTextFromFile, SUPPORTED_MIME_TYPES } from "@/infrastructure/parsing/extractTextFromFile";
 import { CVImportService } from "@/infrastructure/ai/gemini/CVImportService";
 import { ImportCareerDataUseCase } from "@/application/career/commands/ImportCareerData";
@@ -47,7 +48,9 @@ export async function POST(req: NextRequest) {
   }
 
   const useCase = new ImportCareerDataUseCase(new CVImportService());
-  const result = await useCase.execute(rawText);
+  const result = await withUserAiContext(session.user.id, () =>
+    useCase.execute(rawText),
+  );
 
   if (!result.ok) {
     console.error("[import] AI extraction failed:", result.error);

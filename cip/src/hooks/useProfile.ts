@@ -4,13 +4,14 @@ import type { AnswerFeedback } from "@/lib/types/interviewCoach";
 import type { ResumeDefaultsInput } from "@/lib/validators/resume.schema";
 
 export type ProfileTextField = "aboutMe" | "elevatorPitch" | "strengths";
-export type SaveableProfileField = ProfileTextField | "voiceGuide";
+export type SaveableProfileField = ProfileTextField | "voiceGuide" | "geminiApiKey";
 
 export interface ProfileTexts {
   aboutMe: string | null;
   elevatorPitch: string | null;
   strengths: string | null;
   voiceGuide: string | null;
+  geminiApiKey: string | null;
 }
 
 export const profileKeys = {
