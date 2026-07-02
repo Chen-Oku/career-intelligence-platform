@@ -4,12 +4,6 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  // The repo root has an empty stub package-lock.json (see CLAUDE.md) that
-  // makes Next.js's own lockfile-walk mis-detect the workspace root as the
-  // outer repo instead of cip/ — pin both explicitly to cip/ so they agree
-  // (Vercel build was warning "outputFileTracingRoot and turbopack.root...
-  // must have the same value").
-  outputFileTracingRoot: __dirname,
   turbopack: {
     root: __dirname,
   },

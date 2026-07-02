@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project layout
 
-The actual Next.js app lives in `cip/` — run every command below from that directory, not the repo root. The root's `package-lock.json` is an empty stub; ignore it.
+The actual Next.js app lives in `cip/` — run every command below from that directory, not the repo root. Don't add a `package.json`/lockfile at the repo root — a stray empty one there previously broke Next.js's workspace-root detection and Vercel's build packaging (`ENOENT .../.next/package.json`) until it was removed.
 
 ## Commands
 
