@@ -44,7 +44,7 @@ export interface ProjectData {
 
 export interface SkillGroupData {
   category: string;
-  skills: { name: string; level: string }[];
+  skills: { name: string; level?: string }[];
 }
 
 export interface StoryData {
@@ -153,7 +153,7 @@ export function buildResumePrompt(
     config.targetJob ? buildTargetJobSection(config.targetJob) : "",
     buildExperienceSection(context.experiences),
     context.projects.length > 0 ? buildProjectsSection(context.projects) : "",
-    buildSkillsSection(context.skillGroups),
+    buildSkillsSection(context.skillGroups, config),
     context.stories.length > 0 ? buildStoriesSection(context.stories) : "",
     context.certifications.length > 0 ? buildCertificationsSection(context.certifications) : "",
     buildEducationSection(context.education),
@@ -165,32 +165,66 @@ export function buildResumePrompt(
 
 // ─── Section Builders ─────────────────────────────────────────────────────────
 
+/**
+ * One profile per resume type: the focus/vocabulary text feeds the prompt's
+ * TYPE-SPECIFIC INSTRUCTIONS, and `prioritize` doubles as the keyword list
+ * buildSkillsSection uses to reorder each category so the most relevant
+ * items for this type of CV come first (see TYPE_PRIORITY_SKILLS below).
+ */
+const TYPE_PROFILES: Record<string, { focus: string; vocabulary: string; prioritize: string[] }> = {
+  ARCHVIZ: {
+    focus: "Photorealistic rendering, architectural software expertise, project scale, client presentation impact.",
+    vocabulary: "ArchViz, visualization, rendering, photorealistic, immersive, spatial, walkthrough, fly-through.",
+    prioritize: ["3ds Max", "Corona", "V-Ray", "Unreal Engine", "rendering", "visualization", "architecture"],
+  },
+  GAMEPLAY: {
+    focus: "Real-time environments, game engines, performance optimization, interactive design.",
+    vocabulary: "Real-time, frame budget, LOD, game-ready, optimization, playtest, iteration.",
+    prioritize: ["Unreal Engine", "Unity", "gameplay", "level design", "real-time", "optimization"],
+  },
+  TECHNICAL_ARTIST: {
+    focus: "Pipeline tools, shaders, optimization, the bridge between art and engineering.",
+    vocabulary: "Shader, pipeline, LOD, rig, tool, automation, procedural, optimization.",
+    prioritize: ["Python", "MEL", "shader", "pipeline", "tool", "automation", "rigging", "scripting"],
+  },
+  GRAPHIC_DESIGNER: {
+    focus: "Visual identity, layout composition, typography, brand consistency across deliverables.",
+    vocabulary: "Brand identity, layout, typography, composition, print-ready, art direction.",
+    prioritize: ["Photoshop", "Illustrator", "InDesign", "Figma", "typography", "branding", "layout"],
+  },
+  BTL: {
+    focus: "Brand activations, spatial design, production coordination, client presentations.",
+    vocabulary: "Brand experience, activation, installation, spatial, production-ready, fabrication.",
+    prioritize: ["activation", "production", "spatial design", "fabrication", "client presentation"],
+  },
+  ENVIRONMENT_ARTIST: {
+    focus: "World-building, terrain/foliage systems, modular environment kits, visual storytelling through space.",
+    vocabulary: "Modular kit, terrain, foliage, lighting mood, environment storytelling, set dressing.",
+    prioritize: ["World Machine", "Substance", "Unreal Engine", "modular", "terrain", "environment", "lighting"],
+  },
+  VFX: {
+    focus: "Particle/simulation systems, real-time or offline effects, performance budget for effects.",
+    vocabulary: "Particle system, simulation, Niagara, compositing, effect budget, shader-driven FX.",
+    prioritize: ["Niagara", "Houdini", "particle", "simulation", "compositing", "effects"],
+  },
+  MASTER: {
+    focus: "Comprehensive overview. Include all relevant experience. Use versatile language that works across industries.",
+    vocabulary: "",
+    prioritize: [],
+  },
+};
+
 function buildConfigSection(config: ResumeConfig): string {
-  const typeInstructions: Record<string, string> = {
-    ARCHVIZ: `Focus on: Photorealistic rendering, architectural software expertise, project scale, client presentation impact.
-Vocabulary: ArchViz, visualization, rendering, photorealistic, immersive, spatial, walkthrough, fly-through.
-Prioritize: 3ds Max, Corona/V-Ray, Unreal Engine, large-format project delivery.`,
+  const profile = TYPE_PROFILES[config.type];
 
-    GAMEPLAY: `Focus on: Real-time environments, game engines, performance optimization, interactive design.
-Vocabulary: Real-time, frame budget, LOD, game-ready, optimization, playtest, iteration.
-Prioritize: Unreal Engine, Unity experience, any game or interactive project.`,
-
-    TECHNICAL_ARTIST: `Focus on: Pipeline tools, shaders, optimization, the bridge between art and engineering.
-Vocabulary: Shader, pipeline, LOD, rig, tool, automation, procedural, optimization.
-Prioritize: Technical problem-solving, tool-building, cross-team collaboration.`,
-
-    BTL: `Focus on: Brand activations, spatial design, production coordination, client presentations.
-Vocabulary: Brand experience, activation, installation, spatial, production-ready, fabrication.
-Prioritize: Design leadership, cross-team coordination, end-to-end project ownership.`,
-
-    MASTER: `Comprehensive overview. Include all relevant experience. Use versatile language that works across industries.`,
-
-    CUSTOM: config.targetRole
-      ? `Maximize relevance for: "${config.targetRole}". Lead with the experience and skills most relevant to this specific role.`
-      : `General resume. Cover all experience comprehensively.`,
-  };
-
-  const instructions = typeInstructions[config.type] ?? typeInstructions.MASTER;
+  const instructions = config.type === "CUSTOM"
+    ? (config.targetRole
+        ? `Maximize relevance for: "${config.targetRole}". Lead with the experience and skills most relevant to this specific role.`
+        : `General resume. Cover all experience comprehensively.`)
+    : profile
+      ? [`Focus on: ${profile.focus}`, profile.vocabulary && `Vocabulary: ${profile.vocabulary}`, profile.prioritize.length && `Prioritize: ${profile.prioritize.join(", ")}.`]
+          .filter(Boolean).join("\n")
+      : TYPE_PROFILES.MASTER.focus;
 
   return `# RESUME CONFIGURATION
 Name: ${config.userName}
@@ -223,8 +257,9 @@ Tailoring instructions:
 function buildExperienceSection(experiences: ExperienceData[]): string {
   if (!experiences.length) return "";
 
-  // Limit to most recent 6 for prompt length management
-  const toShow = experiences.slice(0, 6);
+  // Limit to the 4 most recent by default — a longer resume reads as
+  // unfocused, and the editor's "add experience" picker covers the rest.
+  const toShow = experiences.slice(0, 4);
 
   const formatted = toShow.map((exp, i) => {
     const lines = [
@@ -270,20 +305,46 @@ function buildProjectsSection(projects: ProjectData[]): string {
   return `# PROJECTS\n\n${formatted.join("\n\n")}`;
 }
 
-function buildSkillsSection(groups: SkillGroupData[]): string {
+/**
+ * Keywords used to sort each category's items so the ones most relevant to
+ * this resume come first — a target job's own required/nice-to-have skills
+ * win when one is set, otherwise the resume type's profile (TYPE_PROFILES).
+ */
+function priorityKeywords(config: ResumeConfig): string[] {
+  if (config.targetJob) return [...config.targetJob.requiredSkills, ...config.targetJob.niceToHaveSkills];
+  return TYPE_PROFILES[config.type]?.prioritize ?? [];
+}
+
+function buildSkillsSection(groups: SkillGroupData[], config: ResumeConfig): string {
   if (!groups.length) return "";
 
+  const priority = priorityKeywords(config).map((k) => k.toLowerCase());
+  // Items matching a priority keyword sort first within their bucket, so
+  // the model tends to lead with (and keep) the skills most relevant to
+  // this resume's type/target role/target job when it has to trim.
+  const byPriority = (a: string, b: string) => {
+    const aHit = priority.some((k) => a.toLowerCase().includes(k));
+    const bHit = priority.some((k) => b.toLowerCase().includes(k));
+    return aHit === bHit ? 0 : aHit ? -1 : 1;
+  };
+
   const formatted = groups.map((group) => {
-    const expert   = group.skills.filter((s) => s.level === "EXPERT").map((s) => s.name);
-    const advanced = group.skills.filter((s) => s.level === "ADVANCED").map((s) => s.name);
-    const inter    = group.skills.filter((s) => s.level === "INTERMEDIATE").map((s) => s.name);
-    const beginner = group.skills.filter((s) => s.level === "BEGINNER").map((s) => s.name);
+    const expert   = group.skills.filter((s) => s.level === "EXPERT").map((s) => s.name).sort(byPriority);
+    const advanced = group.skills.filter((s) => s.level === "ADVANCED").map((s) => s.name).sort(byPriority);
+    const inter    = group.skills.filter((s) => s.level === "INTERMEDIATE").map((s) => s.name).sort(byPriority);
+    const beginner = group.skills.filter((s) => s.level === "BEGINNER").map((s) => s.name).sort(byPriority);
+    // Soft skills (and anything else without a proficiency level) have no
+    // level bucket to fall into — without this they were silently dropped
+    // from the prompt entirely, which is why soft skills never reached the
+    // model. List them plainly instead.
+    const unleveled = group.skills.filter((s) => !s.level).map((s) => s.name).sort(byPriority);
 
     const parts: string[] = [];
-    if (expert.length)   parts.push(`${expert.join(", ")} [Expert]`);
-    if (advanced.length) parts.push(`${advanced.join(", ")} [Advanced]`);
-    if (inter.length)    parts.push(`${inter.join(", ")} [Intermediate]`);
-    if (beginner.length) parts.push(`${beginner.join(", ")} [Basic]`);
+    if (expert.length)    parts.push(`${expert.join(", ")} [Expert]`);
+    if (advanced.length)  parts.push(`${advanced.join(", ")} [Advanced]`);
+    if (inter.length)     parts.push(`${inter.join(", ")} [Intermediate]`);
+    if (beginner.length)  parts.push(`${beginner.join(", ")} [Basic]`);
+    if (unleveled.length) parts.push(unleveled.join(", "));
 
     return `${group.category}: ${parts.join(" | ")}`;
   });
@@ -350,7 +411,7 @@ function buildOutputSection(config: ResumeConfig, context: CareerContext): strin
   return `# OUTPUT RULES
 1. Summary: 3-4 sentences. Start with professional identity. Include years of experience. Mention top specializations. Never start with "I".
 2. Experience bullets: 3-5 per role. Action verb first. Quantify. Use STAR story data where it adds impact.
-3. Skills: Group by category (Technical, Rendering, Real-Time, Design, etc.). items array = clean names only, no level labels.
+3. Skills: Group by category (Technical, Rendering, Real-Time, Design, etc.). items array = clean names only, no level labels. If soft skills are present in the data, ALWAYS include them as their own "Soft Skills" category — never merge them into Technical or omit them. Within each category, order items by relevance to the resume type / target role given above (most relevant first).
 4. Projects: 2-4 most relevant. Description = 1-2 sentences. Impact-focused.
 5. Language: ALL text in ${lang}.
 6. GROUNDING: use only data explicitly provided above. If a field has no data, omit it or leave the array empty — never fabricate.${atsSelfConsistencyRule}

@@ -119,12 +119,12 @@ export class ResumeGeneratorService {
   }
 
   private groupSkills(skills: Skill[]): CareerContext["skillGroups"] {
-    const map = new Map<string, { name: string; level: string }[]>();
+    const map = new Map<string, { name: string; level?: string }[]>();
 
     for (const skill of skills) {
       const label = CATEGORY_LABELS[skill.category] ?? skill.category;
       if (!map.has(label)) map.set(label, []);
-      map.get(label)!.push({ name: skill.name, level: skill.level ?? "N/A" });
+      map.get(label)!.push({ name: skill.name, level: skill.level });
     }
 
     return Array.from(map.entries()).map(([category, skills]) => ({

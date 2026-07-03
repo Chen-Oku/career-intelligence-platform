@@ -38,8 +38,8 @@ const contactLine = (contact: ResumeContact): string =>
  * Router). pdfkit has no React dependency, so it sidesteps the issue.
  */
 export class ResumeDocumentRenderer {
-  async toPdf(content: ResumeContent, contact: ResumeContact, name: string): Promise<Buffer> {
-    const doc = new PDFDocument({ size: "A4", margin: 50 });
+  async toPdf(content: ResumeContent, contact: ResumeContact, name: string, targetRole?: string): Promise<Buffer> {
+    const doc = new PDFDocument({ size: "LETTER", margin: 50 });
     const chunks: Buffer[] = [];
     doc.on("data", (chunk) => chunks.push(chunk));
     const done = new Promise<Buffer>((resolve) => doc.on("end", () => resolve(Buffer.concat(chunks))));
@@ -48,6 +48,10 @@ export class ResumeDocumentRenderer {
 
     // ── Header ──────────────────────────────────────────────────────────
     doc.font("Helvetica-Bold").fontSize(18).fillColor(TEXT).text(name.toUpperCase(), { align: "center" });
+    if (targetRole) {
+      doc.moveDown(0.2);
+      doc.font("Times-Italic").fontSize(11).fillColor(TEXT).text(targetRole, { align: "center" });
+    }
     const contactText = contactLine(contact);
     if (contactText) {
       doc.moveDown(0.4);
@@ -82,7 +86,7 @@ export class ResumeDocumentRenderer {
       }
     }
 
-    if (content.projects && content.projects.length > 0) {
+    if (content.projects && content.projects.length > 0 && content.sectionVisibility?.projects !== false) {
       sectionTitle(doc, "NOTABLE PROJECTS", contentWidth);
       for (const project of content.projects) {
         const techSuffix = project.technologies.length > 0 ? `  —  ${project.technologies.slice(0, 4).join(", ")}` : "";
@@ -119,7 +123,7 @@ export class ResumeDocumentRenderer {
     return done;
   }
 
-  async toDocx(content: ResumeContent, contact: ResumeContact, name: string): Promise<Buffer> {
+  async toDocx(content: ResumeContent, contact: ResumeContact, name: string, targetRole?: string): Promise<Buffer> {
     const contactText = contactLine(contact);
     const children: Paragraph[] = [
       new Paragraph({
@@ -127,6 +131,16 @@ export class ResumeDocumentRenderer {
         children: [new TextRun({ text: name.toUpperCase(), bold: true, size: 32 })],
       }),
     ];
+
+    if (targetRole) {
+      children.push(
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 80 },
+          children: [new TextRun({ text: targetRole, italics: true, size: 22 })],
+        }),
+      );
+    }
 
     if (contactText) {
       children.push(
@@ -177,7 +191,7 @@ export class ResumeDocumentRenderer {
       }
     }
 
-    if (content.projects && content.projects.length > 0) {
+    if (content.projects && content.projects.length > 0 && content.sectionVisibility?.projects !== false) {
       children.push(sectionTitle("NOTABLE PROJECTS"));
       for (const project of content.projects) {
         children.push(
@@ -228,7 +242,9 @@ export class ResumeDocumentRenderer {
       }
     }
 
-    const doc = new DocxDocument({ sections: [{ children }] });
+    const doc = new DocxDocument({
+      sections: [{ properties: { page: { size: { width: 12240, height: 15840 } } }, children }],
+    });
     return Packer.toBuffer(doc);
   }
 }

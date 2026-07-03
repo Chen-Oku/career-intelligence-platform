@@ -41,6 +41,22 @@ export class PrismaResumeRepository implements IResumeRepository {
     }
   }
 
+  async update(resume: Resume): Promise<Result<void>> {
+    try {
+      await prisma.resume.updateMany({
+        where: { id: resume.id, userId: resume.userId },
+        data: {
+          content: { ...(resume.content as object), contact: resume.contact } as object,
+          targetRole: resume.targetRole ?? null,
+          atsScore: resume.atsScore ?? null,
+        },
+      });
+      return Result.ok(undefined);
+    } catch (e) {
+      return Result.err(e instanceof Error ? e : new Error("Failed to update resume."));
+    }
+  }
+
   async delete(id: string, userId: string): Promise<Result<void>> {
     try {
       await prisma.resume.deleteMany({ where: { id, userId } });

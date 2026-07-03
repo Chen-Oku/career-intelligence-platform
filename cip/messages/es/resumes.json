@@ -32,8 +32,9 @@
       "typeLabel": "Tipo *",
       "labelField": "Etiqueta (para tu referencia) *",
       "labelPlaceholder": "Hoja de vida ArchViz 2026",
-      "targetRoleLabel": "Rol objetivo *",
+      "targetRoleLabel": "Título profesional / rol objetivo",
       "targetRoleDescription": "Entre más específico, mejor la personalización.",
+      "professionalTitleDescription": "Se muestra debajo de tu nombre en el encabezado de la hoja de vida — ej. \"Artista 3D Senior\".",
       "targetRolePlaceholder": "Artista 3D Senior — Visualización Arquitectónica en Gensler",
       "languageLabel": "Idioma"
     },
@@ -43,7 +44,8 @@
       "phone": "Teléfono",
       "location": "Ubicación",
       "linkedin": "LinkedIn",
-      "portfolio": "Portafolio"
+      "portfolio": "Portafolio",
+      "hint": "Guarda estos datos una vez en Perfil → Resume Defaults para que se autocompleten cada vez."
     },
     "submit": {
       "generating": "Generando…",
@@ -71,6 +73,47 @@
       "projects": "Proyectos Destacados",
       "skills": "Habilidades Técnicas",
       "education": "Educación"
-    }
+    },
+    "pagination": {
+      "count": "{count, plural, one {# página} other {# páginas}} · Carta (8.5×11in)",
+      "pageLabel": "Página {page}"
+    },
+    "edit": "Editar"
+  },
+  "editor": {
+    "headerSection": "Encabezado",
+    "targetRoleLabel": "Título profesional / rol objetivo",
+    "targetRolePlaceholder": "Artista 3D Senior",
+    "contactFields": {
+      "phone": "Teléfono",
+      "location": "Ubicación",
+      "linkedin": "LinkedIn",
+      "portfolio": "Portafolio"
+    },
+    "addExperience": "Agregar experiencia",
+    "pickExperienceTitle": "Agregar una experiencia de tu perfil",
+    "noMoreExperiences": "Todas tus experiencias guardadas ya están incluidas.",
+    "addBullet": "Agregar viñeta",
+    "addProject": "Agregar proyecto",
+    "pickProjectTitle": "Agregar un proyecto de tu perfil",
+    "noMoreProjects": "Todos tus proyectos guardados ya están incluidos.",
+    "showProjectsSection": "Mostrar la sección de Proyectos en esta hoja de vida",
+    "addSkillCategory": "Agregar categoría",
+    "skills": {
+      "newCategoryPlaceholder": "Nueva categoría",
+      "itemsPlaceholder": "Habilidades separadas por coma"
+    },
+    "fields": {
+      "company": "Empresa",
+      "position": "Cargo",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
+      "projectName": "Nombre del proyecto",
+      "institution": "Institución",
+      "degree": "Título",
+      "year": "Año"
+    },
+    "save": "Guardar cambios",
+    "cancel": "Cancelar"
   }
 }

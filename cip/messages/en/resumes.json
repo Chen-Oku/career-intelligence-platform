@@ -32,8 +32,9 @@
       "typeLabel": "Type *",
       "labelField": "Label (for your reference) *",
       "labelPlaceholder": "ArchViz Resume 2026",
-      "targetRoleLabel": "Target role *",
+      "targetRoleLabel": "Professional title / target role",
       "targetRoleDescription": "The more specific, the better the tailoring.",
+      "professionalTitleDescription": "Shown under your name in the resume header — e.g. \"Senior 3D Artist\".",
       "targetRolePlaceholder": "Senior 3D Artist — Architectural Visualization at Gensler",
       "languageLabel": "Language"
     },
@@ -43,7 +44,8 @@
       "phone": "Phone",
       "location": "Location",
       "linkedin": "LinkedIn",
-      "portfolio": "Portfolio"
+      "portfolio": "Portfolio",
+      "hint": "Save these once in Profile → Resume Defaults so they're prefilled every time."
     },
     "submit": {
       "generating": "Generating…",
@@ -71,6 +73,47 @@
       "projects": "Notable Projects",
       "skills": "Technical Skills",
       "education": "Education"
-    }
+    },
+    "pagination": {
+      "count": "{count, plural, one {# page} other {# pages}} · US Letter (8.5×11in)",
+      "pageLabel": "Page {page}"
+    },
+    "edit": "Edit"
+  },
+  "editor": {
+    "headerSection": "Header",
+    "targetRoleLabel": "Professional title / target role",
+    "targetRolePlaceholder": "Senior 3D Artist",
+    "contactFields": {
+      "phone": "Phone",
+      "location": "Location",
+      "linkedin": "LinkedIn",
+      "portfolio": "Portfolio"
+    },
+    "addExperience": "Add experience",
+    "pickExperienceTitle": "Add an experience from your profile",
+    "noMoreExperiences": "All your saved experiences are already included.",
+    "addBullet": "Add bullet",
+    "addProject": "Add project",
+    "pickProjectTitle": "Add a project from your profile",
+    "noMoreProjects": "All your saved projects are already included.",
+    "showProjectsSection": "Show the Projects section on this resume",
+    "addSkillCategory": "Add category",
+    "skills": {
+      "newCategoryPlaceholder": "New Category",
+      "itemsPlaceholder": "Comma-separated skills"
+    },
+    "fields": {
+      "company": "Company",
+      "position": "Position",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "projectName": "Project name",
+      "institution": "Institution",
+      "degree": "Degree",
+      "year": "Year"
+    },
+    "save": "Save changes",
+    "cancel": "Cancel"
   }
 }

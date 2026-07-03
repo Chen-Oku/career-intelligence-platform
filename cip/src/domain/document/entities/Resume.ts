@@ -41,10 +41,12 @@ export interface CreateResumeProps {
 /**
  * Resume — aggregate root for generated resume documents.
  *
- * Resume entities are immutable after creation.
- * If the user wants to "edit" a resume, they generate a new one.
- * This preserves the history of generated resumes — the user can
- * compare versions and see how the output changes as they add data.
+ * Generation (AI) and editing (manual) are separate paths: `create()`
+ * produces the initial AI-generated content; `updateContent()` lets the
+ * user hand-edit sections afterward (reorder/add/remove experiences,
+ * toggle projects, edit text) without another AI call. Editing mutates
+ * this same record in place — there is no version history, "edit" really
+ * means edit.
  */
 export class Resume extends Entity<ResumeProps> {
   private constructor(props: ResumeProps, id?: string) {
@@ -80,5 +82,14 @@ export class Resume extends Entity<ResumeProps> {
 
   static reconstitute(props: ResumeProps, id: string): Resume {
     return new Resume(props, id);
+  }
+
+  /** Applies a hand-edited version of the content/contact/target role — see class doc. */
+  updateContent(content: object, contact: object, targetRole: string | undefined, atsScore: number | undefined): Result<void> {
+    this.props.content = content;
+    this.props.contact = contact;
+    this.props.targetRole = targetRole;
+    this.props.atsScore = atsScore;
+    return Result.ok(undefined);
   }
 }

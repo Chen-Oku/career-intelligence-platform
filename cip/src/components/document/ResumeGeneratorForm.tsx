@@ -155,19 +155,19 @@ export function ResumeGeneratorForm() {
                 </FormItem>
               )}
             />
-            {watchType === "CUSTOM" && (
-              <FormField
-                control={form.control} name="targetRole"
-                render={({ field }) => (
-                  <FormItem className="sm:col-span-2">
-                    <FormLabel>{t("resumeType.targetRoleLabel")}</FormLabel>
-                    <FormDescription>{t("resumeType.targetRoleDescription")}</FormDescription>
-                    <FormControl><Input placeholder={t("resumeType.targetRolePlaceholder")} {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+            <FormField
+              control={form.control} name="targetRole"
+              render={({ field }) => (
+                <FormItem className="sm:col-span-2">
+                  <FormLabel>{t("resumeType.targetRoleLabel")}</FormLabel>
+                  <FormDescription>
+                    {watchType === "CUSTOM" ? t("resumeType.targetRoleDescription") : t("resumeType.professionalTitleDescription")}
+                  </FormDescription>
+                  <FormControl><Input placeholder={t("resumeType.targetRolePlaceholder")} {...field} /></FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control} name="language"
               render={({ field }) => (
@@ -210,6 +210,7 @@ export function ResumeGeneratorForm() {
               />
             ))}
           </div>
+          <p className="mt-3 text-xs text-muted-foreground">{t("contact.hint")}</p>
         </div>
 
         {/* ── Generate ──────────────────────────────────────────────── */}

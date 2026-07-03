@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import type { ResumeDTO } from "@/lib/types/resume";
-import type { GenerateResumeInput } from "@/lib/validators/resume.schema";
+import type { GenerateResumeInput, UpdateResumeContentInput } from "@/lib/validators/resume.schema";
 
 export const resumeKeys = {
   all: ["resumes"] as const,
@@ -49,6 +49,27 @@ export function useGenerateResume() {
     },
     onError: (error: Error) => {
       toast({ title: "Generation failed", description: error.message, variant: "destructive" });
+    },
+  });
+}
+
+export function useUpdateResume() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: ({ id, input }: { id: string; input: UpdateResumeContentInput }) =>
+      fetchJson<ResumeDTO>(`/api/resumes/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(input),
+      }),
+    onSuccess: (data) => {
+      queryClient.setQueryData(resumeKeys.detail(data.id), data);
+      queryClient.invalidateQueries({ queryKey: resumeKeys.all });
+      toast({ title: "Resume updated" });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Update failed", description: error.message, variant: "destructive" });
     },
   });
 }

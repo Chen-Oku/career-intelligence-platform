@@ -40,6 +40,50 @@ export const generateResumeSchema = z.object({
 export type GenerateResumeInput = z.infer<typeof generateResumeSchema>;
 export { RESUME_TYPES };
 
+// ─── Resume editor (PATCH /api/resumes/[id]) ──────────────────────────────────
+
+const experienceItemSchema = z.object({
+  company: z.string().min(1),
+  position: z.string().min(1),
+  location: z.string().optional(),
+  startDate: z.string(),
+  endDate: z.string(),
+  bullets: z.array(z.string()),
+});
+
+const skillGroupSchema = z.object({
+  category: z.string().min(1),
+  items: z.array(z.string()),
+});
+
+const educationItemSchema = z.object({
+  institution: z.string().min(1),
+  degree: z.string().min(1),
+  year: z.string().optional(),
+});
+
+const projectItemSchema = z.object({
+  name: z.string().min(1),
+  description: z.string(),
+  technologies: z.array(z.string()),
+  url: z.string().nullable().optional(),
+});
+
+export const updateResumeContentSchema = z.object({
+  content: z.object({
+    summary: z.string(),
+    experience: z.array(experienceItemSchema),
+    skills: z.array(skillGroupSchema),
+    education: z.array(educationItemSchema),
+    projects: z.array(projectItemSchema).optional(),
+    sectionVisibility: z.object({ projects: z.boolean().optional() }).optional(),
+  }),
+  contact: contactSchema,
+  targetRole: z.string().max(200).optional(),
+});
+
+export type UpdateResumeContentInput = z.infer<typeof updateResumeContentSchema>;
+
 export const RESUME_TYPE_LABELS: Record<string, string> = {
   MASTER:            "Master Resume",
   ARCHVIZ:           "Architectural Visualization",

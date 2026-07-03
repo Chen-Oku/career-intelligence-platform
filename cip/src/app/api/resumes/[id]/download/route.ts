@@ -42,8 +42,8 @@ export async function GET(req: NextRequest, { params }: P) {
   const content = resume.content as ResumeContent;
   const contact = resume.contact as ResumeContact;
   const buffer = format === "pdf"
-    ? await renderer.toPdf(content, contact, name)
-    : await renderer.toDocx(content, contact, name);
+    ? await renderer.toPdf(content, contact, name, resume.targetRole)
+    : await renderer.toDocx(content, contact, name, resume.targetRole);
 
   const filename = `${sanitizeFilename(resume.title)}.${format}`;
 
