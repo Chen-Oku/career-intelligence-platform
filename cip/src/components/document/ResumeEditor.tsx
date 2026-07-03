@@ -191,7 +191,7 @@ export function ResumeEditor({ resume, userName, onDone }: { resume: ResumeDTO; 
               </div>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="space-y-2">
               <Label>{t("contactFields.phone")}</Label>
               <Input value={contact.phone ?? ""} onChange={(e) => setContact((c) => ({ ...c, phone: e.target.value }))} />
@@ -254,7 +254,7 @@ export function ResumeEditor({ resume, userName, onDone }: { resume: ResumeDTO; 
             {content.experience.map((exp, i) => (
               <div key={i} className="rounded-lg border border-border p-3 space-y-2">
                 <div className="flex items-start justify-between gap-2">
-                  <div className="grid flex-1 grid-cols-2 gap-2">
+                  <div className="grid flex-1 grid-cols-1 gap-2 sm:grid-cols-2">
                     <Input value={exp.company} onChange={(e) => patchExperience(i, { company: e.target.value })} placeholder={t("fields.company")} />
                     <Input value={exp.position} onChange={(e) => patchExperience(i, { position: e.target.value })} placeholder={t("fields.position")} />
                     <Input value={exp.startDate} onChange={(e) => patchExperience(i, { startDate: e.target.value })} placeholder={t("fields.startDate")} />
@@ -339,16 +339,18 @@ export function ResumeEditor({ resume, userName, onDone }: { resume: ResumeDTO; 
           <Separator />
           <div className="space-y-2">
             {content.skills.map((group, i) => (
-              <div key={i} className="flex items-start gap-2">
+              <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-start">
                 <Input
                   value={group.category}
                   onChange={(e) => setContent((c) => ({ ...c, skills: c.skills.map((g, idx) => (idx === i ? { ...g, category: e.target.value } : g)) }))}
-                  className="w-40 shrink-0"
+                  className="w-full sm:w-40 sm:shrink-0"
                 />
-                <Input value={group.items.join(", ")} onChange={(e) => setSkillItems(i, e.target.value)} placeholder={t("skills.itemsPlaceholder")} className="flex-1" />
-                <Button type="button" variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => removeSkillGroup(i)}>
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
+                <div className="flex items-start gap-2">
+                  <Input value={group.items.join(", ")} onChange={(e) => setSkillItems(i, e.target.value)} placeholder={t("skills.itemsPlaceholder")} className="min-w-0 flex-1" />
+                  <Button type="button" variant="ghost" size="sm" className="shrink-0 text-muted-foreground hover:text-destructive" onClick={() => removeSkillGroup(i)}>
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
               </div>
             ))}
           </div>
@@ -360,13 +362,15 @@ export function ResumeEditor({ resume, userName, onDone }: { resume: ResumeDTO; 
           <Separator />
           <div className="space-y-2">
             {content.education.map((edu, i) => (
-              <div key={i} className="flex items-start gap-2">
-                <Input value={edu.institution} onChange={(e) => patchEducation(i, { institution: e.target.value })} placeholder={t("fields.institution")} className="flex-1" />
-                <Input value={edu.degree} onChange={(e) => patchEducation(i, { degree: e.target.value })} placeholder={t("fields.degree")} className="flex-1" />
-                <Input value={edu.year ?? ""} onChange={(e) => patchEducation(i, { year: e.target.value })} placeholder={t("fields.year")} className="w-20" />
-                <Button type="button" variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => removeEducation(i)}>
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
+              <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-start">
+                <Input value={edu.institution} onChange={(e) => patchEducation(i, { institution: e.target.value })} placeholder={t("fields.institution")} className="min-w-0 flex-1" />
+                <Input value={edu.degree} onChange={(e) => patchEducation(i, { degree: e.target.value })} placeholder={t("fields.degree")} className="min-w-0 flex-1" />
+                <div className="flex items-start gap-2">
+                  <Input value={edu.year ?? ""} onChange={(e) => patchEducation(i, { year: e.target.value })} placeholder={t("fields.year")} className="w-full sm:w-20" />
+                  <Button type="button" variant="ghost" size="sm" className="shrink-0 text-muted-foreground hover:text-destructive" onClick={() => removeEducation(i)}>
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
               </div>
             ))}
           </div>

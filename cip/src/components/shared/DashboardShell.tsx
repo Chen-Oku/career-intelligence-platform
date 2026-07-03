@@ -27,9 +27,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Hydrate the persisted desktop collapse preference after mount (localStorage
-  // isn't available during SSR). Defaults to expanded when never set.
+  // isn't available during SSR). Rendering the default first and correcting it
+  // post-mount is the recommended way to sync a client-only value without a
+  // hydration mismatch — hence the deliberate setState in this effect.
   useEffect(() => {
     if (localStorage.getItem(COLLAPSED_STORAGE_KEY) === "true") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing persisted client-only pref after mount
       setCollapsed(true);
     }
   }, []);
@@ -42,8 +45,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     });
   };
 
-  // Any navigation closes the mobile drawer.
+  // Any navigation closes the mobile drawer — syncing UI to the external
+  // route state, which is exactly what this effect is for.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- closing the drawer in response to a route change
     setMobileOpen(false);
   }, [pathname]);
 
