@@ -40,7 +40,8 @@ async function fetchAiCoreStatus(baseUrl: string, apiKey: string): Promise<AiPro
 
   try {
     const response = await fetch(`${baseUrl}/providers/status`, {
-      headers: { "X-API-Key": apiKey },
+      // See GeminiClient.ts's completeViaAiCore for why this header is required.
+      headers: { "X-API-Key": apiKey, "ngrok-skip-browser-warning": "true" },
       signal: controller.signal,
     });
     if (!response.ok) return null;

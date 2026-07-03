@@ -81,6 +81,10 @@ async function completeViaAiCore(
     headers: {
       "Content-Type": "application/json",
       "X-API-Key": apiKey,
+      // Free ngrok static domains serve an HTML "you're about to visit..."
+      // interstitial to any request lacking this header, instead of
+      // proxying to AI Core — this bypasses it for server-to-server calls.
+      "ngrok-skip-browser-warning": "true",
     },
     body: JSON.stringify({
       system: params.system,
