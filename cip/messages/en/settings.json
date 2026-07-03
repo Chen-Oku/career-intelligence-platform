@@ -1,0 +1,24 @@
+{
+  "pageTitle": "Settings",
+  "pageDescription": "Platform-level configuration — not career content: which AI engine powers generation, and your own API key.",
+  "providerStatus": {
+    "title": "AI engine",
+    "description": "The AI provider currently powering every AI feature in the app.",
+    "localBadge": "Local engine",
+    "cloudBadge": "Cloud (Google Gemini)",
+    "model": "Model",
+    "checking": "Checking...",
+    "unavailable": "No AI provider is reachable right now.",
+    "unavailableHint": "Set your own Gemini API key below to keep AI features working.",
+    "refresh": "Refresh"
+  },
+  "aiSettings": {
+    "title": "AI settings",
+    "description": "Optional: use your own Google Gemini API key. When set, your AI features run on your key — and keep working even if the platform's AI engine is offline.",
+    "placeholder": "AIza... (your Gemini API key)",
+    "save": "Save key",
+    "show": "Show key",
+    "hide": "Hide key",
+    "hint": "Get a free API key at"
+  }
+}

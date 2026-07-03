@@ -17,7 +17,7 @@ import { useSaveProfileText } from "@/hooks/useProfile";
  * it's user-authored config, not generated content.
  */
 export function AiSettingsCard({ savedKey }: { savedKey: string }) {
-  const t = useTranslations("profile.aiSettings");
+  const t = useTranslations("settings.aiSettings");
   const [value, setValue] = useState(savedKey);
   const [prevSavedKey, setPrevSavedKey] = useState(savedKey);
   const [isVisible, setIsVisible] = useState(false);

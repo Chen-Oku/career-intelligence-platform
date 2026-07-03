@@ -1,0 +1,24 @@
+{
+  "pageTitle": "Ajustes",
+  "pageDescription": "Configuración de plataforma — no es contenido profesional: qué motor de IA impulsa la generación, y tu propia API key.",
+  "providerStatus": {
+    "title": "Motor de IA",
+    "description": "El proveedor de IA que impulsa actualmente cada función de IA en la app.",
+    "localBadge": "Motor local",
+    "cloudBadge": "Nube (Google Gemini)",
+    "model": "Modelo",
+    "checking": "Verificando...",
+    "unavailable": "Ningún proveedor de IA está disponible en este momento.",
+    "unavailableHint": "Guarda tu propia API key de Gemini abajo para mantener las funciones de IA funcionando.",
+    "refresh": "Actualizar"
+  },
+  "aiSettings": {
+    "title": "Ajustes de IA",
+    "description": "Opcional: usa tu propia API key de Google Gemini. Si la guardas, tus funciones de IA corren con tu key — y siguen funcionando aunque el motor de IA de la plataforma esté apagado.",
+    "placeholder": "AIza... (tu API key de Gemini)",
+    "save": "Guardar key",
+    "show": "Mostrar key",
+    "hide": "Ocultar key",
+    "hint": "Consigue una API key gratuita en"
+  }
+}

@@ -17,7 +17,6 @@ import {
 } from "@/hooks/useProfile";
 import { VoiceGuideCard } from "./VoiceGuideCard";
 import { ResumeDefaultsCard } from "./ResumeDefaultsCard";
-import { AiSettingsCard } from "./AiSettingsCard";
 import type { AnswerFeedback } from "@/lib/types/interviewCoach";
 
 const GUIDED_QUESTION_SETS = {
@@ -65,7 +64,6 @@ export function ProfileClient() {
             guidedQuestionSet="strengths"
           />
           <ResumeDefaultsCard />
-          <AiSettingsCard savedKey={data?.geminiApiKey ?? ""} />
         </div>
       )}
     </div>

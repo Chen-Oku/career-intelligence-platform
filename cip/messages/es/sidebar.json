@@ -5,15 +5,18 @@
   "projects": "Proyectos",
   "skills": "Habilidades",
   "storyBank": "Banco de Historias",
-  "profile": "Perfil",
+  "profile": "Perfil profesional",
   "resumes": "Hojas de Vida",
   "coverLetters": "Cartas de Presentación",
   "jobAnalyzer": "Analizador de Empleo",
   "interviewPrep": "Preparación de Entrevista",
+  "settings": "Ajustes",
   "comingSoon": "pronto",
   "signOut": "Cerrar sesión",
   "certifications": "Certificaciones",
   "groupBuild": "1 · Construye tu base",
   "groupGenerate": "2 · Genera",
-  "groupApply": "3 · Postula y prepárate"
+  "groupApply": "3 · Postula y prepárate",
+  "aiEngineChecking": "Verificando motor de IA…",
+  "aiEngineUnavailable": "IA no configurada"
 }

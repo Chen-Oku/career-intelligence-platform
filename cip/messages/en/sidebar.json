@@ -5,15 +5,18 @@
   "projects": "Projects",
   "skills": "Skills",
   "storyBank": "Story Bank",
-  "profile": "Profile",
+  "profile": "Professional profile",
   "resumes": "Resumes",
   "coverLetters": "Cover Letters",
   "jobAnalyzer": "Job Analyzer",
   "interviewPrep": "Interview Prep",
+  "settings": "Settings",
   "comingSoon": "soon",
   "signOut": "Sign out",
   "certifications": "Certifications",
   "groupBuild": "1 · Build your base",
   "groupGenerate": "2 · Generate",
-  "groupApply": "3 · Apply & prepare"
+  "groupApply": "3 · Apply & prepare",
+  "aiEngineChecking": "Checking AI engine…",
+  "aiEngineUnavailable": "AI not configured"
 }

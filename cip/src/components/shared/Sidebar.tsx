@@ -19,11 +19,13 @@ import {
   Award,
   LogOut,
   ChevronRight,
+  Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import { AiEngineBadge } from "@/components/shared/AiEngineBadge";
 
 interface NavItem {
   href: string;
@@ -74,6 +76,10 @@ const NAV_GROUPS: NavGroup[] = [
       { href: "/interview-prep", labelKey: "interviewPrep", icon: MessageCircleQuestion },
     ],
   },
+  {
+    groupKey: null,
+    items: [{ href: "/settings", labelKey: "settings", icon: Settings }],
+  },
 ];
 
 export function Sidebar() {
@@ -101,7 +107,7 @@ export function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         {NAV_GROUPS.map((group, groupIndex) => (
-          <div key={group.groupKey ?? "top"} className={cn(groupIndex > 0 && "mt-5")}>
+          <div key={group.groupKey ?? `ungrouped-${groupIndex}`} className={cn(groupIndex > 0 && "mt-5")}>
             {group.groupKey && (
               <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                 {t(group.groupKey)}
@@ -148,6 +154,11 @@ export function Sidebar() {
           </div>
         ))}
       </nav>
+
+      {/* Active AI engine */}
+      <div className="border-t border-border px-3 py-2">
+        <AiEngineBadge />
+      </div>
 
       {/* User footer */}
       <div className="border-t border-border p-3">
