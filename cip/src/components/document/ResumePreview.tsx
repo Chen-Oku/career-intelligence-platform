@@ -52,7 +52,7 @@ export function ResumePreview({ resume, userName, onEdit }: { resume: ResumeDTO;
   return (
     <div>
       {/* Action bar */}
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <div className="flex items-center gap-3">
           <div>
             <p className="text-xs text-muted-foreground font-mono-data">
@@ -65,7 +65,7 @@ export function ResumePreview({ resume, userName, onEdit }: { resume: ResumeDTO;
           </div>
           <AtsScoreBadge score={resume.atsScore} tips={content.atsTips} />
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {onEdit && (
             <Button variant="outline" size="sm" onClick={onEdit}>
               <Pencil className="mr-1.5 h-3.5 w-3.5" />

@@ -31,7 +31,7 @@ export function CoverLetterPreview({ coverLetter, userName }: { coverLetter: Cov
   return (
     <div>
       {/* Action bar */}
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <div>
           <p className="text-xs text-muted-foreground font-mono-data">
             {coverLetter.company} · {coverLetter.jobTitle}
@@ -40,7 +40,7 @@ export function CoverLetterPreview({ coverLetter, userName }: { coverLetter: Cov
             {t("generated", { date: new Date(coverLetter.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) })}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button variant="outline" size="sm" onClick={handleCopy}>
             {copied ? <><Check className="mr-1.5 h-3.5 w-3.5 text-emerald-600" />{t("copied")}</> : <><Copy className="mr-1.5 h-3.5 w-3.5" />{t("copyText")}</>}
           </Button>
