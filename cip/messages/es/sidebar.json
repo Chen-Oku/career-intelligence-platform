@@ -19,5 +19,9 @@
   "groupGenerate": "2 · Genera",
   "groupApply": "3 · Postula y prepárate",
   "aiEngineChecking": "Verificando motor de IA…",
-  "aiEngineUnavailable": "IA no configurada"
+  "aiEngineUnavailable": "IA no configurada",
+  "expand": "Expandir",
+  "collapse": "Contraer",
+  "openMenu": "Abrir menú",
+  "closeMenu": "Cerrar menú"
 }

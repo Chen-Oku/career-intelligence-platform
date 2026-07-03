@@ -19,5 +19,9 @@
   "groupGenerate": "2 · Generate",
   "groupApply": "3 · Apply & prepare",
   "aiEngineChecking": "Checking AI engine…",
-  "aiEngineUnavailable": "AI not configured"
+  "aiEngineUnavailable": "AI not configured",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu"
 }

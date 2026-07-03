@@ -13,7 +13,7 @@ const DOT_COLOR: Record<string, string> = {
 };
 
 /** Persistent indicator of which AI engine is currently serving completions — links to /settings. */
-export function AiEngineBadge() {
+export function AiEngineBadge({ collapsed = false }: { collapsed?: boolean }) {
   const t = useTranslations("sidebar");
   const { data, isLoading } = useAiProviderStatus();
 
@@ -26,8 +26,11 @@ export function AiEngineBadge() {
   return (
     <Link
       href="/settings"
-      className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-      title={data?.model ?? undefined}
+      className={cn(
+        "flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
+        collapsed && "lg:justify-center lg:px-0",
+      )}
+      title={collapsed ? label : data?.model ?? undefined}
     >
       <span
         className={cn(
@@ -35,7 +38,7 @@ export function AiEngineBadge() {
           isLoading ? "bg-muted-foreground/40" : DOT_COLOR[data?.source ?? "none"],
         )}
       />
-      <span className="truncate">{label}</span>
+      <span className={cn("truncate", collapsed && "lg:hidden")}>{label}</span>
     </Link>
   );
 }
