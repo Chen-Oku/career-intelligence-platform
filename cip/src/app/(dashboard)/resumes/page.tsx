@@ -63,7 +63,7 @@ export default function ResumesPage() {
                     {new Date(resume.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                   </p>
                 </div>
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex gap-2 shrink-0 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
                   <Button variant="ghost" size="sm" asChild>
                     <Link href={`/resumes/${resume.id}`}>{t("view")}</Link>
                   </Button>

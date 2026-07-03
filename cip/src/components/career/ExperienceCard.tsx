@@ -92,7 +92,7 @@ export function ExperienceCard({
           </div>
 
           {/* Actions — visible on hover */}
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+          <div className="flex items-center gap-1 shrink-0 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
             <Button
               variant="ghost"
               size="icon"

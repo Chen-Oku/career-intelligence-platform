@@ -57,7 +57,7 @@ export function ProjectCard({ project }: { project: ProjectDTO }) {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+          <div className="flex items-center gap-1 shrink-0 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
             {project.externalUrl && (
               <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
                 <a href={project.externalUrl} target="_blank" rel="noopener noreferrer">

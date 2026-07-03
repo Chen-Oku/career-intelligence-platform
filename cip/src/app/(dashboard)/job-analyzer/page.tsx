@@ -79,7 +79,7 @@ export default function JobAnalyzerPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                <div className="flex gap-2 shrink-0 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
                   <Button variant="ghost" size="sm" asChild><Link href={`/job-analyzer/${job.id}`}>{t("list.view")}</Link></Button>
                   <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => deleteJob(job.id)}>
                     <Trash2 className="h-3.5 w-3.5" />

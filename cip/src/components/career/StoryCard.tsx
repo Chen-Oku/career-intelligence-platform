@@ -58,7 +58,7 @@ export function StoryCard({ story }: { story: StoryDTO }) {
 
         <div className="flex items-center gap-1 shrink-0">
           {/* Edit + delete — only visible on hover */}
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="flex items-center gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
             <Button variant="ghost" size="icon" className="h-7 w-7" asChild onClick={(e) => e.stopPropagation()}>
               <Link href={`/stories/${story.id}/edit`}>
                 <Pencil className="h-3.5 w-3.5" />
