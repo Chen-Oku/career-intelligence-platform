@@ -16,7 +16,7 @@ export interface ResumeContent {
   experience: {
     company: string;
     position: string;
-    location?: string;
+    location?: string | null;
     startDate: string;
     endDate: string;
     bullets: string[];

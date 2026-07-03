@@ -45,7 +45,7 @@ export { RESUME_TYPES };
 const experienceItemSchema = z.object({
   company: z.string().min(1),
   position: z.string().min(1),
-  location: z.string().optional(),
+  location: z.string().nullable().optional(),
   startDate: z.string(),
   endDate: z.string(),
   bullets: z.array(z.string()),
