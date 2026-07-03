@@ -64,6 +64,13 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
   return completeViaGemini(geminiKey, params);
 }
 
+// If the cloudflared tunnel to AI Core is down or stale, an unbounded fetch
+// hangs until the platform's own socket timeout — on Vercel that can eat the
+// entire request's maxDuration before the Gemini fallback below ever runs,
+// turning a survivable outage into a 504. Fail fast instead so there's
+// budget left for the fallback.
+const AI_CORE_TIMEOUT_MS = 8000;
+
 async function completeViaAiCore(
   baseUrl: string,
   apiKey: string,
@@ -82,6 +89,7 @@ async function completeViaAiCore(
       temperature: params.temperature ?? 0.6,
       top_p: params.topP ?? 0.9,
     }),
+    signal: AbortSignal.timeout(AI_CORE_TIMEOUT_MS),
   });
 
   if (!response.ok) {
