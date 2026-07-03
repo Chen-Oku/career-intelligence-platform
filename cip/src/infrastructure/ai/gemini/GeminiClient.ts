@@ -48,7 +48,7 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
     } catch (error) {
       if (!geminiKey) throw error;
       console.warn(
-        "[GeminiClient] AI Core unavailable, falling back to Gemini API:",
+        `[GeminiClient] AI Core (${aiCoreUrl}) unavailable, falling back to Gemini API:`,
         error instanceof Error ? error.message : error,
       );
     }
@@ -64,12 +64,15 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
   return completeViaGemini(geminiKey, params);
 }
 
-// If the cloudflared tunnel to AI Core is down or stale, an unbounded fetch
-// hangs until the platform's own socket timeout — on Vercel that can eat the
-// entire request's maxDuration before the Gemini fallback below ever runs,
-// turning a survivable outage into a 504. Fail fast instead so there's
-// budget left for the fallback.
-const AI_CORE_TIMEOUT_MS = 8000;
+// Timeout for the whole AI Core completion call. Local LLM generation (a
+// resume, a profile, presets) routinely takes tens of seconds, so this must be
+// generous enough not to abort real work — an earlier 8s value silently killed
+// every slow generation and fell back to Gemini. It still stays under the
+// route's maxDuration (60s on Vercel) so there's budget left for the Gemini
+// fallback if AI Core is genuinely down. A dead ngrok/cloudflare tunnel returns
+// an error fast anyway, so this ceiling only bites when a tunnel hangs.
+// Override with AI_CORE_TIMEOUT_MS (e.g. lower it if you start seeing 504s).
+const AI_CORE_TIMEOUT_MS = Number(process.env.AI_CORE_TIMEOUT_MS) || 45000;
 
 async function completeViaAiCore(
   baseUrl: string,
