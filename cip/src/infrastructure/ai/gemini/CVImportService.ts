@@ -1,6 +1,8 @@
 import { geminiComplete } from "./GeminiClient";
 import { IMPORT_SYSTEM_PROMPT, buildImportPrompt } from "../prompts/import.prompts";
-import type { RawImportResult, ImportedExperience, ImportedProject } from "@/lib/types/cvImport";
+import type {
+  RawImportResult, ImportedExperience, ImportedProject, ImportedEducation, ImportedCertification,
+} from "@/lib/types/cvImport";
 
 const asStringArray = (value: unknown): string[] => (Array.isArray(value) ? value.filter((v) => typeof v === "string") : []);
 
@@ -92,6 +94,28 @@ export class CVImportService {
     );
 
     const skills = content.skills as Record<string, unknown>;
+
+    const education = (Array.isArray(content.education) ? content.education as Record<string, unknown>[] : []).map(
+      (e): ImportedEducation => ({
+        institution: typeof e.institution === "string" ? e.institution : "",
+        degree: typeof e.degree === "string" ? e.degree : "",
+        field: typeof e.field === "string" ? e.field : undefined,
+        startDate: typeof e.startDate === "string" ? e.startDate : undefined,
+        endDate: typeof e.endDate === "string" ? e.endDate : undefined,
+        isOngoing: Boolean(e.isOngoing),
+      }),
+    );
+
+    const certifications = (Array.isArray(content.certifications) ? content.certifications as Record<string, unknown>[] : []).map(
+      (c): ImportedCertification => ({
+        name: typeof c.name === "string" ? c.name : "",
+        issuer: typeof c.issuer === "string" ? c.issuer : "",
+        issueDate: typeof c.issueDate === "string" ? c.issueDate : undefined,
+        credentialId: typeof c.credentialId === "string" ? c.credentialId : undefined,
+        credentialUrl: typeof c.credentialUrl === "string" ? c.credentialUrl : undefined,
+      }),
+    );
+
     return {
       experiences,
       projects,
@@ -99,6 +123,8 @@ export class CVImportService {
         technical: asStringArray(skills.technical),
         soft: asStringArray(skills.soft),
       },
+      education,
+      certifications,
     };
   }
 }

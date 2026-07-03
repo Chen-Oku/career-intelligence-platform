@@ -1,26 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { Award, ExternalLink, Loader2, Pencil, Plus, Trash2 } from "lucide-react";
+import { Award, ExternalLink, Pencil, Plus, Trash2 } from "lucide-react";
 import { PageHeader, ExperienceListSkeleton } from "@/components/shared/PageHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import {
   useCertifications, useCreateCertification, useUpdateCertification, useDeleteCertification,
 } from "@/hooks/useCertifications";
-import { createCertificationSchema, type CreateCertificationInput } from "@/lib/validators/certification.schema";
+import { CertificationForm } from "./CertificationForm";
+import type { CreateCertificationInput } from "@/lib/validators/certification.schema";
 import type { CertificationDTO } from "@/lib/types/certification";
-
-/** ISO date → value usable by <input type="date"> (or "" when absent). */
-const toDateInput = (iso?: string) => (iso ? iso.slice(0, 10) : "");
 
 export function CertificationsList() {
   const t = useTranslations("certifications");
@@ -156,35 +150,26 @@ function CertificationDialog({
   editing: CertificationDTO | null;
 }) {
   const t = useTranslations("certifications.form");
-  const { mutate: create, isPending: isCreating } = useCreateCertification();
-  const { mutate: update, isPending: isUpdating } = useUpdateCertification();
+  const { mutateAsync: create, isPending: isCreating } = useCreateCertification();
+  const { mutateAsync: update, isPending: isUpdating } = useUpdateCertification();
   const isPending = isCreating || isUpdating;
 
-  const form = useForm<CreateCertificationInput>({
-    resolver: zodResolver(createCertificationSchema),
-    defaultValues: editing
-      ? {
-          name: editing.name,
-          issuer: editing.issuer,
-          issueDate: editing.issueDate ? new Date(editing.issueDate) : undefined,
-          expiryDate: editing.expiryDate ? new Date(editing.expiryDate) : undefined,
-          credentialId: editing.credentialId ?? "",
-          credentialUrl: editing.credentialUrl ?? "",
-          skills: editing.skills,
-        }
-      : { name: "", issuer: "", credentialId: "", credentialUrl: "", skills: [] },
-  });
+  const defaultValues: Partial<CreateCertificationInput> & { skills?: string[] } = editing
+    ? {
+        name: editing.name,
+        issuer: editing.issuer,
+        issueDate: editing.issueDate ? new Date(editing.issueDate) : undefined,
+        expiryDate: editing.expiryDate ? new Date(editing.expiryDate) : undefined,
+        credentialId: editing.credentialId ?? "",
+        credentialUrl: editing.credentialUrl ?? "",
+        skills: editing.skills,
+      }
+    : { name: "", issuer: "", credentialId: "", credentialUrl: "", skills: [] };
 
-  const [skillsText, setSkillsText] = useState(editing?.skills.join(", ") ?? "");
-
-  const handleSubmit = (values: CreateCertificationInput) => {
-    const payload = {
-      ...values,
-      skills: skillsText.split(",").map((s) => s.trim()).filter(Boolean).slice(0, 20),
-    };
-    const onSuccess = () => onOpenChange(false);
-    if (editing) update({ id: editing.id, ...payload }, { onSuccess });
-    else create(payload, { onSuccess });
+  const handleSubmit = async (values: CreateCertificationInput) => {
+    if (editing) await update({ id: editing.id, ...values });
+    else await create(values);
+    onOpenChange(false);
   };
 
   return (
@@ -193,103 +178,13 @@ function CertificationDialog({
         <DialogHeader>
           <DialogTitle>{editing ? t("editTitle") : t("createTitle")}</DialogTitle>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <FormField
-                control={form.control} name="name"
-                render={({ field }) => (
-                  <FormItem className="sm:col-span-2">
-                    <FormLabel>{t("name")}</FormLabel>
-                    <FormControl><Input placeholder={t("namePlaceholder")} {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control} name="issuer"
-                render={({ field }) => (
-                  <FormItem className="sm:col-span-2">
-                    <FormLabel>{t("issuer")}</FormLabel>
-                    <FormControl><Input placeholder={t("issuerPlaceholder")} {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control} name="issueDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("issueDate")}</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        value={field.value ? toDateInput(field.value.toISOString()) : ""}
-                        onChange={(e) => field.onChange(e.target.value ? new Date(e.target.value) : undefined)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control} name="expiryDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("expiryDate")}</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        value={field.value ? toDateInput(field.value.toISOString()) : ""}
-                        onChange={(e) => field.onChange(e.target.value ? new Date(e.target.value) : undefined)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control} name="credentialId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("credentialId")}</FormLabel>
-                    <FormControl><Input {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control} name="credentialUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("credentialUrl")}</FormLabel>
-                    <FormControl><Input placeholder="https://" {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormItem className="sm:col-span-2">
-                <FormLabel>{t("skills")}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t("skillsPlaceholder")}
-                    value={skillsText}
-                    onChange={(e) => setSkillsText(e.target.value)}
-                  />
-                </FormControl>
-              </FormItem>
-            </div>
-            <div className="flex justify-end gap-2 pt-2">
-              <Button type="button" variant="outline" size="sm" onClick={() => onOpenChange(false)}>
-                {t("cancel")}
-              </Button>
-              <Button type="submit" size="sm" disabled={isPending}>
-                {isPending && <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />}
-                {editing ? t("saveChanges") : t("create")}
-              </Button>
-            </div>
-          </form>
-        </Form>
+        <CertificationForm
+          defaultValues={defaultValues}
+          isLoading={isPending}
+          submitLabel={editing ? t("saveChanges") : t("create")}
+          onSubmit={handleSubmit}
+          onCancel={() => onOpenChange(false)}
+        />
       </DialogContent>
     </Dialog>
   );

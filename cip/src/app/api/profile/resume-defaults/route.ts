@@ -1,5 +1,5 @@
-// src/app/api/profile/resume-defaults/route.ts — GET/PUT the education +
-// contact defaults prefilled into the resume generator.
+// src/app/api/profile/resume-defaults/route.ts — GET/PUT the contact
+// defaults prefilled into the resume generator.
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -13,18 +13,17 @@ export async function GET() {
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { education: true, contactInfo: true },
+    select: { contactInfo: true },
   });
 
-  // Stored blobs are validated on write, but re-parse on read so a manual
+  // Stored blob is validated on write, but re-parse on read so a manual
   // DB edit can't feed the form malformed data — fall back to empty defaults.
   const parsed = resumeDefaultsSchema.safeParse({
-    education: user?.education ?? [],
     contact: user?.contactInfo ?? {},
   });
 
   return NextResponse.json({
-    data: parsed.success ? parsed.data : { education: [], contact: {} },
+    data: parsed.success ? parsed.data : { contact: {} },
   });
 }
 

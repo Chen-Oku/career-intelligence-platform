@@ -11,6 +11,8 @@ import { useToast } from "@/hooks/use-toast";
 import { ImportExperienceReview } from "@/components/import/ImportExperienceReview";
 import { ImportProjectReview } from "@/components/import/ImportProjectReview";
 import { ImportSkillsReview } from "@/components/import/ImportSkillsReview";
+import { ImportEducationReview } from "@/components/import/ImportEducationReview";
+import { ImportCertificationReview } from "@/components/import/ImportCertificationReview";
 import type { RawImportResult } from "@/lib/types/cvImport";
 
 export default function ImportPage() {
@@ -106,6 +108,12 @@ export default function ImportPage() {
               <TabsTrigger value="skills">
                 {t("tabs.skills", { count: result.skills.technical.length + result.skills.soft.length })}
               </TabsTrigger>
+              <TabsTrigger value="education">
+                {t("tabs.education", { count: result.education.length })}
+              </TabsTrigger>
+              <TabsTrigger value="certifications">
+                {t("tabs.certifications", { count: result.certifications.length })}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="experience" className="mt-4">
@@ -116,6 +124,12 @@ export default function ImportPage() {
             </TabsContent>
             <TabsContent value="skills" className="mt-4">
               <ImportSkillsReview skills={result.skills} />
+            </TabsContent>
+            <TabsContent value="education" className="mt-4">
+              <ImportEducationReview items={result.education} />
+            </TabsContent>
+            <TabsContent value="certifications" className="mt-4">
+              <ImportCertificationReview items={result.certifications} />
             </TabsContent>
           </Tabs>
         </div>

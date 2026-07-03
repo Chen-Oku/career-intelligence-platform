@@ -46,6 +46,10 @@
     "certifications": {
       "title": "Certificaciones",
       "description": "Cursos, credenciales y licencias que respaldan tus habilidades."
+    },
+    "education": {
+      "title": "Educación",
+      "description": "Títulos, diplomas y bootcamps, incluidos automáticamente en cada CV."
     }
   },
   "completeness": {
@@ -57,7 +61,7 @@
       "projects": "Agrega un proyecto",
       "stories": "Escribe una historia STAR",
       "aboutMe": "Genera tu About Me",
-      "education": "Guarda tu educación en Perfil"
+      "education": "Agrega tu educación"
     }
   },
   "latestAnalysis": {

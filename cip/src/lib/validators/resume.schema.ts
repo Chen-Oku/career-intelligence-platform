@@ -5,13 +5,6 @@ const RESUME_TYPES = [
   "GRAPHIC_DESIGNER", "BTL", "ENVIRONMENT_ARTIST", "VFX", "CUSTOM",
 ] as const;
 
-export const educationSchema = z.object({
-  institution: z.string().min(1, "Institution required").max(200),
-  degree:      z.string().min(1, "Degree required").max(200),
-  field:       z.string().max(100).optional(),
-  year:        z.string().max(10).optional(),
-});
-
 export const contactSchema = z.object({
   email:     z.string().email().optional().or(z.literal("")),
   phone:     z.string().max(30).optional(),
@@ -21,14 +14,14 @@ export const contactSchema = z.object({
 });
 
 /**
- * Resume defaults stored on the user profile (User.education/contactInfo)
- * and prefilled into the resume generator so they aren't retyped per resume.
- * Unlike generateResumeSchema, education may be empty here — having no
- * defaults saved yet is a valid state.
+ * Resume defaults stored on the user profile (User.contactInfo) and
+ * prefilled into the resume generator so contact info isn't retyped per
+ * resume. Education used to live here too (User.education) but now comes
+ * from the Education entity instead — fetched automatically during
+ * generation, same as Certifications.
  */
 export const resumeDefaultsSchema = z.object({
-  education: z.array(educationSchema).max(5),
-  contact:   contactSchema,
+  contact: contactSchema,
 });
 
 export type ResumeDefaultsInput = z.infer<typeof resumeDefaultsSchema>;
@@ -38,7 +31,6 @@ export const generateResumeSchema = z.object({
   title:      z.string().min(1, "Title is required.").max(200),
   targetRole: z.string().max(200).optional(),
   language:   z.enum(["en", "es"]).default("en"),
-  education:  z.array(educationSchema).min(1, "Add at least one education entry.").max(5),
   contact:    contactSchema,
   // When set, the resume is tailored to a previously analyzed job posting:
   // its keywords/required skills are injected into the generation prompt.

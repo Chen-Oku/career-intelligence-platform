@@ -1,0 +1,41 @@
+{
+  "pageTitle": "Educación",
+  "pageDescription": "Títulos, diplomas y bootcamps. Se incluyen automáticamente en cada CV que generes.",
+  "addEducation": "Agregar educación",
+  "loadError": "No se pudo cargar la educación. Por favor, actualiza la página.",
+  "ongoing": "En curso",
+  "emptyState": {
+    "title": "Aún no hay educación registrada",
+    "description": "Agrega tus títulos, diplomas o bootcamps — se incluyen automáticamente en cada CV.",
+    "action": "Agrega tu primer registro"
+  },
+  "form": {
+    "createTitle": "Agregar educación",
+    "editTitle": "Editar educación",
+    "overview": {
+      "title": "Resumen"
+    },
+    "period": {
+      "title": "Período"
+    },
+    "skills": {
+      "title": "Habilidades relacionadas",
+      "description": "Opcional — habilidades o áreas de enfoque cubiertas por este programa."
+    },
+    "institutionLabel": "Institución",
+    "institutionPlaceholder": "Massachusetts Institute of Technology",
+    "degreeLabel": "Título",
+    "degreePlaceholder": "Licenciatura en Ciencias",
+    "fieldLabel": "Campo de estudio",
+    "fieldPlaceholder": "Ciencias de la Computación",
+    "startDateLabel": "Fecha de inicio",
+    "endDateLabel": "Fecha de fin",
+    "isOngoingLabel": "Actualmente estudiando aquí",
+    "skillsPlaceholder": "Presiona Enter para agregar una habilidad",
+    "cancel": "Cancelar",
+    "create": "Agregar",
+    "save": "Guardar",
+    "saveChanges": "Guardar cambios",
+    "saving": "Guardando..."
+  }
+}

@@ -30,10 +30,13 @@ model User {
   // injected into aboutMe/elevatorPitch/strengths generation and feedback so
   // output matches the user's own voice instead of a generic professional tone.
   voiceGuide       String?
-  // Resume defaults — education entries + contact info entered once here and
-  // prefilled into every resume generation instead of retyped per resume.
-  // Json (not normalized) for the same reason Resume.content is: small,
-  // user-owned blobs read/written as a whole.
+  // Resume defaults — contact info entered once here and prefilled into
+  // every resume generation instead of retyped per resume. Json (not
+  // normalized) for the same reason Resume.content is: a small, user-owned
+  // blob read/written as a whole.
+  // deprecated — superseded by the Education entity below; column kept
+  // (unused) rather than dropped, since this project has no migrations
+  // history to roll a destructive schema change back through.
   education        Json?
   contactInfo      Json?
   // BYOK — the user's own Gemini API key. When set, their AI requests use
@@ -48,6 +51,7 @@ model User {
   skills            Skill[]
   stories           Story[]
   certifications    Certification[]
+  educationEntries  EducationEntry[]
 
   // Document Context relations
   resumes           Resume[]
@@ -263,6 +267,29 @@ model Certification {
 
   @@index([userId])
   @@map("certifications")
+}
+
+// Academic education — degrees, diplomas, bootcamps. Named EducationEntry
+// (not Education) at the Prisma-model level only, to avoid clashing with
+// the deprecated User.education Json field above; the domain layer still
+// calls this entity "Education".
+model EducationEntry {
+  id          String    @id @default(cuid())
+  userId      String
+  institution String
+  degree      String
+  field       String?
+  startDate   DateTime?
+  endDate     DateTime?
+  isOngoing   Boolean   @default(false)
+  skills      String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("education_entries")
 }
 
 // ============================================================

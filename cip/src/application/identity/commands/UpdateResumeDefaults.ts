@@ -10,9 +10,9 @@ export interface UpdateResumeDefaultsCommand {
 /**
  * UpdateResumeDefaultsUseCase
  *
- * Direct Prisma write, same precedent as UpdateProfileText: plain profile
- * blobs (education entries + contact info) with no invariants beyond the
- * Zod validation already done at the route boundary.
+ * Direct Prisma write, same precedent as UpdateProfileText: a plain
+ * profile blob (contact info) with no invariants beyond the Zod
+ * validation already done at the route boundary.
  */
 export class UpdateResumeDefaultsUseCase {
   async execute(command: UpdateResumeDefaultsCommand): AsyncResult<void> {
@@ -20,7 +20,6 @@ export class UpdateResumeDefaultsUseCase {
       await prisma.user.update({
         where: { id: command.userId },
         data: {
-          education: command.defaults.education,
           contactInfo: command.defaults.contact,
         },
       });

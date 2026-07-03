@@ -9,6 +9,7 @@ import { useDeleteResume, useDownloadResume } from "@/hooks/useResumes";
 import { resumeToPlainText } from "@/lib/types/resume";
 import { RESUME_TYPE_LABELS } from "@/lib/validators/resume.schema";
 import { cn } from "@/lib/utils";
+import { AtsScoreBadge } from "./AtsScoreBadge";
 import type { ResumeDTO, ResumeContent, ResumeContact } from "@/lib/types/resume";
 
 /**
@@ -51,14 +52,17 @@ export function ResumePreview({ resume, userName }: { resume: ResumeDTO; userNam
     <div>
       {/* Action bar */}
       <div className="flex items-center justify-between mb-5">
-        <div>
-          <p className="text-xs text-muted-foreground font-mono-data">
-            {resume.type in RESUME_TYPE_LABELS ? RESUME_TYPE_LABELS[resume.type] : resume.type}
-            {resume.targetRole && ` · ${resume.targetRole}`}
-          </p>
-          <p className="text-xs text-muted-foreground font-mono-data">
-            {t("generated", { date: new Date(resume.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) })}
-          </p>
+        <div className="flex items-center gap-3">
+          <div>
+            <p className="text-xs text-muted-foreground font-mono-data">
+              {resume.type in RESUME_TYPE_LABELS ? RESUME_TYPE_LABELS[resume.type] : resume.type}
+              {resume.targetRole && ` · ${resume.targetRole}`}
+            </p>
+            <p className="text-xs text-muted-foreground font-mono-data">
+              {t("generated", { date: new Date(resume.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) })}
+            </p>
+          </div>
+          <AtsScoreBadge score={resume.atsScore} tips={content.atsTips} />
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={handleCopy}>

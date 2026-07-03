@@ -37,17 +37,6 @@
       "targetRolePlaceholder": "Artista 3D Senior — Visualización Arquitectónica en Gensler",
       "languageLabel": "Idioma"
     },
-    "education": {
-      "heading": "Educación",
-      "description": "Tus títulos y certificaciones.",
-      "institutionLabel": "Institución",
-      "institutionPlaceholder": "Universidad Icesi",
-      "degreeLabel": "Título",
-      "degreePlaceholder": "Pregrado en Diseño Industrial",
-      "yearLabel": "Año",
-      "yearPlaceholder": "2014",
-      "addDegree": "Agregar título"
-    },
     "contact": {
       "heading": "Datos de contacto",
       "description": "Aparece en el encabezado de la hoja de vida. El correo se toma de tu cuenta.",
@@ -69,6 +58,8 @@
   },
   "preview": {
     "generated": "Generado el {date}",
+    "atsScore": "Puntaje ATS",
+    "atsScoreLabel": "ATS {score}%",
     "copyText": "Copiar texto",
     "copied": "¡Copiado!",
     "download": "Descargar",

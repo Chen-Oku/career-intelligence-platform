@@ -29,6 +29,7 @@ export class PrismaResumeRepository implements IResumeRepository {
           content: resume.content as object,
           targetRole: resume.targetRole ?? null,
           language: resume.language,
+          atsScore: resume.atsScore ?? null,
           isActive: true,
           // Store contact in a separate JSON field or in content
           // For MVP, we add contact to content directly

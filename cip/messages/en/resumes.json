@@ -37,17 +37,6 @@
       "targetRolePlaceholder": "Senior 3D Artist — Architectural Visualization at Gensler",
       "languageLabel": "Language"
     },
-    "education": {
-      "heading": "Education",
-      "description": "Your degrees and certifications.",
-      "institutionLabel": "Institution",
-      "institutionPlaceholder": "Universidad Icesi",
-      "degreeLabel": "Degree",
-      "degreePlaceholder": "Bachelor's in Industrial Design",
-      "yearLabel": "Year",
-      "yearPlaceholder": "2014",
-      "addDegree": "Add degree"
-    },
     "contact": {
       "heading": "Contact Details",
       "description": "Appears in the resume header. Email is pulled from your account.",
@@ -69,6 +58,8 @@
   },
   "preview": {
     "generated": "Generated {date}",
+    "atsScore": "ATS score",
+    "atsScoreLabel": "ATS {score}%",
     "copyText": "Copy text",
     "copied": "Copied!",
     "download": "Download",

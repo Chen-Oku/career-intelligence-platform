@@ -1,0 +1,41 @@
+{
+  "pageTitle": "Education",
+  "pageDescription": "Degrees, diplomas and bootcamps. Included automatically in every resume you generate.",
+  "addEducation": "Add education",
+  "loadError": "Could not load education. Please refresh the page.",
+  "ongoing": "Ongoing",
+  "emptyState": {
+    "title": "No education yet",
+    "description": "Add your degrees, diplomas or bootcamps — they're pulled into every resume automatically.",
+    "action": "Add your first entry"
+  },
+  "form": {
+    "createTitle": "Add education",
+    "editTitle": "Edit education",
+    "overview": {
+      "title": "Overview"
+    },
+    "period": {
+      "title": "Period"
+    },
+    "skills": {
+      "title": "Related skills",
+      "description": "Optional — skills or focus areas covered by this program."
+    },
+    "institutionLabel": "Institution",
+    "institutionPlaceholder": "Massachusetts Institute of Technology",
+    "degreeLabel": "Degree",
+    "degreePlaceholder": "Bachelor of Science",
+    "fieldLabel": "Field of study",
+    "fieldPlaceholder": "Computer Science",
+    "startDateLabel": "Start date",
+    "endDateLabel": "End date",
+    "isOngoingLabel": "Currently studying here",
+    "skillsPlaceholder": "Press Enter to add a skill",
+    "cancel": "Cancel",
+    "create": "Add",
+    "save": "Save",
+    "saveChanges": "Save changes",
+    "saving": "Saving..."
+  }
+}

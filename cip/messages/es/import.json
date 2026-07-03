@@ -1,6 +1,6 @@
 {
   "pageTitle": "Importar desde CV",
-  "pageDescription": "Sube tu hoja de vida (PDF o Word) y Gemini prellenará tu Experiencia, Proyectos y Habilidades. Revisa y edita todo antes de guardarlo — nada se agrega automáticamente.",
+  "pageDescription": "Sube tu hoja de vida (PDF o Word) y Gemini prellenará tu Experiencia, Proyectos, Habilidades, Educación y Certificaciones. Revisa y edita todo antes de guardarlo — nada se agrega automáticamente.",
   "upload": {
     "prompt": "Selecciona una hoja de vida en PDF o Word (.docx) (máx. 10MB)",
     "extracting": "Extrayendo…",
@@ -13,7 +13,9 @@
   "tabs": {
     "experience": "Experiencia ({count})",
     "projects": "Proyectos ({count})",
-    "skills": "Habilidades ({count})"
+    "skills": "Habilidades ({count})",
+    "education": "Educación ({count})",
+    "certifications": "Certificaciones ({count})"
   },
   "experienceReview": {
     "discard": "Descartar",
@@ -39,5 +41,19 @@
     "addedToast": "{count, plural, one {# habilidad agregada} other {# habilidades agregadas}}",
     "skippedToast": "{count, plural, one {# habilidad omitida} other {# habilidades omitidas}}",
     "skippedDescription": "Ya está en tu perfil o no se pudo guardar."
+  },
+  "educationReview": {
+    "discard": "Descartar",
+    "submitLabel": "Agregar educación",
+    "addedToast": "\"{institution}\" agregada",
+    "allReviewed": "Se revisó toda la educación extraída.",
+    "saveErrorTitle": "Error al guardar la educación"
+  },
+  "certificationReview": {
+    "discard": "Descartar",
+    "submitLabel": "Agregar certificación",
+    "addedToast": "\"{name}\" agregada",
+    "allReviewed": "Se revisaron todas las certificaciones extraídas.",
+    "saveErrorTitle": "Error al guardar la certificación"
   }
 }

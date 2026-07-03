@@ -11,6 +11,7 @@ import type { Project } from "@/domain/career/entities/Project";
 import type { Skill } from "@/domain/career/entities/Skill";
 import type { Story } from "@/domain/career/entities/Story";
 import type { Certification } from "@/domain/career/entities/Certification";
+import type { Education } from "@/domain/career/entities/Education";
 import { CATEGORY_LABELS } from "@/lib/types/skill";
 
 /**
@@ -34,9 +35,10 @@ export class ResumeGeneratorService {
     skills: Skill[],
     stories: Story[],
     certifications: Certification[],
+    education: Education[],
     config: ResumeConfig,
   ): Promise<ResumeContent> {
-    const context = this.buildContext(experiences, projects, skills, stories, certifications);
+    const context = this.buildContext(experiences, projects, skills, stories, certifications, education);
     const prompt = buildResumePrompt(context, config);
 
     const raw = await geminiComplete({
@@ -61,6 +63,7 @@ export class ResumeGeneratorService {
     skills: Skill[],
     stories: Story[],
     certifications: Certification[],
+    education: Education[],
   ): CareerContext {
     return {
       experiences: experiences.map((e) => ({
@@ -103,6 +106,14 @@ export class ResumeGeneratorService {
         name: c.name,
         issuer: c.issuer,
         year: c.issueDate?.getFullYear().toString(),
+      })),
+
+      education: education.map((e) => ({
+        institution: e.institution,
+        degree: e.degree,
+        field: e.field,
+        year: (e.isOngoing ? e.startDate : e.endDate ?? e.startDate)?.getFullYear().toString(),
+        isOngoing: e.isOngoing,
       })),
     };
   }

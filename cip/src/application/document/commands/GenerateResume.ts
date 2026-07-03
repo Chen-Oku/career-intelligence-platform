@@ -3,11 +3,13 @@ import { IProjectRepository } from "../../../domain/career/repositories/IProject
 import { ISkillRepository } from "../../../domain/career/repositories/ISkillRepository";
 import { IStoryRepository } from "../../../domain/career/repositories/IStoryRepository";
 import { ICertificationRepository } from "../../../domain/career/repositories/ICertificationRepository";
+import { IEducationRepository } from "../../../domain/career/repositories/IEducationRepository";
 import { IResumeRepository } from "../../../domain/document/repositories/IResumeRepository";
 import { Resume, ResumeType } from "../../../domain/document/entities/Resume";
 import { ResumeGeneratorService } from "../../../infrastructure/ai/gemini/ResumeGeneratorService";
+import { computeAtsScore } from "../../../infrastructure/document/AtsScorer";
 import { Result, AsyncResult } from "../../../domain/shared/Result";
-import { ResumeDTO, toResumeDTO, ResumeContact, EducationInput } from "../../../lib/types/resume";
+import { ResumeDTO, toResumeDTO, ResumeContact } from "../../../lib/types/resume";
 import { prisma } from "../../../infrastructure/database/client";
 import type { TargetJobContext } from "../../../infrastructure/ai/prompts/resume.prompts";
 import type { JobAnalysisData } from "../../../lib/types/job";
@@ -19,7 +21,6 @@ export interface GenerateResumeCommand {
   title: string;
   targetRole?: string;
   language: string;
-  education: EducationInput[];
   contact: ResumeContact;
   /** Optional: tailor the resume to a previously analyzed job posting. */
   jobDescriptionId?: string;
@@ -46,18 +47,20 @@ export class GenerateResumeUseCase {
     private readonly skillRepo: ISkillRepository,
     private readonly storyRepo: IStoryRepository,
     private readonly certificationRepo: ICertificationRepository,
+    private readonly educationRepo: IEducationRepository,
     private readonly resumeRepo: IResumeRepository,
     private readonly aiService: ResumeGeneratorService,
   ) {}
 
   async execute(command: GenerateResumeCommand): GenerateResumeResult {
     // 1. Fetch all career data in parallel — this is the "knowledge retrieval" step
-    const [experiences, projects, skills, stories, certifications] = await Promise.all([
+    const [experiences, projects, skills, stories, certifications, education] = await Promise.all([
       this.experienceRepo.findByUserId({ userId: command.userId }),
       this.projectRepo.findByUserId({ userId: command.userId }),
       this.skillRepo.findByUserId({ userId: command.userId }),
       this.storyRepo.findByUserId({ userId: command.userId }),
       this.certificationRepo.findByUserId({ userId: command.userId }),
+      this.educationRepo.findByUserId({ userId: command.userId }),
     ]);
 
     if (experiences.length === 0) {
@@ -101,6 +104,7 @@ export class GenerateResumeUseCase {
         skills,
         stories,
         certifications,
+        education,
         {
           type: command.type,
           title: command.title,
@@ -108,7 +112,6 @@ export class GenerateResumeUseCase {
           // the role extracted from the posting.
           targetRole: command.targetRole || targetJob?.role,
           language: command.language,
-          education: command.education,
           contact: command.contact,
           userName: command.userName,
           targetJob,
@@ -120,9 +123,10 @@ export class GenerateResumeUseCase {
       );
     }
 
-    // 3. Create Resume domain entity
-    // Contact is stored inside the content JSON for simplicity
-    const fullContent = { ...content, contact: command.contact };
+    // 3. Score ATS-friendliness deterministically (no extra AI call — see
+    // AtsScorer.ts) and fold the tips into the content blob alongside contact.
+    const { score: atsScore, tips: atsTips } = computeAtsScore(content, targetJob);
+    const fullContent = { ...content, contact: command.contact, atsTips };
 
     const resumeResult = Resume.create({
       userId: command.userId,
@@ -132,6 +136,7 @@ export class GenerateResumeUseCase {
       contact: command.contact,
       targetRole: command.targetRole || targetJob?.role,
       language: command.language,
+      atsScore,
     });
 
     if (!resumeResult.ok) return Result.err(resumeResult.error);

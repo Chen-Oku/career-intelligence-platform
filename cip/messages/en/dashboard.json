@@ -46,6 +46,10 @@
     "certifications": {
       "title": "Certifications",
       "description": "Courses, credentials and licenses that back up your skills."
+    },
+    "education": {
+      "title": "Education",
+      "description": "Degrees, diplomas and bootcamps, included automatically in every resume."
     }
   },
   "completeness": {
@@ -57,7 +61,7 @@
       "projects": "Add a project",
       "stories": "Write a STAR story",
       "aboutMe": "Generate your About Me",
-      "education": "Save your education in Profile"
+      "education": "Add your education"
     }
   },
   "latestAnalysis": {

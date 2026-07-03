@@ -35,6 +35,7 @@ export interface CreateResumeProps {
   contact: object;
   targetRole?: string;
   language?: string;
+  atsScore?: number;
 }
 
 /**

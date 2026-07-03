@@ -1,4 +1,4 @@
-import type { EducationInput, ResumeContact } from "@/lib/types/resume";
+import type { ResumeContact } from "@/lib/types/resume";
 import { BULLET_TRANSFORMATIONS, SUMMARY_EXAMPLE, PROJECT_EXAMPLE } from "./examples/resume.examples";
 import { RESPONSE_QUALITY_BAR } from "./shared.prompts";
 
@@ -63,12 +63,21 @@ export interface CertificationData {
   year?: string;
 }
 
+export interface EducationData {
+  institution: string;
+  degree: string;
+  field?: string;
+  year?: string;
+  isOngoing: boolean;
+}
+
 export interface CareerContext {
   experiences: ExperienceData[];
   projects: ProjectData[];
   skillGroups: SkillGroupData[];
   stories: StoryData[];
   certifications: CertificationData[];
+  education: EducationData[];
 }
 
 export interface ResumeConfig {
@@ -76,7 +85,6 @@ export interface ResumeConfig {
   title: string;
   targetRole?: string;
   language: string;
-  education: EducationInput[];
   contact: ResumeContact;
   userName: string;
   /**
@@ -111,6 +119,11 @@ Your writing style:
 - Specific over generic — "Produced 12 photorealistic renders of a 200-seat university auditorium" beats "Created architectural visualizations"
 - Each bullet answers the implicit question "so what?" — impact is always clear
 - Professional summary starts with the professional identity, not "I am" — e.g., "Industrial Designer and 3D Artist with 9+ years..."
+
+ATS SAFETY — every resume must parse cleanly through an Applicant Tracking System, not just read well to a human:
+- Plain-ASCII bullet content only — no decorative unicode symbols, emoji, or special glyphs inside bullet text.
+- Spell an acronym out in full the first time it's used, then the acronym alone after (e.g. "Unreal Engine 5 (UE5)", then "UE5").
+- Use the candidate's exact tool/skill/technology names verbatim, exactly as given in the data — never a paraphrase or a more "natural-sounding" substitute, since ATS keyword matching is literal.
 ${RESPONSE_QUALITY_BAR}
 
 You MUST respond with ONLY valid JSON. No markdown code blocks, no explanation, no preamble. Start your response with { and end with }.
@@ -143,8 +156,8 @@ export function buildResumePrompt(
     buildSkillsSection(context.skillGroups),
     context.stories.length > 0 ? buildStoriesSection(context.stories) : "",
     context.certifications.length > 0 ? buildCertificationsSection(context.certifications) : "",
-    buildEducationSection(config.education),
-    buildOutputSection(config),
+    buildEducationSection(context.education),
+    buildOutputSection(config, context),
   ];
 
   return parts.filter(Boolean).join("\n\n");
@@ -311,18 +324,28 @@ These are verified credentials the candidate holds. Where relevant, reflect them
 ${formatted.join("\n")}`;
 }
 
-function buildEducationSection(education: EducationInput[]): string {
+function buildEducationSection(education: EducationData[]): string {
   if (!education.length) return "";
 
   const formatted = education.map(
-    (e) => `${e.institution}${e.year ? ` (${e.year})` : ""}\n${e.degree}${e.field ? ` in ${e.field}` : ""}`,
+    (e) => `${e.institution}${e.year ? ` (${e.isOngoing ? `${e.year} – present` : e.year})` : ""}\n${e.degree}${e.field ? ` in ${e.field}` : ""}`,
   );
 
   return `# EDUCATION\n\n${formatted.join("\n\n")}`;
 }
 
-function buildOutputSection(config: ResumeConfig): string {
+function buildOutputSection(config: ResumeConfig, context: CareerContext): string {
   const lang = config.language === "es" ? "Spanish" : "English";
+
+  // Keyword-tailoring against a specific posting only happens when
+  // targetJob is set (buildTargetJobSection). Every other resume gets this
+  // weaker but still real ATS instruction: reuse the candidate's own real
+  // skill names verbatim instead of paraphrasing them, so a generic ATS
+  // keyword scan (with no posting to compare against) still finds them.
+  const ownSkillNames = context.skillGroups.flatMap((g) => g.skills.map((s) => s.name)).slice(0, 25);
+  const atsSelfConsistencyRule = !config.targetJob && ownSkillNames.length
+    ? `\n7. ATS keyword consistency: no specific job posting is targeted, so instead reuse the candidate's own real skill/tool names verbatim (exact spelling/casing) across the summary and experience bullets — do not paraphrase or rename them — so a generic ATS keyword scan still matches. Candidate's real skills: ${ownSkillNames.join(", ")}.`
+    : "";
 
   return `# OUTPUT RULES
 1. Summary: 3-4 sentences. Start with professional identity. Include years of experience. Mention top specializations. Never start with "I".
@@ -330,7 +353,7 @@ function buildOutputSection(config: ResumeConfig): string {
 3. Skills: Group by category (Technical, Rendering, Real-Time, Design, etc.). items array = clean names only, no level labels.
 4. Projects: 2-4 most relevant. Description = 1-2 sentences. Impact-focused.
 5. Language: ALL text in ${lang}.
-6. GROUNDING: use only data explicitly provided above. If a field has no data, omit it or leave the array empty — never fabricate.
+6. GROUNDING: use only data explicitly provided above. If a field has no data, omit it or leave the array empty — never fabricate.${atsSelfConsistencyRule}
 
 Return ONLY this JSON structure. No markdown. No explanation:
 

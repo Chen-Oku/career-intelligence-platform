@@ -4,14 +4,14 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/infrastructure/database/client";
 import {
   Briefcase, FolderOpen, Zap, BookOpen, Upload, FileText, Mail,
-  MessageCircleQuestion, Search, User, Award, ArrowRight, Target,
+  MessageCircleQuestion, Search, User, Award, GraduationCap, ArrowRight, Target,
 } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = { title: "Dashboard" };
 
 type ModuleKey =
-  | "import" | "experience" | "projects" | "skills" | "certifications"
+  | "import" | "experience" | "projects" | "skills" | "certifications" | "education"
   | "stories" | "profile" | "resumes" | "coverLetters" | "jobAnalyzer" | "interviewPrep";
 
 const MODULES: Record<ModuleKey, { href: string; icon: React.ElementType }> = {
@@ -20,6 +20,7 @@ const MODULES: Record<ModuleKey, { href: string; icon: React.ElementType }> = {
   projects: { href: "/projects", icon: FolderOpen },
   skills: { href: "/skills", icon: Zap },
   certifications: { href: "/certifications", icon: Award },
+  education: { href: "/education", icon: GraduationCap },
   stories: { href: "/stories", icon: BookOpen },
   profile: { href: "/profile", icon: User },
   resumes: { href: "/resumes", icon: FileText },
@@ -30,7 +31,7 @@ const MODULES: Record<ModuleKey, { href: string; icon: React.ElementType }> = {
 
 /** Same three-step structure as the sidebar: feed data → generate → apply. */
 const STEP_GROUPS: { stepKey: "build" | "generate" | "apply"; modules: ModuleKey[] }[] = [
-  { stepKey: "build", modules: ["import", "experience", "projects", "skills", "certifications", "stories", "profile"] },
+  { stepKey: "build", modules: ["import", "experience", "projects", "skills", "certifications", "education", "stories", "profile"] },
   { stepKey: "generate", modules: ["resumes", "coverLetters"] },
   { stepKey: "apply", modules: ["jobAnalyzer", "interviewPrep"] },
 ];
@@ -44,18 +45,19 @@ export default async function DashboardPage() {
   // Direct Prisma reads for dashboard aggregates — read-only counts don't
   // warrant use-case ceremony (same precedent as job-analyzer's GET).
   const [
-    experienceCount, projectCount, skillCount, certificationCount, storyCount,
+    experienceCount, projectCount, skillCount, certificationCount, educationCount, storyCount,
     resumeCount, coverLetterCount, jobCount, user, latestJob,
   ] = await Promise.all([
     prisma.experience.count({ where: { userId } }),
     prisma.project.count({ where: { userId } }),
     prisma.skill.count({ where: { userId } }),
     prisma.certification.count({ where: { userId } }),
+    prisma.educationEntry.count({ where: { userId } }),
     prisma.story.count({ where: { userId } }),
     prisma.resume.count({ where: { userId } }),
     prisma.coverLetter.count({ where: { userId } }),
     prisma.jobDescription.count({ where: { userId } }),
-    prisma.user.findUnique({ where: { id: userId }, select: { aboutMe: true, education: true } }),
+    prisma.user.findUnique({ where: { id: userId }, select: { aboutMe: true } }),
     prisma.jobDescription.findFirst({
       where: { userId },
       orderBy: { createdAt: "desc" },
@@ -68,6 +70,7 @@ export default async function DashboardPage() {
     projects: projectCount,
     skills: skillCount,
     certifications: certificationCount,
+    education: educationCount,
     stories: storyCount,
     resumes: resumeCount,
     coverLetters: coverLetterCount,
@@ -81,7 +84,7 @@ export default async function DashboardPage() {
     { key: "projects", done: projectCount > 0, href: "/projects" },
     { key: "stories", done: storyCount > 0, href: "/stories" },
     { key: "aboutMe", done: !!user?.aboutMe, href: "/profile" },
-    { key: "education", done: Array.isArray(user?.education) && user.education.length > 0, href: "/profile" },
+    { key: "education", done: educationCount > 0, href: "/education" },
   ];
   const completedChecks = checks.filter((c) => c.done).length;
   const percent = Math.round((completedChecks / checks.length) * 100);

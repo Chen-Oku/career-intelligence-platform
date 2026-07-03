@@ -41,12 +41,7 @@
   },
   "resumeDefaults": {
     "title": "Resume defaults",
-    "description": "Education and contact info saved here are prefilled into every resume you generate, so you never retype them.",
-    "educationHeading": "Education",
-    "institution": "Institution",
-    "degree": "Degree",
-    "year": "Year",
-    "addEducation": "Add education",
+    "description": "Contact info saved here is prefilled into every resume you generate, so you never retype it. Education is managed on its own page and included automatically.",
     "contactHeading": "Contact",
     "phone": "Phone",
     "location": "Location",

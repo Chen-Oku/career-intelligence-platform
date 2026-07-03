@@ -41,12 +41,7 @@
   },
   "resumeDefaults": {
     "title": "Datos para tus CVs",
-    "description": "La educación y datos de contacto que guardes aquí se precargan en cada CV que generes, para que no los vuelvas a escribir.",
-    "educationHeading": "Educación",
-    "institution": "Institución",
-    "degree": "Título",
-    "year": "Año",
-    "addEducation": "Agregar educación",
+    "description": "Los datos de contacto que guardes aquí se precargan en cada CV que generes, para que no los vuelvas a escribir. La educación se gestiona en su propia sección y se incluye automáticamente.",
     "contactHeading": "Contacto",
     "phone": "Teléfono",
     "location": "Ubicación",

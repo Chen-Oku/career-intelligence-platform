@@ -1,6 +1,6 @@
 {
   "pageTitle": "Import from CV",
-  "pageDescription": "Upload your resume (PDF or Word) and Gemini will pre-fill your Experience, Projects, and Skills. Review and edit everything before it's saved — nothing is added automatically.",
+  "pageDescription": "Upload your resume (PDF or Word) and Gemini will pre-fill your Experience, Projects, Skills, Education, and Certifications. Review and edit everything before it's saved — nothing is added automatically.",
   "upload": {
     "prompt": "Select a PDF or Word (.docx) resume (max 10MB)",
     "extracting": "Extracting…",
@@ -13,7 +13,9 @@
   "tabs": {
     "experience": "Experience ({count})",
     "projects": "Projects ({count})",
-    "skills": "Skills ({count})"
+    "skills": "Skills ({count})",
+    "education": "Education ({count})",
+    "certifications": "Certifications ({count})"
   },
   "experienceReview": {
     "discard": "Discard",
@@ -39,5 +41,19 @@
     "addedToast": "{count, plural, one {# skill added} other {# skills added}}",
     "skippedToast": "{count, plural, one {# skill skipped} other {# skills skipped}}",
     "skippedDescription": "Already in your profile or failed to save."
+  },
+  "educationReview": {
+    "discard": "Discard",
+    "submitLabel": "Add education",
+    "addedToast": "\"{institution}\" added",
+    "allReviewed": "All extracted education has been reviewed.",
+    "saveErrorTitle": "Failed to save education"
+  },
+  "certificationReview": {
+    "discard": "Discard",
+    "submitLabel": "Add certification",
+    "addedToast": "\"{name}\" added",
+    "allReviewed": "All extracted certifications have been reviewed.",
+    "saveErrorTitle": "Failed to save certification"
   }
 }

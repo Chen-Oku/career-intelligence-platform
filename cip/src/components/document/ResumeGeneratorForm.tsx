@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -13,9 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Loader2, Plus, Trash2, Sparkles, Target, X } from "lucide-react";
+import { Loader2, Sparkles, Target, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
 
 export function ResumeGeneratorForm() {
   const t = useTranslations("resumes.generatorForm");
@@ -43,8 +42,10 @@ export function ResumeGeneratorForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  // Education/contact live on the profile (Profile → Resume defaults) and
-  // are prefilled here — no more retyping them on every generation.
+  // Contact lives on the profile (Profile → Resume defaults) and is
+  // prefilled here — no more retyping it on every generation. Education
+  // is no longer a form field: it's fetched automatically from the
+  // Education entity during generation, same as Certifications.
   const { data: defaults } = useResumeDefaults();
 
   const form = useForm<GenerateResumeInput>({
@@ -53,23 +54,17 @@ export function ResumeGeneratorForm() {
       type: "MASTER",
       title: "",
       language: "en",
-      education: [{ institution: "", degree: "", year: "" }],
       contact: {},
     },
   });
 
-  const { fields, append, remove } = useFieldArray({ control: form.control, name: "education" });
   const watchType = form.watch("type");
 
-  // Prefill saved defaults once they load — but never clobber fields the
-  // user already started editing.
+  // Prefill saved contact defaults once they load — but never clobber
+  // fields the user already started editing.
   useEffect(() => {
     if (!defaults) return;
-    const { education, contact } = form.getValues();
-    const educationUntouched = education.length === 1 && !education[0].institution && !education[0].degree;
-    if (educationUntouched && defaults.education.length > 0) {
-      form.setValue("education", defaults.education);
-    }
+    const contact = form.getValues("contact");
     if (Object.values(contact).every((v) => !v)) {
       form.setValue("contact", defaults.contact);
     }
@@ -192,56 +187,7 @@ export function ResumeGeneratorForm() {
           </div>
         </div>
 
-        {/* ── Section 2: Education ──────────────────────────────────── */}
-        <div>
-          <h3 className="text-sm font-semibold mb-1">{t("education.heading")}</h3>
-          <p className="text-sm text-muted-foreground mb-4">{t("education.description")}</p>
-          <Separator className="mb-4" />
-          <div className="space-y-3">
-            {fields.map((field, index) => (
-              <div key={field.id} className="grid grid-cols-[1fr_1fr_80px_32px] gap-2 items-end">
-                <FormField
-                  control={form.control} name={`education.${index}.institution`}
-                  render={({ field }) => (
-                    <FormItem>
-                      {index === 0 && <FormLabel>{t("education.institutionLabel")}</FormLabel>}
-                      <FormControl><Input placeholder={t("education.institutionPlaceholder")} {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control} name={`education.${index}.degree`}
-                  render={({ field }) => (
-                    <FormItem>
-                      {index === 0 && <FormLabel>{t("education.degreeLabel")}</FormLabel>}
-                      <FormControl><Input placeholder={t("education.degreePlaceholder")} {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control} name={`education.${index}.year`}
-                  render={({ field }) => (
-                    <FormItem>
-                      {index === 0 && <FormLabel>{t("education.yearLabel")}</FormLabel>}
-                      <FormControl><Input placeholder={t("education.yearPlaceholder")} {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-                <Button type="button" variant="ghost" size="icon" className={cn("h-9 w-9 text-muted-foreground hover:text-destructive", index === 0 && "mt-6")}
-                  onClick={() => remove(index)} disabled={fields.length === 1}>
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
-              </div>
-            ))}
-            <Button type="button" variant="outline" size="sm" onClick={() => append({ institution: "", degree: "", year: "" })}>
-              <Plus className="mr-1.5 h-3.5 w-3.5" />{t("education.addDegree")}
-            </Button>
-          </div>
-        </div>
-
-        {/* ── Section 3: Contact ────────────────────────────────────── */}
+        {/* ── Section 2: Contact ────────────────────────────────────── */}
         <div>
           <h3 className="text-sm font-semibold mb-1">{t("contact.heading")}</h3>
           <p className="text-sm text-muted-foreground mb-4">{t("contact.description")}</p>

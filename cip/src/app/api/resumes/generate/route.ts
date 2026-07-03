@@ -8,6 +8,7 @@ import { PrismaProjectRepository } from "@/infrastructure/database/repositories/
 import { PrismaSkillRepository } from "@/infrastructure/database/repositories/PrismaSkillRepository";
 import { PrismaStoryRepository } from "@/infrastructure/database/repositories/PrismaStoryRepository";
 import { PrismaCertificationRepository } from "@/infrastructure/database/repositories/PrismaCertificationRepository";
+import { PrismaEducationRepository } from "@/infrastructure/database/repositories/PrismaEducationRepository";
 import { PrismaResumeRepository } from "@/infrastructure/database/repositories/PrismaResumeRepository";
 import { ResumeGeneratorService } from "@/infrastructure/ai/gemini/ResumeGeneratorService";
 import { GenerateResumeUseCase } from "@/application/document/commands/GenerateResume";
@@ -48,6 +49,7 @@ export async function POST(req: NextRequest) {
     new PrismaSkillRepository(),
     new PrismaStoryRepository(),
     new PrismaCertificationRepository(),
+    new PrismaEducationRepository(),
     new PrismaResumeRepository(),
     new ResumeGeneratorService(),
   );
@@ -60,7 +62,6 @@ export async function POST(req: NextRequest) {
       title: parsed.data.title,
       targetRole: parsed.data.targetRole,
       language: parsed.data.language,
-      education: parsed.data.education,
       jobDescriptionId: parsed.data.jobDescriptionId,
       contact: {
         email: session.user.email ?? parsed.data.contact.email,
