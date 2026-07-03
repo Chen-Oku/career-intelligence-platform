@@ -57,7 +57,7 @@ export function JobAnalysisResult({ analysis }: { analysis: JobDescriptionDTO })
             </div>
           )}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button variant="outline" size="sm" asChild>
             <Link href={`/resumes/new?jobId=${analysis.id}`}>
               <FileText className="mr-1.5 h-3.5 w-3.5" />{t("result.generateTailoredResume")}
@@ -209,13 +209,13 @@ function ResultSection({
 }) {
   return (
     <div>
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex flex-wrap items-center gap-2 mb-3">
         <span aria-hidden>{icon}</span>
         <h3 className="text-sm font-semibold">{title}</h3>
         {count !== undefined && (
           <span className="font-mono-data text-xs text-muted-foreground">({count})</span>
         )}
-        <div className="flex-1 h-px bg-border" />
+        <div className="hidden flex-1 h-px bg-border sm:block" />
         {action}
       </div>
       {children}
@@ -280,8 +280,8 @@ function QuestionAccordion({
 
           {/* Suggested answer — grounded only in the candidate's real data */}
           <div className={cn("mt-3 rounded-md border px-3 py-2.5", suggestedAnswer ? "bg-emerald-50/50 border-emerald-200/60" : "bg-muted/50 border-border")}>
-            <div className="flex items-center justify-between gap-2 mb-1.5">
-              <div className="flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+              <div className="flex items-center gap-1.5 min-w-0">
                 <Sparkles className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                 <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   {suggestedAnswer ? t("result.suggestedAnswer") : t("result.noMatchingStory")}

@@ -129,7 +129,7 @@ function InterviewPrepCard({
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button type="button" variant="outline" size="sm" disabled={isGenerating || !canGenerate} onClick={handleGenerate}>
             {isGenerating ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <Sparkles className="mr-1.5 h-3.5 w-3.5" />}
             {t("generateWithAi")}

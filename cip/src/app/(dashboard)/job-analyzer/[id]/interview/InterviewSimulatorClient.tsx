@@ -186,8 +186,8 @@ export function InterviewSimulatorClient({ jobId }: { jobId: string }) {
 
         {/* Suggested answer */}
         <div className={cn("rounded-md border px-3 py-2.5", current.suggestedAnswer ? "bg-emerald-50/50 border-emerald-200/60" : "bg-muted/50 border-border")}>
-          <div className="flex items-center justify-between gap-2 mb-1.5">
-            <div className="flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+            <div className="flex items-center gap-1.5 min-w-0">
               <Sparkles className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
               <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 {current.suggestedAnswer ? t("question.suggestedAnswer") : t("question.noMatchingStory")}
