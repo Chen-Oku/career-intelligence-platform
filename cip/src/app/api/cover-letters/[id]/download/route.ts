@@ -34,8 +34,8 @@ export async function GET(req: NextRequest, { params }: P) {
   const coverLetter = await repo.findById(id, session.user.id);
   if (!coverLetter) return NextResponse.json({ error: "Not found." }, { status: 404 });
 
-  const user = await prisma.user.findUnique({ where: { id: session.user.id }, select: { name: true } });
-  const name = user?.name ?? "Professional";
+  const user = await prisma.user.findUnique({ where: { id: session.user.id }, select: { displayName: true, name: true } });
+  const name = user?.displayName?.trim() || user?.name || "Professional";
 
   const renderer = new CoverLetterDocumentRenderer();
   const buffer = format === "pdf"

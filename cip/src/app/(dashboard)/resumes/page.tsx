@@ -57,7 +57,7 @@ export default function ResumesPage() {
                     <h3 className="text-sm font-semibold truncate hover:text-primary transition-colors">{resume.title}</h3>
                   </Link>
                   <p className="text-xs text-muted-foreground mt-0.5 font-mono-data">
-                    {RESUME_TYPE_LABELS[resume.type] ?? resume.type}
+                    {resume.typeLabel ?? (RESUME_TYPE_LABELS[resume.type] ?? resume.type)}
                     {resume.targetRole && ` · ${resume.targetRole}`}
                     {" · "}
                     {new Date(resume.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}

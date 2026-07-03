@@ -36,7 +36,9 @@
       "targetRoleDescription": "Entre más específico, mejor la personalización.",
       "professionalTitleDescription": "Se muestra debajo de tu nombre en el encabezado de la hoja de vida — ej. \"Artista 3D Senior\".",
       "targetRolePlaceholder": "Artista 3D Senior — Visualización Arquitectónica en Gensler",
-      "languageLabel": "Idioma"
+      "languageLabel": "Idioma",
+      "builtinMaster": "Master Resume",
+      "builtinCustom": "Personalizado (especifica el rol objetivo)"
     },
     "contact": {
       "heading": "Datos de contacto",
@@ -84,6 +86,7 @@
     "headerSection": "Encabezado",
     "targetRoleLabel": "Título profesional / rol objetivo",
     "targetRolePlaceholder": "Artista 3D Senior",
+    "suggestTargetRole": "Sugerir con IA",
     "contactFields": {
       "phone": "Teléfono",
       "location": "Ubicación",

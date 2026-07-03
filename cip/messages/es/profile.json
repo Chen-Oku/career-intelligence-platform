@@ -42,6 +42,9 @@
   "resumeDefaults": {
     "title": "Datos para tus CVs",
     "description": "Los datos de contacto que guardes aquí se precargan en cada CV que generes, para que no los vuelvas a escribir. La educación se gestiona en su propia sección y se incluye automáticamente.",
+    "displayName": "Nombre que aparece en los documentos",
+    "displayNameHint": "Reemplaza el nombre de tu cuenta en las hojas de vida y cartas de presentación generadas — útil si el nombre de tu cuenta incluye un apodo o alias que no quieres en un documento profesional. Déjalo en blanco para usar el nombre de tu cuenta.",
+    "displayNamePlaceholder": "ej. Miguel Velandia",
     "contactHeading": "Contacto",
     "phone": "Teléfono",
     "location": "Ubicación",
@@ -49,5 +52,40 @@
     "portfolio": "Portafolio",
     "save": "Guardar datos",
     "saving": "Guardando..."
+  },
+  "resumeTypePresets": {
+    "title": "Tipos de CV personalizados",
+    "description": "Ángulos de CV personalizados que puedes elegir al generar — ej. \"ArchViz\", \"Backend Engineer\", \"Diseño de producto\". Master y Personalizado están siempre disponibles y no necesitan un preset.",
+    "addPreset": "Agregar tipo",
+    "suggestWithAi": "Sugerir con IA",
+    "emptyState": {
+      "title": "Aún no tienes tipos personalizados",
+      "description": "Agrega uno manualmente, o deja que la IA sugiera algunos a partir de tu historial profesional."
+    },
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "ej. Backend Engineer",
+      "focus": "Enfoque",
+      "focusPlaceholder": "¿Qué debería enfatizar el CV para este ángulo?",
+      "vocabulary": "Vocabulario",
+      "vocabularyPlaceholder": "Términos separados por coma a los que darle peso",
+      "prioritizeKeywords": "Palabras clave prioritarias",
+      "prioritizeKeywordsPlaceholder": "Separadas por coma, las más importantes primero",
+      "defaultTitle": "Título profesional por defecto",
+      "createTitle": "Nuevo tipo",
+      "editTitle": "Editar tipo",
+      "create": "Crear",
+      "saveChanges": "Guardar cambios",
+      "cancel": "Cancelar"
+    },
+    "suggest": {
+      "dialogTitle": "Tipos sugeridos",
+      "dialogDescription": "Basado en tu experiencia, proyectos, habilidades e historias. Revisa y agrega los que te sirvan.",
+      "empty": "No hay sugerencias esta vez.",
+      "selectedCount": "{count} de {total} seleccionados",
+      "addSelected": "Agregar {count} seleccionados",
+      "resultToast": "{added} tipo(s) agregado(s)",
+      "resultFailed": "{failed} fallaron"
+    }
   }
 }

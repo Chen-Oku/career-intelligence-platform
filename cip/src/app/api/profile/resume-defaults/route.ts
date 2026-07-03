@@ -13,12 +13,13 @@ export async function GET() {
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { contactInfo: true },
+    select: { displayName: true, contactInfo: true },
   });
 
   // Stored blob is validated on write, but re-parse on read so a manual
   // DB edit can't feed the form malformed data — fall back to empty defaults.
   const parsed = resumeDefaultsSchema.safeParse({
+    displayName: user?.displayName ?? undefined,
     contact: user?.contactInfo ?? {},
   });
 

@@ -82,6 +82,10 @@ export interface CareerContext {
 
 export interface ResumeConfig {
   type: string;
+  /** Human-readable resume type name — what the prompt shows the model, since `type` can be an opaque preset id. */
+  typeLabel: string;
+  /** Prompt-tuning data resolved from the user's ResumeTypePreset, when `type` isn't a MASTER/CUSTOM built-in. */
+  typeProfile?: { name: string; focus: string; vocabulary?: string; prioritize: string[] };
   title: string;
   targetRole?: string;
   language: string;
@@ -165,57 +169,12 @@ export function buildResumePrompt(
 
 // ─── Section Builders ─────────────────────────────────────────────────────────
 
-/**
- * One profile per resume type: the focus/vocabulary text feeds the prompt's
- * TYPE-SPECIFIC INSTRUCTIONS, and `prioritize` doubles as the keyword list
- * buildSkillsSection uses to reorder each category so the most relevant
- * items for this type of CV come first (see TYPE_PRIORITY_SKILLS below).
- */
-const TYPE_PROFILES: Record<string, { focus: string; vocabulary: string; prioritize: string[] }> = {
-  ARCHVIZ: {
-    focus: "Photorealistic rendering, architectural software expertise, project scale, client presentation impact.",
-    vocabulary: "ArchViz, visualization, rendering, photorealistic, immersive, spatial, walkthrough, fly-through.",
-    prioritize: ["3ds Max", "Corona", "V-Ray", "Unreal Engine", "rendering", "visualization", "architecture"],
-  },
-  GAMEPLAY: {
-    focus: "Real-time environments, game engines, performance optimization, interactive design.",
-    vocabulary: "Real-time, frame budget, LOD, game-ready, optimization, playtest, iteration.",
-    prioritize: ["Unreal Engine", "Unity", "gameplay", "level design", "real-time", "optimization"],
-  },
-  TECHNICAL_ARTIST: {
-    focus: "Pipeline tools, shaders, optimization, the bridge between art and engineering.",
-    vocabulary: "Shader, pipeline, LOD, rig, tool, automation, procedural, optimization.",
-    prioritize: ["Python", "MEL", "shader", "pipeline", "tool", "automation", "rigging", "scripting"],
-  },
-  GRAPHIC_DESIGNER: {
-    focus: "Visual identity, layout composition, typography, brand consistency across deliverables.",
-    vocabulary: "Brand identity, layout, typography, composition, print-ready, art direction.",
-    prioritize: ["Photoshop", "Illustrator", "InDesign", "Figma", "typography", "branding", "layout"],
-  },
-  BTL: {
-    focus: "Brand activations, spatial design, production coordination, client presentations.",
-    vocabulary: "Brand experience, activation, installation, spatial, production-ready, fabrication.",
-    prioritize: ["activation", "production", "spatial design", "fabrication", "client presentation"],
-  },
-  ENVIRONMENT_ARTIST: {
-    focus: "World-building, terrain/foliage systems, modular environment kits, visual storytelling through space.",
-    vocabulary: "Modular kit, terrain, foliage, lighting mood, environment storytelling, set dressing.",
-    prioritize: ["World Machine", "Substance", "Unreal Engine", "modular", "terrain", "environment", "lighting"],
-  },
-  VFX: {
-    focus: "Particle/simulation systems, real-time or offline effects, performance budget for effects.",
-    vocabulary: "Particle system, simulation, Niagara, compositing, effect budget, shader-driven FX.",
-    prioritize: ["Niagara", "Houdini", "particle", "simulation", "compositing", "effects"],
-  },
-  MASTER: {
-    focus: "Comprehensive overview. Include all relevant experience. Use versatile language that works across industries.",
-    vocabulary: "",
-    prioritize: [],
-  },
-};
+/** MASTER has no user-defined preset — this is its fixed instruction text. */
+const MASTER_FALLBACK_FOCUS =
+  "Comprehensive overview. Include all relevant experience. Use versatile language that works across industries.";
 
 function buildConfigSection(config: ResumeConfig): string {
-  const profile = TYPE_PROFILES[config.type];
+  const profile = config.typeProfile;
 
   const instructions = config.type === "CUSTOM"
     ? (config.targetRole
@@ -224,11 +183,11 @@ function buildConfigSection(config: ResumeConfig): string {
     : profile
       ? [`Focus on: ${profile.focus}`, profile.vocabulary && `Vocabulary: ${profile.vocabulary}`, profile.prioritize.length && `Prioritize: ${profile.prioritize.join(", ")}.`]
           .filter(Boolean).join("\n")
-      : TYPE_PROFILES.MASTER.focus;
+      : MASTER_FALLBACK_FOCUS;
 
   return `# RESUME CONFIGURATION
 Name: ${config.userName}
-Type: ${config.type}${config.targetRole ? `\nTarget Role: ${config.targetRole}` : ""}
+Type: ${config.typeLabel}${config.targetRole ? `\nTarget Role: ${config.targetRole}` : ""}
 Language: ${config.language === "es" ? "Spanish — write ALL content in Spanish" : "English"}
 
 TYPE-SPECIFIC INSTRUCTIONS:
@@ -308,11 +267,11 @@ function buildProjectsSection(projects: ProjectData[]): string {
 /**
  * Keywords used to sort each category's items so the ones most relevant to
  * this resume come first — a target job's own required/nice-to-have skills
- * win when one is set, otherwise the resume type's profile (TYPE_PROFILES).
+ * win when one is set, otherwise the resume type's preset (config.typeProfile).
  */
 function priorityKeywords(config: ResumeConfig): string[] {
   if (config.targetJob) return [...config.targetJob.requiredSkills, ...config.targetJob.niceToHaveSkills];
-  return TYPE_PROFILES[config.type]?.prioritize ?? [];
+  return config.typeProfile?.prioritize ?? [];
 }
 
 function buildSkillsSection(groups: SkillGroupData[], config: ResumeConfig): string {

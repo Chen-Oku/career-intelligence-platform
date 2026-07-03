@@ -20,6 +20,11 @@ model User {
   id               String           @id @default(cuid())
   email            String           @unique
   name             String?
+  // Name shown on generated documents (resume header, cover letter
+  // signature). Defaults to `name` (from the OAuth provider) but is
+  // separately editable — `name` can carry a nickname/alias from the
+  // provider profile that isn't fit for a professional document.
+  displayName      String?
   avatar           String?
   subscriptionTier SubscriptionTier @default(FREE)
   // Profile — single editable AI-generated text per field, no version history.
@@ -55,6 +60,7 @@ model User {
 
   // Document Context relations
   resumes           Resume[]
+  resumeTypePresets ResumeTypePreset[]
   coverLetters      CoverLetter[]
 
   // Intelligence Context relations
@@ -302,7 +308,13 @@ model EducationEntry {
 model Resume {
   id            String     @id @default(cuid())
   userId        String
-  type          ResumeType
+  // "MASTER", "CUSTOM" (universal built-ins), or a ResumeTypePreset.id
+  // (per-user preset). Immutable after creation — see typeLabel below.
+  type          String
+  // Display name resolved at generation time (preset's name, or the
+  // built-in's label) — denormalized so the resumes list/preview never
+  // need to join against a preset that could later be edited or deleted.
+  typeLabel     String?
   title         String
   // Structured content — not a raw string. AI returns JSON matching
   // a defined ResumeContent interface so we can render it as needed.
@@ -321,16 +333,25 @@ model Resume {
   @@map("resumes")
 }
 
-enum ResumeType {
-  MASTER
-  ARCHVIZ
-  GAMEPLAY
-  TECHNICAL_ARTIST
-  GRAPHIC_DESIGNER
-  BTL
-  ENVIRONMENT_ARTIST
-  VFX
-  CUSTOM
+// Per-user "resume type" presets — replaces the old fixed enum. MASTER and
+// CUSTOM stay as universal built-ins (not rows here); everything else is a
+// user-defined specialization used to tune the generation prompt's focus,
+// vocabulary, and skill-priority keywords.
+model ResumeTypePreset {
+  id                 String   @id @default(cuid())
+  userId             String
+  name               String
+  focus              String
+  vocabulary         String?
+  prioritizeKeywords String[]
+  defaultTitle       String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("resume_type_presets")
 }
 
 model CoverLetter {

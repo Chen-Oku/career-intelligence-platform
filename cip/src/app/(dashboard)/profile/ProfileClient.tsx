@@ -17,6 +17,7 @@ import {
 } from "@/hooks/useProfile";
 import { VoiceGuideCard } from "./VoiceGuideCard";
 import { ResumeDefaultsCard } from "./ResumeDefaultsCard";
+import { ResumeTypePresetsCard } from "./ResumeTypePresetsCard";
 import type { AnswerFeedback } from "@/lib/types/interviewCoach";
 
 const GUIDED_QUESTION_SETS = {
@@ -64,6 +65,7 @@ export function ProfileClient() {
             guidedQuestionSet="strengths"
           />
           <ResumeDefaultsCard />
+          <ResumeTypePresetsCard />
         </div>
       )}
     </div>

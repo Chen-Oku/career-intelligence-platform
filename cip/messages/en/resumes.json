@@ -36,7 +36,9 @@
       "targetRoleDescription": "The more specific, the better the tailoring.",
       "professionalTitleDescription": "Shown under your name in the resume header — e.g. \"Senior 3D Artist\".",
       "targetRolePlaceholder": "Senior 3D Artist — Architectural Visualization at Gensler",
-      "languageLabel": "Language"
+      "languageLabel": "Language",
+      "builtinMaster": "Master Resume",
+      "builtinCustom": "Custom (specify target role)"
     },
     "contact": {
       "heading": "Contact Details",
@@ -84,6 +86,7 @@
     "headerSection": "Header",
     "targetRoleLabel": "Professional title / target role",
     "targetRolePlaceholder": "Senior 3D Artist",
+    "suggestTargetRole": "Suggest with AI",
     "contactFields": {
       "phone": "Phone",
       "location": "Location",

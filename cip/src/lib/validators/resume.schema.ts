@@ -1,10 +1,5 @@
 import { z } from "zod";
 
-const RESUME_TYPES = [
-  "MASTER", "ARCHVIZ", "GAMEPLAY", "TECHNICAL_ARTIST",
-  "GRAPHIC_DESIGNER", "BTL", "ENVIRONMENT_ARTIST", "VFX", "CUSTOM",
-] as const;
-
 export const contactSchema = z.object({
   email:     z.string().email().optional().or(z.literal("")),
   phone:     z.string().max(30).optional(),
@@ -21,13 +16,19 @@ export const contactSchema = z.object({
  * generation, same as Certifications.
  */
 export const resumeDefaultsSchema = z.object({
+  // Name shown on generated documents — overrides the account's OAuth
+  // name (which can carry a nickname/alias unfit for a resume header).
+  displayName: z.string().max(200).optional(),
   contact: contactSchema,
 });
 
 export type ResumeDefaultsInput = z.infer<typeof resumeDefaultsSchema>;
 
 export const generateResumeSchema = z.object({
-  type:       z.enum(RESUME_TYPES, { required_error: "Resume type is required." }),
+  // "MASTER"/"CUSTOM" (built-in) or a ResumeTypePreset id — can't be a
+  // static Zod enum since presets are a dynamic, per-user list.
+  // GenerateResumeUseCase resolves/validates the actual value.
+  type:       z.string().min(1, "Resume type is required."),
   title:      z.string().min(1, "Title is required.").max(200),
   targetRole: z.string().max(200).optional(),
   language:   z.enum(["en", "es"]).default("en"),
@@ -38,7 +39,6 @@ export const generateResumeSchema = z.object({
 });
 
 export type GenerateResumeInput = z.infer<typeof generateResumeSchema>;
-export { RESUME_TYPES };
 
 // ─── Resume editor (PATCH /api/resumes/[id]) ──────────────────────────────────
 
@@ -84,6 +84,14 @@ export const updateResumeContentSchema = z.object({
 
 export type UpdateResumeContentInput = z.infer<typeof updateResumeContentSchema>;
 
+/**
+ * Legacy-fallback-only display map — used only when a Resume row predates
+ * the per-user resume-type-preset migration and its `typeLabel` column is
+ * null. Never used to build the resume-type picker: that's per-user
+ * ResumeTypePreset rows plus the 2 built-ins (MASTER/CUSTOM), sourced via
+ * next-intl so the picker stays localized — this map was always
+ * English-only and is not maintained going forward.
+ */
 export const RESUME_TYPE_LABELS: Record<string, string> = {
   MASTER:            "Master Resume",
   ARCHVIZ:           "Architectural Visualization",

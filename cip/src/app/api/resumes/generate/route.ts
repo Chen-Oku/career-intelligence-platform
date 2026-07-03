@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { prisma } from "@/infrastructure/database/client";
 import { withUserAiContext } from "@/infrastructure/ai/requestAiContext";
 import { PrismaExperienceRepository } from "@/infrastructure/database/repositories/PrismaExperienceRepository";
 import { PrismaProjectRepository } from "@/infrastructure/database/repositories/PrismaProjectRepository";
@@ -10,10 +11,10 @@ import { PrismaStoryRepository } from "@/infrastructure/database/repositories/Pr
 import { PrismaCertificationRepository } from "@/infrastructure/database/repositories/PrismaCertificationRepository";
 import { PrismaEducationRepository } from "@/infrastructure/database/repositories/PrismaEducationRepository";
 import { PrismaResumeRepository } from "@/infrastructure/database/repositories/PrismaResumeRepository";
+import { PrismaResumeTypePresetRepository } from "@/infrastructure/database/repositories/PrismaResumeTypePresetRepository";
 import { ResumeGeneratorService } from "@/infrastructure/ai/gemini/ResumeGeneratorService";
 import { GenerateResumeUseCase } from "@/application/document/commands/GenerateResume";
 import { generateResumeSchema } from "@/lib/validators/resume.schema";
-import type { ResumeType } from "@/domain/document/entities/Resume";
 
 /**
  * POST /api/resumes/generate
@@ -52,13 +53,17 @@ export async function POST(req: NextRequest) {
     new PrismaEducationRepository(),
     new PrismaResumeRepository(),
     new ResumeGeneratorService(),
+    new PrismaResumeTypePresetRepository(),
   );
+
+  const user = await prisma.user.findUnique({ where: { id: session.user.id }, select: { displayName: true, name: true } });
+  const userName = user?.displayName?.trim() || user?.name || session.user.name || "Professional";
 
   const result = await withUserAiContext(session.user.id, () =>
     useCase.execute({
       userId: session.user.id,
-      userName: session.user.name ?? "Professional",
-      type: parsed.data.type as ResumeType,
+      userName,
+      type: parsed.data.type,
       title: parsed.data.title,
       targetRole: parsed.data.targetRole,
       language: parsed.data.language,

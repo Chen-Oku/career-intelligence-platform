@@ -20,6 +20,7 @@ export class UpdateResumeDefaultsUseCase {
       await prisma.user.update({
         where: { id: command.userId },
         data: {
+          displayName: command.defaults.displayName?.trim() || null,
           contactInfo: command.defaults.contact,
         },
       });

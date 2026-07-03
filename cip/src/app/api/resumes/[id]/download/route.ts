@@ -35,8 +35,8 @@ export async function GET(req: NextRequest, { params }: P) {
   const resume = await repo.findById(id, session.user.id);
   if (!resume) return NextResponse.json({ error: "Not found." }, { status: 404 });
 
-  const user = await prisma.user.findUnique({ where: { id: session.user.id }, select: { name: true } });
-  const name = user?.name ?? "Professional";
+  const user = await prisma.user.findUnique({ where: { id: session.user.id }, select: { displayName: true, name: true } });
+  const name = user?.displayName?.trim() || user?.name || "Professional";
 
   const renderer = new ResumeDocumentRenderer();
   const content = resume.content as ResumeContent;

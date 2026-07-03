@@ -74,6 +74,18 @@ export function useUpdateResume() {
   });
 }
 
+export function useSuggestTargetRole() {
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: (id: string) =>
+      fetchJson<string[]>(`/api/resumes/${id}/suggest-target-role`, { method: "POST" }),
+    onError: (error: Error) => {
+      toast({ title: "Suggestion failed", description: error.message, variant: "destructive" });
+    },
+  });
+}
+
 function filenameFromContentDisposition(header: string | null, fallback: string): string {
   const match = header?.match(/filename="([^"]+)"/);
   return match?.[1] ?? fallback;

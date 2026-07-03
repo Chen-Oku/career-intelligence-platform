@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Loader2, Plus, Trash2, X } from "lucide-react";
+import { Loader2, Plus, Sparkles, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useExperiences } from "@/hooks/useExperiences";
 import { useProjects } from "@/hooks/useProjects";
-import { useUpdateResume } from "@/hooks/useResumes";
+import { useUpdateResume, useSuggestTargetRole } from "@/hooks/useResumes";
 import { ResumeDocument } from "./ResumeDocument";
 import { PaginatedPage } from "./PaginatedPage";
 import type { ResumeDTO, ResumeContent, ResumeContact } from "@/lib/types/resume";
@@ -37,12 +37,19 @@ export function ResumeEditor({ resume, userName, onDone }: { resume: ResumeDTO; 
   const t = useTranslations("resumes.editor");
   const tPreview = useTranslations("resumes.preview");
   const { mutate: updateResume, isPending } = useUpdateResume();
+  const { mutateAsync: suggestTargetRole, isPending: isSuggesting } = useSuggestTargetRole();
   const { data: allExperiences } = useExperiences();
   const { data: allProjects } = useProjects();
 
   const [content, setContent] = useState<ResumeContent>(resume.content as ResumeContent);
   const [contact, setContact] = useState<ResumeContact>(resume.contact as ResumeContact);
   const [targetRole, setTargetRole] = useState(resume.targetRole ?? "");
+  const [roleSuggestions, setRoleSuggestions] = useState<string[] | null>(null);
+
+  const handleSuggestTargetRole = async () => {
+    const suggestions = await suggestTargetRole(resume.id);
+    if (suggestions) setRoleSuggestions(suggestions);
+  };
 
   const labels = {
     summary: tPreview("sections.summary"),
@@ -158,8 +165,31 @@ export function ResumeEditor({ resume, userName, onDone }: { resume: ResumeDTO; 
           <h3 className="text-sm font-semibold">{t("headerSection")}</h3>
           <Separator />
           <div className="space-y-2">
-            <Label>{t("targetRoleLabel")}</Label>
+            <div className="flex items-center justify-between">
+              <Label>{t("targetRoleLabel")}</Label>
+              <Button
+                type="button" variant="ghost" size="sm" className="h-6 px-2 text-xs text-muted-foreground"
+                disabled={isSuggesting} onClick={handleSuggestTargetRole}
+              >
+                {isSuggesting ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : <Sparkles className="mr-1 h-3 w-3" />}
+                {t("suggestTargetRole")}
+              </Button>
+            </div>
             <Input value={targetRole} onChange={(e) => setTargetRole(e.target.value)} placeholder={t("targetRolePlaceholder")} />
+            {roleSuggestions && roleSuggestions.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {roleSuggestions.map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    onClick={() => { setTargetRole(suggestion); setRoleSuggestions(null); }}
+                    className="rounded-full border border-border px-2.5 py-1 text-xs hover:bg-muted"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">

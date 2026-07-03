@@ -1,23 +1,17 @@
 import { Entity } from "../../shared/Entity";
 import { Result } from "../../shared/Result";
 
-export const ResumeType = {
-  MASTER:           "MASTER",
-  ARCHVIZ:          "ARCHVIZ",
-  GAMEPLAY:         "GAMEPLAY",
-  TECHNICAL_ARTIST: "TECHNICAL_ARTIST",
-  GRAPHIC_DESIGNER: "GRAPHIC_DESIGNER",
-  BTL:              "BTL",
-  ENVIRONMENT_ARTIST:"ENVIRONMENT_ARTIST",
-  VFX:              "VFX",
-  CUSTOM:           "CUSTOM",
-} as const;
-
-export type ResumeType = (typeof ResumeType)[keyof typeof ResumeType];
+// "MASTER"/"CUSTOM" (universal built-ins) or a ResumeTypePreset id
+// (per-user preset) — see ResumeTypePreset.ts.
+export type ResumeType = string;
 
 export interface ResumeProps {
   userId: string;
   type: ResumeType;
+  // Display name resolved at generation time (preset's name, or the
+  // built-in's label) — immutable, same as `type`. See typeLabel doc on
+  // the Prisma model for why this is denormalized rather than joined.
+  typeLabel?: string;
   title: string;
   content: object;           // ResumeContent — typed in lib/types/resume
   contact: object;           // ResumeContact
@@ -30,6 +24,7 @@ export interface ResumeProps {
 export interface CreateResumeProps {
   userId: string;
   type: ResumeType;
+  typeLabel: string;
   title: string;
   content: object;
   contact: object;
@@ -55,6 +50,7 @@ export class Resume extends Entity<ResumeProps> {
 
   get userId(): string        { return this.props.userId; }
   get type(): ResumeType      { return this.props.type; }
+  get typeLabel(): string | undefined { return this.props.typeLabel; }
   get title(): string         { return this.props.title; }
   get content(): object       { return this.props.content; }
   get contact(): object       { return this.props.contact; }

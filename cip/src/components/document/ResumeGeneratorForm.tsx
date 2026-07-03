@@ -4,17 +4,18 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { generateResumeSchema, GenerateResumeInput, RESUME_TYPES, RESUME_TYPE_LABELS } from "@/lib/validators/resume.schema";
+import { generateResumeSchema, GenerateResumeInput } from "@/lib/validators/resume.schema";
 import { useGenerateResume } from "@/hooks/useResumes";
 import { useJobAnalysis } from "@/hooks/useJobAnalyzer";
 import { useResumeDefaults } from "@/hooks/useProfile";
+import { useResumeTypePresets } from "@/hooks/useResumeTypePresets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Loader2, Sparkles, Target, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function ResumeGeneratorForm() {
   const t = useTranslations("resumes.generatorForm");
@@ -47,6 +48,7 @@ export function ResumeGeneratorForm() {
   // is no longer a form field: it's fetched automatically from the
   // Education entity during generation, same as Certifications.
   const { data: defaults } = useResumeDefaults();
+  const { data: presets } = useResumeTypePresets();
 
   const form = useForm<GenerateResumeInput>({
     resolver: zodResolver(generateResumeSchema),
@@ -59,6 +61,22 @@ export function ResumeGeneratorForm() {
   });
 
   const watchType = form.watch("type");
+
+  // Prefill targetRole from the resume type's default title when the type
+  // changes — respects manual edits: only overwrites when the field is
+  // empty or still holds the previous type's auto-filled value. Skipped
+  // entirely once a target job is set (that flow drives targetRole itself).
+  const lastAutoTargetRole = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    if (targetJob) return;
+    const suggested = presets?.find((p) => p.id === watchType)?.defaultTitle;
+    const current = form.getValues("targetRole");
+    if (!current || current === lastAutoTargetRole.current) {
+      form.setValue("targetRole", suggested ?? "");
+      lastAutoTargetRole.current = suggested;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchType]);
 
   // Prefill saved contact defaults once they load — but never clobber
   // fields the user already started editing.
@@ -136,9 +154,11 @@ export function ResumeGeneratorForm() {
                   <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
                     <SelectContent>
-                      {RESUME_TYPES.map((rt) => (
-                        <SelectItem key={rt} value={rt}>{RESUME_TYPE_LABELS[rt]}</SelectItem>
+                      <SelectItem value="MASTER">{t("resumeType.builtinMaster")}</SelectItem>
+                      {presets?.map((preset) => (
+                        <SelectItem key={preset.id} value={preset.id}>{preset.name}</SelectItem>
                       ))}
+                      <SelectItem value="CUSTOM">{t("resumeType.builtinCustom")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

@@ -42,6 +42,9 @@
   "resumeDefaults": {
     "title": "Resume defaults",
     "description": "Contact info saved here is prefilled into every resume you generate, so you never retype it. Education is managed on its own page and included automatically.",
+    "displayName": "Name shown on documents",
+    "displayNameHint": "Overrides your account name on generated resumes and cover letters — useful if your account name includes a nickname or alias you don't want on a professional document. Leave blank to use your account name.",
+    "displayNamePlaceholder": "e.g. Miguel Velandia",
     "contactHeading": "Contact",
     "phone": "Phone",
     "location": "Location",
@@ -49,5 +52,40 @@
     "portfolio": "Portfolio",
     "save": "Save defaults",
     "saving": "Saving..."
+  },
+  "resumeTypePresets": {
+    "title": "Resume type presets",
+    "description": "Custom resume angles you can pick from when generating — e.g. \"ArchViz\", \"Backend Engineer\", \"Product Design\". Master and Custom are always available and don't need a preset.",
+    "addPreset": "Add preset",
+    "suggestWithAi": "Suggest with AI",
+    "emptyState": {
+      "title": "No presets yet",
+      "description": "Add one manually, or let AI suggest some from your career data."
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "e.g. Backend Engineer",
+      "focus": "Focus",
+      "focusPlaceholder": "What should the resume emphasize for this angle?",
+      "vocabulary": "Vocabulary",
+      "vocabularyPlaceholder": "Comma-separated terms to lean on",
+      "prioritizeKeywords": "Priority keywords",
+      "prioritizeKeywordsPlaceholder": "Comma-separated, most important first",
+      "defaultTitle": "Default professional title",
+      "createTitle": "New preset",
+      "editTitle": "Edit preset",
+      "create": "Create",
+      "saveChanges": "Save changes",
+      "cancel": "Cancel"
+    },
+    "suggest": {
+      "dialogTitle": "Suggested presets",
+      "dialogDescription": "Based on your experience, projects, skills, and stories. Review and add the ones that fit.",
+      "empty": "No suggestions this time.",
+      "selectedCount": "{count} of {total} selected",
+      "addSelected": "Add {count} selected",
+      "resultToast": "{added} preset(s) added",
+      "resultFailed": "{failed} failed"
+    }
   }
 }

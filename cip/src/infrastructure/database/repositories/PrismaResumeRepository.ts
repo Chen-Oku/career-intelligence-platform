@@ -1,7 +1,7 @@
 import type { Resume as PrismaResume } from "@prisma/client";
 import { prisma } from "../client";
 import { IResumeRepository } from "../../../domain/document/repositories/IResumeRepository";
-import { Resume, ResumeProps, ResumeType } from "../../../domain/document/entities/Resume";
+import { Resume, ResumeProps } from "../../../domain/document/entities/Resume";
 import { Result } from "../../../domain/shared/Result";
 
 export class PrismaResumeRepository implements IResumeRepository {
@@ -25,6 +25,7 @@ export class PrismaResumeRepository implements IResumeRepository {
           id: resume.id,
           userId: resume.userId,
           type: resume.type,
+          typeLabel: resume.typeLabel ?? null,
           title: resume.title,
           content: resume.content as object,
           targetRole: resume.targetRole ?? null,
@@ -84,7 +85,8 @@ export class PrismaResumeRepository implements IResumeRepository {
 
     const props: ResumeProps = {
       userId: r.userId,
-      type: r.type as ResumeType,
+      type: r.type,
+      typeLabel: r.typeLabel ?? undefined,
       title: r.title,
       content: content as object,
       contact,

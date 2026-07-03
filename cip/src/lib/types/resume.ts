@@ -56,6 +56,7 @@ export interface ResumeContact {
 export interface ResumeDTO {
   id: string;
   type: string;
+  typeLabel?: string;
   title: string;
   targetRole?: string;
   language: string;
@@ -69,6 +70,7 @@ export function toResumeDTO(resume: Resume): ResumeDTO {
   return {
     id: resume.id,
     type: resume.type,
+    typeLabel: resume.typeLabel,
     title: resume.title,
     targetRole: resume.targetRole,
     language: resume.language,

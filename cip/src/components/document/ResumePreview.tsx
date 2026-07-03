@@ -56,7 +56,7 @@ export function ResumePreview({ resume, userName, onEdit }: { resume: ResumeDTO;
         <div className="flex items-center gap-3">
           <div>
             <p className="text-xs text-muted-foreground font-mono-data">
-              {resume.type in RESUME_TYPE_LABELS ? RESUME_TYPE_LABELS[resume.type] : resume.type}
+              {resume.typeLabel ?? (resume.type in RESUME_TYPE_LABELS ? RESUME_TYPE_LABELS[resume.type] : resume.type)}
               {resume.targetRole && ` · ${resume.targetRole}`}
             </p>
             <p className="text-xs text-muted-foreground font-mono-data">

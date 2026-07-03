@@ -10,7 +10,7 @@ import { useResumeDefaults, useSaveResumeDefaults } from "@/hooks/useProfile";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 /**
  * ResumeDefaultsCard — contact info saved once on the profile and
@@ -24,7 +24,7 @@ export function ResumeDefaultsCard() {
 
   const form = useForm<ResumeDefaultsInput>({
     resolver: zodResolver(resumeDefaultsSchema),
-    defaultValues: { contact: {} },
+    defaultValues: { displayName: "", contact: {} },
   });
 
   // Load saved defaults into the form once fetched. reset (not setValue)
@@ -48,6 +48,18 @@ export function ResumeDefaultsCard() {
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit((values) => save(values))} className="space-y-6">
+              {/* Display name */}
+              <FormField control={form.control} name="displayName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("displayName")}</FormLabel>
+                    <FormDescription>{t("displayNameHint")}</FormDescription>
+                    <FormControl><Input {...field} value={field.value ?? ""} placeholder={t("displayNamePlaceholder")} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               {/* Contact */}
               <div>
                 <p className="mb-3 text-sm font-medium">{t("contactHeading")}</p>

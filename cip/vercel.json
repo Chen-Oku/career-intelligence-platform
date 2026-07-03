@@ -32,6 +32,12 @@
     },
     "src/app/api/assistant/chat/route.ts": {
       "maxDuration": 60
+    },
+    "src/app/api/resumes/[id]/suggest-target-role/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/resume-type-presets/suggest/route.ts": {
+      "maxDuration": 60
     }
   }
 }
