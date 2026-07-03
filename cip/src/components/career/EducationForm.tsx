@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm, useWatch, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { createEducationSchema, CreateEducationInput } from "@/lib/validators/education.schema";
@@ -43,7 +43,7 @@ export function EducationForm({
     },
   });
 
-  const isOngoing = form.watch("isOngoing");
+  const isOngoing = useWatch({ control: form.control, name: "isOngoing" });
 
   return (
     <Form {...form}>

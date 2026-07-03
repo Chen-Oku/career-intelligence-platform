@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -35,6 +35,7 @@ export function ResumeGeneratorForm() {
 
   // Advance loading step every 5 seconds during generation
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- resetting the step counter when generation ends
     if (!isPending) { setStepIndex(0); return; }
     const interval = setInterval(() => {
       setStepIndex((i) => Math.min(i + 1, GENERATION_STEPS.length - 1));
@@ -60,7 +61,7 @@ export function ResumeGeneratorForm() {
     },
   });
 
-  const watchType = form.watch("type");
+  const watchType = useWatch({ control: form.control, name: "type" });
 
   // Prefill targetRole from the resume type's default title when the type
   // changes — respects manual edits: only overwrites when the field is
