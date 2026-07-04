@@ -43,15 +43,28 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
   const geminiKey = getRequestGeminiKey() ?? process.env.GEMINI_API_KEY?.trim();
 
   if (aiCoreUrl && aiCoreKey) {
-    try {
-      const text = await completeViaAiCore(aiCoreUrl, aiCoreKey, params);
-      setUsedAiProvider("ai-core");
-      return text;
-    } catch (error) {
-      if (!geminiKey) throw error;
+    // Fast reachability probe first: distinguishes "AI Core is down/hanging"
+    // (fail over to Gemini in ~1s, don't burn the request budget waiting on a
+    // completion timeout) from "AI Core is up, just slow" (be patient and let
+    // the long completion timeout ride — we prefer the local LLM's output). If
+    // there's no Gemini fallback anyway, skip the probe and just try it so a
+    // real error surfaces.
+    const shouldTry = !geminiKey || (await aiCoreReachable(aiCoreUrl, aiCoreKey));
+    if (shouldTry) {
+      try {
+        const text = await completeViaAiCore(aiCoreUrl, aiCoreKey, params);
+        setUsedAiProvider("ai-core");
+        return text;
+      } catch (error) {
+        if (!geminiKey) throw error;
+        console.warn(
+          `[GeminiClient] AI Core (${aiCoreUrl}) failed after a successful reachability probe, falling back to Gemini API:`,
+          error instanceof Error ? error.message : error,
+        );
+      }
+    } else {
       console.warn(
-        `[GeminiClient] AI Core (${aiCoreUrl}) unavailable, falling back to Gemini API:`,
-        error instanceof Error ? error.message : error,
+        `[GeminiClient] AI Core (${aiCoreUrl}) unreachable (probe failed), using Gemini API.`,
       );
     }
   }
@@ -68,14 +81,37 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
   return text;
 }
 
-// Timeout for the whole AI Core completion call. With thinking disabled (see
-// aiCoreSystem) a full resume comes back in ~18s over the tunnel, so 30s covers
-// a normal generation with margin while still leaving budget for the Gemini
-// fallback to run afterward within Vercel's 60s maxDuration (30s + ~25s Gemini).
-// A dead tunnel errors fast regardless, so this ceiling only bites when the
-// tunnel is up but the model is unusually slow. Override AI_CORE_TIMEOUT_MS if
-// you re-enable thinking (AI_CORE_THINKING=true) or self-host without a 60s cap.
-const AI_CORE_TIMEOUT_MS = Number(process.env.AI_CORE_TIMEOUT_MS) || 30000;
+// Completion timeout, only reached once the reachability probe has confirmed AI
+// Core is up (see geminiComplete). Because "is it down?" is already answered by
+// the probe, this can be patient: with thinking disabled (aiCoreSystem) a full
+// resume is ~18s, but under load it can run longer, and we'd rather wait for the
+// local LLM than abandon it for Gemini. 50s stays just under Vercel's 60s
+// maxDuration. Raise it (self-host, no 60s cap) or lower it (leave more room for
+// a Gemini fallback) via AI_CORE_TIMEOUT_MS.
+const AI_CORE_TIMEOUT_MS = Number(process.env.AI_CORE_TIMEOUT_MS) || 50000;
+
+// Reachability-probe timeout. /providers/status answers in well under a second
+// when AI Core is up, so a few seconds is plenty; if the tunnel is down or
+// hanging the probe fails here instead of the completion stalling for 50s.
+const AI_CORE_PROBE_MS = Number(process.env.AI_CORE_PROBE_MS) || 4000;
+
+/**
+ * Cheap "is AI Core actually up?" check before committing to a long completion.
+ * Hits /providers/status (fast, no generation). Any failure — unreachable,
+ * timeout, non-2xx — counts as down so we fail over to Gemini quickly rather
+ * than waiting out AI_CORE_TIMEOUT_MS on a completion that will never arrive.
+ */
+async function aiCoreReachable(baseUrl: string, apiKey: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${baseUrl}/providers/status`, {
+      headers: { "X-API-Key": apiKey, "ngrok-skip-browser-warning": "true" },
+      signal: AbortSignal.timeout(AI_CORE_PROBE_MS),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Qwen3 (the model AI Core serves) runs in "thinking" mode by default, emitting
