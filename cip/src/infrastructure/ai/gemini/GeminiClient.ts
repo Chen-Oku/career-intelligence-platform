@@ -68,22 +68,31 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
   return text;
 }
 
-// Timeout for the whole AI Core completion call. This is a hard tradeoff with
-// two opposite regimes, so it's env-tuned per environment:
-//
-//  • Vercel (default): maxDuration is 60s, and if AI Core is slow we still need
-//    to run the Gemini fallback AFTER the abort — all within that 60s. A local
-//    LLM behind a tunnel routinely can't finish a resume in time anyway (tens
-//    of seconds each), so the pragmatic move in production is to fail FAST to
-//    Gemini. The 15s default leaves ~45s of budget for the fallback; a higher
-//    value (the old 45s) meant abort-at-45 + Gemini easily blew past 60s → 504.
-//  • Local / self-hosted where the local LLM is the primary provider: set
-//    AI_CORE_TIMEOUT_MS high (e.g. 180000) in .env so slow real generations
-//    aren't aborted — there's no 60s cap under `npm run dev`.
-//
-// A dead tunnel returns an error fast regardless, so this ceiling only bites
-// when the tunnel is up but the model is slower than the budget.
-const AI_CORE_TIMEOUT_MS = Number(process.env.AI_CORE_TIMEOUT_MS) || 15000;
+// Timeout for the whole AI Core completion call. With thinking disabled (see
+// aiCoreSystem) a full resume comes back in ~18s over the tunnel, so 30s covers
+// a normal generation with margin while still leaving budget for the Gemini
+// fallback to run afterward within Vercel's 60s maxDuration (30s + ~25s Gemini).
+// A dead tunnel errors fast regardless, so this ceiling only bites when the
+// tunnel is up but the model is unusually slow. Override AI_CORE_TIMEOUT_MS if
+// you re-enable thinking (AI_CORE_THINKING=true) or self-host without a 60s cap.
+const AI_CORE_TIMEOUT_MS = Number(process.env.AI_CORE_TIMEOUT_MS) || 30000;
+
+/**
+ * Qwen3 (the model AI Core serves) runs in "thinking" mode by default, emitting
+ * a long <think>…</think> reasoning block before the answer. For our structured,
+ * grounded generation tasks (rewrite this career data into resume JSON) that
+ * reasoning adds little but dominates latency: a full resume took ~86s WITH
+ * thinking vs ~18s with it off — the difference between blowing past Vercel's
+ * 60s budget (→ fall back to Gemini) and comfortably serving the local LLM.
+ *
+ * Qwen3 honors a `/no_think` soft switch in the prompt to disable it, so append
+ * it here (AI Core path only — Gemini never sees it). Set AI_CORE_THINKING=true
+ * to keep thinking on (e.g. if AI Core is later pointed at a model that needs it).
+ */
+function aiCoreSystem(system: string): string {
+  if (process.env.AI_CORE_THINKING === "true") return system;
+  return `${system}\n\n/no_think`;
+}
 
 async function completeViaAiCore(
   baseUrl: string,
@@ -101,7 +110,7 @@ async function completeViaAiCore(
       "ngrok-skip-browser-warning": "true",
     },
     body: JSON.stringify({
-      system: params.system,
+      system: aiCoreSystem(params.system),
       prompt: params.prompt,
       max_tokens: params.maxTokens ?? 4096,
       temperature: params.temperature ?? 0.6,
