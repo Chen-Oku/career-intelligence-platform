@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { postAiJson } from "@/lib/apiFetch";
 import type { CoverLetterDTO } from "@/lib/types/coverLetter";
 
 export interface GenerateCoverLetterParams {
@@ -43,13 +44,10 @@ export function useGenerateCoverLetter() {
 
   return useMutation({
     mutationFn: (input: GenerateCoverLetterParams) =>
-      fetchJson<CoverLetterDTO>("/api/cover-letters/generate", {
-        method: "POST",
-        body: JSON.stringify(input),
-      }),
-    onSuccess: (data) => {
+      postAiJson<CoverLetterDTO>("/api/cover-letters/generate", input),
+    onSuccess: ({ data, aiProvider }) => {
       queryClient.invalidateQueries({ queryKey: coverLetterKeys.all });
-      toast({ title: "Cover letter generated" });
+      toast({ title: "Cover letter generated", description: aiProvider ? `Generated with ${aiProvider}` : undefined });
       router.push(`/cover-letters/${data.id}`);
     },
     onError: (error: Error) => {

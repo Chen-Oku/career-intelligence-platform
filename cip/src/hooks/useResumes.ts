@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { postAiJson } from "@/lib/apiFetch";
 import type { ResumeDTO } from "@/lib/types/resume";
 import type { GenerateResumeInput, UpdateResumeContentInput } from "@/lib/validators/resume.schema";
 
@@ -38,13 +39,10 @@ export function useGenerateResume() {
 
   return useMutation({
     mutationFn: (input: GenerateResumeInput) =>
-      fetchJson<ResumeDTO>("/api/resumes/generate", {
-        method: "POST",
-        body: JSON.stringify(input),
-      }),
-    onSuccess: (data) => {
+      postAiJson<ResumeDTO>("/api/resumes/generate", input),
+    onSuccess: ({ data, aiProvider }) => {
       queryClient.invalidateQueries({ queryKey: resumeKeys.all });
-      toast({ title: "Resume generated" });
+      toast({ title: "Resume generated", description: aiProvider ? `Generated with ${aiProvider}` : undefined });
       router.push(`/resumes/${data.id}`);
     },
     onError: (error: Error) => {

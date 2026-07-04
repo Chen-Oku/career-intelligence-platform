@@ -36,7 +36,7 @@
     "languageLabel": "Idioma del análisis",
     "submit": "Analizar descripción del empleo",
     "analyzing": "Analizando…",
-    "helperText": "Claude lee la descripción del empleo y todo tu perfil. Tarda unos 15 segundos.",
+    "helperText": "La IA lee la descripción del empleo y todo tu perfil. Tarda unos 15 segundos.",
     "steps": {
       "reading": "Leyendo los requisitos del empleo…",
       "extracting": "Extrayendo habilidades y palabras clave requeridas…",

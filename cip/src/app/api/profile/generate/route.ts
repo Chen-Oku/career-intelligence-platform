@@ -2,7 +2,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { withUserAiContext } from "@/infrastructure/ai/requestAiContext";
+import { withUserAiContextTracked } from "@/infrastructure/ai/requestAiContext";
+import { withProviderHeader } from "@/infrastructure/ai/aiResponseHeader";
 import { PrismaExperienceRepository } from "@/infrastructure/database/repositories/PrismaExperienceRepository";
 import { PrismaSkillRepository } from "@/infrastructure/database/repositories/PrismaSkillRepository";
 import { PrismaStoryRepository } from "@/infrastructure/database/repositories/PrismaStoryRepository";
@@ -37,9 +38,9 @@ export async function POST(req: NextRequest) {
     new ProfilePitchService(),
   );
 
-  const result = await withUserAiContext(session.user.id, () =>
+  const { result, usedProvider } = await withUserAiContextTracked(session.user.id, () =>
     useCase.execute({ userId: session.user.id, ...parsed.data }),
   );
   if (!result.ok) return NextResponse.json({ error: result.error.message }, { status: 422 });
-  return NextResponse.json({ data: result.value });
+  return withProviderHeader(NextResponse.json({ data: result.value }), usedProvider);
 }

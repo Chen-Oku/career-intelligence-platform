@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { postAiJson } from "@/lib/apiFetch";
 import type { AnswerFeedback } from "@/lib/types/interviewCoach";
 import type { ResumeDefaultsInput } from "@/lib/validators/resume.schema";
 
@@ -40,11 +41,14 @@ export function useGenerateProfileText() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: (input: { field: ProfileTextField; language: string; guidedAnswers?: { question: string; answer: string }[] }) =>
-      fetchJson<{ field: ProfileTextField; text: string }>("/api/profile/generate", {
-        method: "POST",
-        body: JSON.stringify(input),
-      }),
+    mutationFn: async (input: { field: ProfileTextField; language: string; guidedAnswers?: { question: string; answer: string }[] }) => {
+      const { data, aiProvider } = await postAiJson<{ field: ProfileTextField; text: string }>(
+        "/api/profile/generate",
+        input,
+      );
+      if (aiProvider) toast({ title: "Draft generated", description: `Generated with ${aiProvider}` });
+      return data;
+    },
     onError: (error: Error) => {
       toast({ title: "Generation failed", description: error.message, variant: "destructive" });
     },

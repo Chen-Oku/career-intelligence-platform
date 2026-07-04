@@ -16,7 +16,7 @@
  *    by every user of the instance.
  */
 
-import { getRequestGeminiKey } from "../requestAiContext";
+import { getRequestGeminiKey, setUsedAiProvider } from "../requestAiContext";
 
 export interface CompletionParams {
   system: string;
@@ -44,7 +44,9 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
 
   if (aiCoreUrl && aiCoreKey) {
     try {
-      return await completeViaAiCore(aiCoreUrl, aiCoreKey, params);
+      const text = await completeViaAiCore(aiCoreUrl, aiCoreKey, params);
+      setUsedAiProvider("ai-core");
+      return text;
     } catch (error) {
       if (!geminiKey) throw error;
       console.warn(
@@ -61,7 +63,9 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
     );
   }
 
-  return completeViaGemini(geminiKey, params);
+  const text = await completeViaGemini(geminiKey, params);
+  setUsedAiProvider("gemini");
+  return text;
 }
 
 // Timeout for the whole AI Core completion call. Local LLM generation (a

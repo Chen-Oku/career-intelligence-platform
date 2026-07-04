@@ -36,7 +36,7 @@
     "languageLabel": "Analysis language",
     "submit": "Analyze Job Description",
     "analyzing": "Analyzing…",
-    "helperText": "Claude reads the job description and your full profile. Takes ~15 seconds.",
+    "helperText": "AI reads the job description and your full profile. Takes ~15 seconds.",
     "steps": {
       "reading": "Reading job requirements…",
       "extracting": "Extracting required skills and keywords…",
