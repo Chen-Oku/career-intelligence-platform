@@ -68,15 +68,22 @@ export async function geminiComplete(params: CompletionParams): Promise<string> 
   return text;
 }
 
-// Timeout for the whole AI Core completion call. Local LLM generation (a
-// resume, a profile, presets) routinely takes tens of seconds, so this must be
-// generous enough not to abort real work — an earlier 8s value silently killed
-// every slow generation and fell back to Gemini. It still stays under the
-// route's maxDuration (60s on Vercel) so there's budget left for the Gemini
-// fallback if AI Core is genuinely down. A dead ngrok/cloudflare tunnel returns
-// an error fast anyway, so this ceiling only bites when a tunnel hangs.
-// Override with AI_CORE_TIMEOUT_MS (e.g. lower it if you start seeing 504s).
-const AI_CORE_TIMEOUT_MS = Number(process.env.AI_CORE_TIMEOUT_MS) || 45000;
+// Timeout for the whole AI Core completion call. This is a hard tradeoff with
+// two opposite regimes, so it's env-tuned per environment:
+//
+//  • Vercel (default): maxDuration is 60s, and if AI Core is slow we still need
+//    to run the Gemini fallback AFTER the abort — all within that 60s. A local
+//    LLM behind a tunnel routinely can't finish a resume in time anyway (tens
+//    of seconds each), so the pragmatic move in production is to fail FAST to
+//    Gemini. The 15s default leaves ~45s of budget for the fallback; a higher
+//    value (the old 45s) meant abort-at-45 + Gemini easily blew past 60s → 504.
+//  • Local / self-hosted where the local LLM is the primary provider: set
+//    AI_CORE_TIMEOUT_MS high (e.g. 180000) in .env so slow real generations
+//    aren't aborted — there's no 60s cap under `npm run dev`.
+//
+// A dead tunnel returns an error fast regardless, so this ceiling only bites
+// when the tunnel is up but the model is slower than the budget.
+const AI_CORE_TIMEOUT_MS = Number(process.env.AI_CORE_TIMEOUT_MS) || 15000;
 
 async function completeViaAiCore(
   baseUrl: string,
