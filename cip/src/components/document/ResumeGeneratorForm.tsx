@@ -56,6 +56,10 @@ export function ResumeGeneratorForm() {
     defaultValues: {
       type: "MASTER",
       title: "",
+      // Controlled from the start: the type-change effect below setValue()s
+      // this, so without a defined default the input flips uncontrolled →
+      // controlled and React warns.
+      targetRole: "",
       language: "en",
       contact: {},
     },
