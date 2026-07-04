@@ -48,6 +48,16 @@ export interface GuidedAnswer {
 }
 
 /**
+ * When the user requests a specific length (e.g. to fit a job application's word
+ * cap), this overrides the per-field default length guidance with a hard target.
+ * Empty when no target is set, so the builders fall back to their own wording.
+ */
+function buildLengthConstraint(targetWords?: number): string {
+  if (!targetWords) return "";
+  return `\n\nLENGTH REQUIREMENT (overrides any length guidance above): aim for about ${targetWords} words — get as close to ${targetWords} as the real material allows, and never exceed it (it is an application's word limit). Only fall short if there genuinely isn't enough grounded material to reach ${targetWords}; don't pad with filler, but don't cut good, well-evidenced points that still fit within ${targetWords} either.`;
+}
+
+/**
  * Guided answers are the candidate's own words, typed in response to a
  * prompt like "what first drew you to this field?" — they're as grounded
  * as the profile data itself, not an invented detail, so the model may
@@ -59,7 +69,7 @@ function buildGuidedContextSection(guidedAnswers?: GuidedAnswer[]): string {
   return `\n\n# ADDITIONAL CONTEXT FROM THE CANDIDATE (their own words — treat as grounded fact, use directly)\n${lines}`;
 }
 
-export function buildAboutMePrompt(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[]): string {
+export function buildAboutMePrompt(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], targetWords?: number): string {
   const lang = language === "es" ? "Spanish" : "English";
   const hasGuidance = !!guidedAnswers && guidedAnswers.length > 0;
 
@@ -72,13 +82,13 @@ export function buildAboutMePrompt(profile: CandidateProfileContext, language: s
 # TASK
 ${lengthInstruction} Use ONLY facts from the candidate profile and the additional context above — pull real company names, technologies, and achievements. Never invent education, certifications, years of experience, or anything not shown above.
 Natural and confident, no clichés ("passionate team player," "results-driven professional," "self-starter").
-All text in ${lang}.
+All text in ${lang}.${buildLengthConstraint(targetWords)}
 
 Return ONLY this JSON:
 { "aboutMe": "string" }`;
 }
 
-export function buildElevatorPitchPrompt(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[]): string {
+export function buildElevatorPitchPrompt(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], targetWords?: number): string {
   const lang = language === "es" ? "Spanish" : "English";
 
   return `${buildCandidateSection(profile)}${buildGuidedContextSection(guidedAnswers)}
@@ -86,13 +96,13 @@ export function buildElevatorPitchPrompt(profile: CandidateProfileContext, langu
 # TASK
 Write a spoken elevator pitch — 30-60 seconds when read aloud (roughly 75-150 words, and use the full range if the profile has enough material — don't undersell a rich profile with a short pitch) — structured as: who they are → their standout strength or achievement, with a real number or outcome if the profile has one → what they're looking for next. Use ONLY facts from the candidate profile and the additional context above — never invent a detail that isn't there.
 Punchy and conversational, sounds natural when spoken out loud, not like a written paragraph. No stock phrases ("I'm a passionate...", "I bring to the table...").
-All text in ${lang}.
+All text in ${lang}.${buildLengthConstraint(targetWords)}
 
 Return ONLY this JSON:
 { "elevatorPitch": "string" }`;
 }
 
-export function buildStrengthsPrompt(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[]): string {
+export function buildStrengthsPrompt(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], targetWords?: number): string {
   const lang = language === "es" ? "Spanish" : "English";
 
   return `${buildCandidateSection(profile)}${buildGuidedContextSection(guidedAnswers)}
@@ -100,7 +110,7 @@ export function buildStrengthsPrompt(profile: CandidateProfileContext, language:
 # TASK
 Write a first-person "Strengths" summary, 3-4 short paragraphs, that synthesizes this candidate's most distinctive strengths — patterns across their skills, experience, and stories that a single job title wouldn't show on its own. Look specifically for: cross-disciplinary range (skills or experience spanning more than one field or category), a recurring collaboration or leadership style visible across their stories (e.g. mentoring, support-oriented leadership, systems thinking, how they help a stuck teammate), and any analytical or creative pattern that repeats across different roles. Use ONLY facts, skills, and stories from the candidate profile and the additional context above — never invent a strength that isn't evidenced there. If the profile is sparse, name fewer strengths rather than padding with generic ones.
 Natural and confident, no clichés ("team player," "results-driven," "hard worker").
-All text in ${lang}.
+All text in ${lang}.${buildLengthConstraint(targetWords)}
 
 Return ONLY this JSON:
 { "strengths": "string" }`;

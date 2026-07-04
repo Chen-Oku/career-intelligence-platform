@@ -14,6 +14,8 @@ export interface GenerateProfileTextCommand {
   field: ProfileTextField;
   language: string;
   guidedAnswers?: { question: string; answer: string }[];
+  /** Optional word-count target (e.g. to fit a job application's length cap). */
+  targetWords?: number;
 }
 
 export interface GenerateProfileTextResultValue {
@@ -52,10 +54,10 @@ export class GenerateProfileTextUseCase {
 
     try {
       const text = command.field === "aboutMe"
-        ? await this.aiService.generateAboutMe(profile, command.language, command.guidedAnswers, voiceGuide)
+        ? await this.aiService.generateAboutMe(profile, command.language, command.guidedAnswers, voiceGuide, command.targetWords)
         : command.field === "elevatorPitch"
-        ? await this.aiService.generateElevatorPitch(profile, command.language, command.guidedAnswers, voiceGuide)
-        : await this.aiService.generateStrengths(profile, command.language, command.guidedAnswers, voiceGuide);
+        ? await this.aiService.generateElevatorPitch(profile, command.language, command.guidedAnswers, voiceGuide, command.targetWords)
+        : await this.aiService.generateStrengths(profile, command.language, command.guidedAnswers, voiceGuide, command.targetWords);
       return Result.ok({ field: command.field, text });
     } catch (error) {
       return Result.err(error instanceof Error ? error : new Error("Generation failed."));

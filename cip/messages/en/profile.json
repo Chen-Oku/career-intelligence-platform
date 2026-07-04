@@ -23,6 +23,8 @@
   "generateWithAi": "Generate with AI",
   "evaluateWithAi": "Evaluate with AI",
   "save": "Save",
+  "words": "{count, plural, one {# word} other {# words}}",
+  "targetWordsLabel": "Max words",
   "guidedQuestions": {
     "toggle": "Refine with guided questions (optional)",
     "hint": "Answer any of these before generating to get a richer, more personal draft. Left blank, generation uses only your career data.",

@@ -23,6 +23,8 @@
   "generateWithAi": "Generar con IA",
   "evaluateWithAi": "Evaluar con IA",
   "save": "Guardar",
+  "words": "{count, plural, one {# palabra} other {# palabras}}",
+  "targetWordsLabel": "Máx. palabras",
   "guidedQuestions": {
     "toggle": "Refinar con preguntas guía (opcional)",
     "hint": "Responde algunas de estas antes de generar para obtener un borrador más rico y personal. Si las dejas en blanco, la generación usará solo tu historial profesional.",

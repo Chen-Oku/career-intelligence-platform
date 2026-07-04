@@ -41,7 +41,7 @@ export function useGenerateProfileText() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (input: { field: ProfileTextField; language: string; guidedAnswers?: { question: string; answer: string }[] }) => {
+    mutationFn: async (input: { field: ProfileTextField; language: string; guidedAnswers?: { question: string; answer: string }[]; targetWords?: number }) => {
       const { data, aiProvider } = await postAiJson<{ field: ProfileTextField; text: string }>(
         "/api/profile/generate",
         input,

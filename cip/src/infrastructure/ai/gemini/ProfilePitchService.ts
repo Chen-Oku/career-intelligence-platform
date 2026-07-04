@@ -40,13 +40,24 @@ function parseField(raw: string, field: string): string {
   return content[field];
 }
 
+/**
+ * Token budget for a generation. Defaults comfortably fit each field's normal
+ * length, but a large user-requested word target could overflow them and get
+ * truncated mid-JSON — so when targetWords is set, ensure enough headroom
+ * (~1.6 tokens/word plus JSON overhead).
+ */
+function tokenBudget(defaultTokens: number, targetWords?: number): number {
+  if (!targetWords) return defaultTokens;
+  return Math.max(defaultTokens, Math.ceil(targetWords * 1.6) + 256);
+}
+
 /** ProfilePitchService — generates the candidate's "About Me" bio, elevator pitch, and strengths summary. */
 export class ProfilePitchService {
-  async generateAboutMe(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], voiceGuide?: string | null): Promise<string> {
+  async generateAboutMe(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], voiceGuide?: string | null, targetWords?: number): Promise<string> {
     const raw = await geminiComplete({
       system: buildProfileSystemPrompt(voiceGuide),
-      prompt: buildAboutMePrompt(profile, language, guidedAnswers),
-      maxTokens: 1536,
+      prompt: buildAboutMePrompt(profile, language, guidedAnswers, targetWords),
+      maxTokens: tokenBudget(1536, targetWords),
       // Slightly higher than resume: the bio/pitch needs natural, flowing
       // prose, but still low enough to stay grounded in the input data.
       temperature: 0.4,
@@ -54,21 +65,21 @@ export class ProfilePitchService {
     return parseField(raw, "aboutMe");
   }
 
-  async generateElevatorPitch(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], voiceGuide?: string | null): Promise<string> {
+  async generateElevatorPitch(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], voiceGuide?: string | null, targetWords?: number): Promise<string> {
     const raw = await geminiComplete({
       system: buildProfileSystemPrompt(voiceGuide),
-      prompt: buildElevatorPitchPrompt(profile, language, guidedAnswers),
-      maxTokens: 1024,
+      prompt: buildElevatorPitchPrompt(profile, language, guidedAnswers, targetWords),
+      maxTokens: tokenBudget(1024, targetWords),
       temperature: 0.4,
     });
     return parseField(raw, "elevatorPitch");
   }
 
-  async generateStrengths(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], voiceGuide?: string | null): Promise<string> {
+  async generateStrengths(profile: CandidateProfileContext, language: string, guidedAnswers?: GuidedAnswer[], voiceGuide?: string | null, targetWords?: number): Promise<string> {
     const raw = await geminiComplete({
       system: buildProfileSystemPrompt(voiceGuide),
-      prompt: buildStrengthsPrompt(profile, language, guidedAnswers),
-      maxTokens: 1536,
+      prompt: buildStrengthsPrompt(profile, language, guidedAnswers, targetWords),
+      maxTokens: tokenBudget(1536, targetWords),
       temperature: 0.4,
     });
     return parseField(raw, "strengths");

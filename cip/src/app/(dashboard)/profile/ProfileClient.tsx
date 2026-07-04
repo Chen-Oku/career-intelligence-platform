@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { PageHeader, ExperienceListSkeleton } from "@/components/shared/PageHeader";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FeedbackPanel } from "@/components/intelligence/FeedbackPanel";
 import {
@@ -45,7 +46,7 @@ export function ProfileClient() {
             title={t("aboutMe.title")}
             description={t("aboutMe.description")}
             savedText={data?.aboutMe ?? ""}
-            maxLength={2000}
+            defaultTargetWords={250}
             guidedQuestionSet="shared"
           />
           <ProfileFieldCard
@@ -53,7 +54,7 @@ export function ProfileClient() {
             title={t("elevatorPitch.title")}
             description={t("elevatorPitch.description")}
             savedText={data?.elevatorPitch ?? ""}
-            maxLength={1500}
+            defaultTargetWords={120}
             guidedQuestionSet="shared"
           />
           <ProfileFieldCard
@@ -61,7 +62,7 @@ export function ProfileClient() {
             title={t("strengths.title")}
             description={t("strengths.description")}
             savedText={data?.strengths ?? ""}
-            maxLength={2000}
+            defaultTargetWords={250}
             guidedQuestionSet="strengths"
           />
           <ResumeDefaultsCard />
@@ -73,13 +74,13 @@ export function ProfileClient() {
 }
 
 function ProfileFieldCard({
-  field, title, description, savedText, maxLength, guidedQuestionSet,
+  field, title, description, savedText, defaultTargetWords, guidedQuestionSet,
 }: {
   field: ProfileTextField;
   title: string;
   description: string;
   savedText: string;
-  maxLength: number;
+  defaultTargetWords: number;
   guidedQuestionSet: GuidedQuestionSet;
 }) {
   const t = useTranslations("profile");
@@ -90,6 +91,8 @@ function ProfileFieldCard({
   const [prevSavedText, setPrevSavedText] = useState(savedText);
   const [showGuidedQuestions, setShowGuidedQuestions] = useState(false);
   const [guidedAnswers, setGuidedAnswers] = useState<string[]>(guidedQuestionKeys.map(() => ""));
+  // Empty = no explicit target; generation uses the field's default length.
+  const [targetWordsInput, setTargetWordsInput] = useState("");
 
   const { mutateAsync: generate, isPending: isGenerating } = useGenerateProfileText();
   const { mutate: save, isPending: isSaving } = useSaveProfileText();
@@ -101,6 +104,13 @@ function ProfileFieldCard({
     setText(savedText);
   }
 
+  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const parsedTarget = targetWordsInput.trim() ? Number(targetWordsInput) : undefined;
+  const validTarget = parsedTarget !== undefined && Number.isFinite(parsedTarget) && parsedTarget >= 20 && parsedTarget <= 1500
+    ? Math.round(parsedTarget)
+    : undefined;
+  const overTarget = validTarget !== undefined && wordCount > validTarget;
+
   const handleGenerate = async () => {
     const filledAnswers = guidedQuestionKeys
       .map((key, i) => ({ question: t(`guidedQuestions.${guidedQuestionSet}.${key}`), answer: guidedAnswers[i].trim() }))
@@ -110,6 +120,7 @@ function ProfileFieldCard({
       field,
       language: locale,
       guidedAnswers: filledAnswers.length > 0 ? filledAnswers : undefined,
+      targetWords: validTarget,
     });
     if (result) {
       setText(result.text);
@@ -138,9 +149,27 @@ function ProfileFieldCard({
           placeholder={t("placeholder", { title: title.toLowerCase() })}
           className="min-h-[120px] text-sm resize-y"
         />
-        <p className={`text-xs text-right ${text.length > maxLength ? "text-destructive" : "text-muted-foreground"}`}>
-          {text.length} / {maxLength}
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <label htmlFor={`target-words-${field}`} className="text-xs text-muted-foreground">
+              {t("targetWordsLabel")}
+            </label>
+            <Input
+              id={`target-words-${field}`}
+              type="number"
+              inputMode="numeric"
+              min={20}
+              max={1500}
+              value={targetWordsInput}
+              onChange={(e) => setTargetWordsInput(e.target.value)}
+              placeholder={String(defaultTargetWords)}
+              className="h-8 w-20 text-xs"
+            />
+          </div>
+          <p className={`text-xs ${overTarget ? "text-amber-600 dark:text-amber-500" : "text-muted-foreground"}`}>
+            {t("words", { count: wordCount })}{validTarget !== undefined ? ` / ${validTarget}` : ""}
+          </p>
+        </div>
 
         <div className="rounded-md border bg-muted/30">
           <button
@@ -179,7 +208,7 @@ function ProfileFieldCard({
             {isEvaluating ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <ClipboardCheck className="mr-1.5 h-3.5 w-3.5" />}
             {t("evaluateWithAi")}
           </Button>
-          <Button type="button" size="sm" disabled={!text.trim() || text.length > maxLength || isSaving} onClick={handleSave} className="ml-auto">
+          <Button type="button" size="sm" disabled={!text.trim() || isSaving} onClick={handleSave} className="ml-auto">
             {isSaving ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <Save className="mr-1.5 h-3.5 w-3.5" />}
             {t("save")}
           </Button>
