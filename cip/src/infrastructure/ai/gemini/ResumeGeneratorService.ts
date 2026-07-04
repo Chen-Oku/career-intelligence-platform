@@ -47,9 +47,11 @@ export class ResumeGeneratorService {
       // A full multi-job resume echoes back a lot of text — 4096 was
       // truncating mid-JSON on richer profiles and breaking the parse below.
       maxTokens: 8192,
-      // Low temperature: maximizes fidelity to the input data and reduces
-      // risk of the model inventing details not present in the career context.
-      temperature: 0.3,
+      // Moderate temperature: 0.3 was so faithful that bullets came out nearly
+      // identical across resume types (only the summary varied). 0.5 gives the
+      // model enough room to re-emphasize/rephrase per the type-specific
+      // instructions while the strict GROUNDING RULE still blocks fabrication.
+      temperature: 0.5,
     });
 
     return this.parseResponse(raw);

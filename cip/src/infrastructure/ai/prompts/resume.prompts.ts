@@ -155,8 +155,8 @@ export function buildResumePrompt(
   const parts: string[] = [
     buildConfigSection(config),
     config.targetJob ? buildTargetJobSection(config.targetJob) : "",
-    buildExperienceSection(context.experiences),
-    context.projects.length > 0 ? buildProjectsSection(context.projects) : "",
+    buildExperienceSection(context.experiences, config),
+    context.projects.length > 0 ? buildProjectsSection(context.projects, config) : "",
     buildSkillsSection(context.skillGroups, config),
     context.stories.length > 0 ? buildStoriesSection(context.stories) : "",
     context.certifications.length > 0 ? buildCertificationsSection(context.certifications) : "",
@@ -213,12 +213,27 @@ Tailoring instructions:
 - Prefer the posting's exact terminology when the candidate's data uses a synonym (e.g. their "UE5" can be written "Unreal Engine 5" if the posting says so — same fact, posting's vocabulary).${job.resumeTips.length ? `\n- Apply these analyst tips where the data supports them:\n${job.resumeTips.map((t) => `  - ${t}`).join("\n")}` : ""}`;
 }
 
-function buildExperienceSection(experiences: ExperienceData[]): string {
+/**
+ * Short description of what this resume type wants the bullets to emphasize —
+ * used to instruct the model to reframe each experience per the profile,
+ * instead of rewriting the same raw responsibilities identically every time.
+ */
+function profileEmphasis(config: ResumeConfig): string | null {
+  if (config.targetJob) return `the target job's required skills and responsibilities`;
+  if (config.type === "CUSTOM") return config.targetRole ? `the target role "${config.targetRole}"` : null;
+  const profile = config.typeProfile;
+  if (!profile) return null;
+  return `this resume type's focus (${profile.focus})${profile.vocabulary ? `, using its vocabulary (${profile.vocabulary}) where natural` : ""}`;
+}
+
+function buildExperienceSection(experiences: ExperienceData[], config: ResumeConfig): string {
   if (!experiences.length) return "";
 
   // Limit to the 4 most recent by default — a longer resume reads as
   // unfocused, and the editor's "add experience" picker covers the rest.
   const toShow = experiences.slice(0, 4);
+
+  const emphasis = profileEmphasis(config);
 
   const formatted = toShow.map((exp, i) => {
     const lines = [
@@ -243,12 +258,27 @@ function buildExperienceSection(experiences: ExperienceData[]): string {
     return lines.join("\n");
   });
 
-  return `# WORK EXPERIENCE\n\n${formatted.join("\n\n---\n\n")}`;
+  const emphasisNote = emphasis
+    ? `\n\nTailor each role's bullets to ${emphasis}: choose WHICH responsibilities/achievements to surface first and how to phrase them so the emphasis is clear. The same experience written for a different resume type should read differently in what it highlights — NOT identical text. This is reframing REAL data (grounding rule still applies): change emphasis, ordering, and wording only — never invent facts the data doesn't contain.`
+    : "";
+
+  return `# WORK EXPERIENCE${emphasisNote}\n\n${formatted.join("\n\n---\n\n")}`;
 }
 
-function buildProjectsSection(projects: ProjectData[]): string {
-  const highlighted = projects.filter((p) => p.isHighlighted).slice(0, 4);
-  const rest = projects.filter((p) => !p.isHighlighted).slice(0, 2);
+function buildProjectsSection(projects: ProjectData[], config: ResumeConfig): string {
+  // Within each bucket, surface the projects most relevant to this resume's
+  // type/target so a "Technical" and an "Art Direction" resume don't both show
+  // the same first four projects. Highlighted still outranks non-highlighted.
+  const priority = priorityKeywords(config).map((k) => k.toLowerCase());
+  const relevanceScore = (p: ProjectData) => {
+    if (!priority.length) return 0;
+    const haystack = [p.name, p.description, p.myRole ?? "", ...p.technologies].join(" ").toLowerCase();
+    return priority.reduce((n, k) => (haystack.includes(k) ? n + 1 : n), 0);
+  };
+  const byRelevance = (a: ProjectData, b: ProjectData) => relevanceScore(b) - relevanceScore(a);
+
+  const highlighted = projects.filter((p) => p.isHighlighted).sort(byRelevance).slice(0, 4);
+  const rest = projects.filter((p) => !p.isHighlighted).sort(byRelevance).slice(0, 2);
   const toShow = [...highlighted, ...rest];
 
   if (!toShow.length) return "";
